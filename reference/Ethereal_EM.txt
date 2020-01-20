@@ -1,0 +1,19 @@
+GET
+http://192.168.2.103:1999/api/TestingForBunny/RainController
+Response Data
+{
+[
+    {
+        "name": "superadmin",
+        "guard_name": "web"
+    },
+    {
+        "name": "companyadmin",
+        "guard_name": "web"
+    },
+    {
+        "name": "user",
+        "guard_name": "web"
+    }
+]
+}

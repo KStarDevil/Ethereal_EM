@@ -1,0 +1,25 @@
+# naing thura aung.
+api => dotnet core sample api 
+
+
+for get image
+localhost:8503/api/announcement/GetImageForWebsite/
+
+photo 
+\\server1\TemporaryData
+
+HPDT.zip
+
+
+for expire noti
+
+member/MemberExpire
+Request data
+{   MemberID:1
+}
+
+Response Data
+{
+     result =  new {isExpired=1,msg ="Will be expired soon"+" "+endDate.ToString("yyyy-MM-dd")};
+}
+if expire return true else return false

@@ -1,0 +1,7 @@
+G:\Work\Ethereal_EM\obj\Debug\netcoreapp3.1\ETHEREAL_EM.csprojAssemblyReference.cache
+G:\Work\Ethereal_EM\obj\Debug\netcoreapp3.1\staticwebassets\ETHEREAL_EM.StaticWebAssets.Manifest.cache
+G:\Work\Ethereal_EM\obj\Debug\netcoreapp3.1\staticwebassets\ETHEREAL_EM.StaticWebAssets.xml
+G:\Work\Ethereal_EM\obj\Debug\netcoreapp3.1\ETHEREAL_EM.MvcApplicationPartsAssemblyInfo.cs
+G:\Work\Ethereal_EM\obj\Debug\netcoreapp3.1\ETHEREAL_EM.MvcApplicationPartsAssemblyInfo.cache
+G:\Work\Ethereal_EM\obj\Debug\netcoreapp3.1\ETHEREAL_EM.AssemblyInfoInputs.cache
+G:\Work\Ethereal_EM\obj\Debug\netcoreapp3.1\ETHEREAL_EM.AssemblyInfo.cs
