@@ -27,12 +27,25 @@ namespace Ethereal_EM
         [HttpGet("GetAdmin", Name = "GetAdmin")]
         public dynamic GetAdmin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-           
-            dynamic dd = param;
-            int id = dd.id;
-            dynamic mainQuery = _repositoryWrapper.Admin_Repository.GetAdminbyid(id);  
-            int count = mainQuery.Count;
-            dynamic jsondata =  new {data= new{Count =count, mainQuery}};
+            dynamic jsondata = null;
+            try
+            {
+                dynamic dd = param;
+                int id = dd.id;
+                dynamic mainQuery = _repositoryWrapper.Admin_Repository.GetAdminbyid(id);
+                if (mainQuery == null)
+                {
+                    jsondata = new { data = new { mainQuery = "No Data" } };
+                }
+                else
+                {
+                    jsondata = new { data = new { mainQuery } };
+                }
+            }
+            catch (Exception ex)
+            {
+                jsondata = new { data = new { msg = ex.Message } };
+            }
             return jsondata;
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Ethereal_EM
 {
-    [System.ComponentModel.DataAnnotations.Schema.Table("tbl_admin")]
+    [System.ComponentModel.DataAnnotations.Schema.Table("tbl_admin11")]
     public class Admin : BaseModel
     {
         public int AdminID { get; set; }
