@@ -80,11 +80,37 @@ namespace Ethereal_EM
           public DbSet <hw_tb1_user> hw_tb1_user{get;set;}
           public DbSet <hw_tb1_account> hw_tb1_account{get;set;}
           public DbSet <hw_tb1_register> hw_tb1_register{get;set;}
+          //project
+          public DbSet <tbl_admin> tbl_admin{get;set;}
+          public DbSet <tbl_role> tbl_role{get;set;}
+          public DbSet <tbl_permission> tbl_permission{get;set;}
+          public DbSet <tbl_menu> tbl_menu{get;set;}
+          public DbSet <tbl_permission_admin> tbl_permission_admin{get;set;}
+          public DbSet <tbl_role_admin> tbl_role_admin{get;set;}
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   
             modelBuilder.Entity<hw_tb1_user>()
               .HasKey(c => new { c.id });
+            //project
+            modelBuilder.Entity<tbl_admin>()
+              .HasKey(c => new { c.admin_id });
+            
+            modelBuilder.Entity<tbl_role>()
+              .HasKey(c => new { c.role_id });
 
+            modelBuilder.Entity<tbl_permission>()
+              .HasKey(c => new { c.permsiion_id });
+            
+            modelBuilder.Entity<tbl_menu>()
+              .HasKey(c => new { c.menu_id });
+            
+            modelBuilder.Entity<tbl_permission_admin>()
+              .HasKey(c => new { c.permsiion_id, c.admin_id });
+
+            modelBuilder.Entity<tbl_role_admin>()
+              .HasKey(c => new { c.admin_id, c.role_id });
+            //project
             modelBuilder.Entity<hw_tb1_account>()
               .HasKey(c => new { c.name });
 
