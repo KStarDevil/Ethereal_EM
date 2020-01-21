@@ -65,6 +65,20 @@ namespace Repository
         private Ihw_tb1_userRepo _hw_tb1_userRepo;
         private Ihw_tb1_accountRepo _hw_tb1_accountRepo;
         private Ihw_tb1_registerRepo _hw_tb1_registerRepo;
+        private IAdmin_Repository _Admin_Repository;
+
+         public IAdmin_Repository Admin_Repository
+        {
+            get
+            {
+                if (_Admin_Repository == null)
+                {
+                    _Admin_Repository = new Admin_Repository(_repoContext);
+                }
+
+                return _Admin_Repository;
+            }
+        }
         
          public Ihw_tb1_userRepo hw_tb1_userRepo
         {
@@ -653,7 +667,7 @@ namespace Repository
             }
         }
 
-        
+       
     }
 
 

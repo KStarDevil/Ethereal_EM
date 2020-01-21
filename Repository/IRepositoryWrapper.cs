@@ -53,6 +53,7 @@ namespace Ethereal_EM.Repository
         Ihw_tb1_userRepo hw_tb1_userRepo{get;}
         Ihw_tb1_accountRepo hw_tb1_accountRepo{get;}
         Ihw_tb1_registerRepo hw_tb1_registerRepo{get;}
+        IAdmin_Repository Admin_Repository{get;}
         //////Template Place Holder/////
     }
 }

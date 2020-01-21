@@ -81,7 +81,7 @@ namespace Ethereal_EM
           public DbSet <hw_tb1_account> hw_tb1_account{get;set;}
           public DbSet <hw_tb1_register> hw_tb1_register{get;set;}
           //project
-          public DbSet <tbl_admin> tbl_admin{get;set;}
+          public DbSet <tbAdmin> tbAdmin{get;set;}
           public DbSet <tbl_role> tbl_role{get;set;}
           public DbSet <tbl_permission> tbl_permission{get;set;}
           public DbSet <tbl_menu> tbl_menu{get;set;}
@@ -93,7 +93,7 @@ namespace Ethereal_EM
             modelBuilder.Entity<hw_tb1_user>()
               .HasKey(c => new { c.id });
             //project
-            modelBuilder.Entity<tbl_admin>()
+            modelBuilder.Entity<tbAdmin>()
               .HasKey(c => new { c.admin_id });
             
             modelBuilder.Entity<tbl_role>()
