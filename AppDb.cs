@@ -100,7 +100,7 @@ namespace Ethereal_EM
               .HasKey(c => new { c.role_id });
 
             modelBuilder.Entity<tbl_permission>()
-              .HasKey(c => new { c.permsiion_id });
+              .HasKey(c => new { c.permission_id});
             
             modelBuilder.Entity<tbl_menu>()
               .HasKey(c => new { c.menu_id });

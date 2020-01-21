@@ -32,7 +32,7 @@ namespace Ethereal_EM
             {
                 dynamic dd = param;
                 int id = dd.id;
-                dynamic mainQuery = _repositoryWrapper.Admin_Repository.GetAdminbyid(id);
+                dynamic mainQuery = _repositoryWrapper.Role_Repository.GetRolebyid(id);
                 if (mainQuery == null)
                 {
                     jsondata = new { data = new { mainQuery = "No Data" } };

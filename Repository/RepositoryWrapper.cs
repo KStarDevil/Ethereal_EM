@@ -66,7 +66,33 @@ namespace Repository
         private Ihw_tb1_accountRepo _hw_tb1_accountRepo;
         private Ihw_tb1_registerRepo _hw_tb1_registerRepo;
         private IAdmin_Repository _Admin_Repository;
+        private IPermission_Repository _Permission_Repository;
+        private IRole_Repository _Role_Repository;
 
+         public IRole_Repository Role_Repository
+        {
+            get
+            {
+                if (_Role_Repository == null)
+                {
+                    _Role_Repository = new Role_Repository(_repoContext);
+                }
+
+                return _Role_Repository;
+            }
+        }
+         public IPermission_Repository Permission_Repository
+        {
+            get
+            {
+                if (_Permission_Repository == null)
+                {
+                    _Permission_Repository = new Permission_Repository(_repoContext);
+                }
+
+                return _Permission_Repository;
+            }
+        }
          public IAdmin_Repository Admin_Repository
         {
             get
