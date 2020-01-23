@@ -65,7 +65,7 @@ CREATE TABLE `tbl_menu` (
 
 LOCK TABLES `tbl_menu` WRITE;
 /*!40000 ALTER TABLE `tbl_menu` DISABLE KEYS */;
-INSERT INTO `tbl_menu` VALUES (1,1,'Game','m1'),(2,2,'Job','j1');
+INSERT INTO `tbl_menu` VALUES (1,1,'Review','Review_link'),(2,2,'Notification','Noti_Link'),(3,3,'User Management','User_management_link'),(4,4,'Admin Management','Admin_management_link'),(5,5,'Announcement','Announcement_link'),(1001,1,'Freelance Post','Freelance_link'),(1002,1,'Business Post','Business_link'),(1003,1,'User Post','User_link'),(1004,1,'Report','Report_link');
 /*!40000 ALTER TABLE `tbl_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,4 +201,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-23 10:58:05
+-- Dump completed on 2020-01-23 11:34:03

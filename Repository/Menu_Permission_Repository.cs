@@ -20,7 +20,7 @@ namespace Ethereal_EM.Repository
         {
             var result =(from menupermission in RepositoryContext.tbl_menu_permission
                         select menupermission
-                        ).FirstOrDefault();
+                        ).ToList();
             return result;
         }
     }

@@ -29,7 +29,7 @@ namespace Ethereal_EM.Repository
         {
             var result = (from permission in RepositoryContext.tbl_permission
                             select permission
-                            ).FirstOrDefault();
+                            ).ToList();
             return result;
         }
     }

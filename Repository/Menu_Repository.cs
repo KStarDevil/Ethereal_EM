@@ -20,7 +20,7 @@ namespace Ethereal_EM.Repository
         {
             var result = (from menu in RepositoryContext.tbl_menu
                             select menu
-                        ).FirstOrDefault();
+                        ).ToList();
             return result;
         }
     }

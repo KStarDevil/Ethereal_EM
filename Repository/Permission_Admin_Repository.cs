@@ -19,7 +19,7 @@ namespace Ethereal_EM.Repository
         {
             var result =(from permissionadmin in RepositoryContext.tbl_permission_admin
                         select permissionadmin
-                        ).FirstOrDefault();
+                        ).ToList();
             return result;
         }
     }

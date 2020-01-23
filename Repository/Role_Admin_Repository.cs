@@ -20,7 +20,7 @@ namespace Ethereal_EM.Repository
         {
             var result =(from roleadmin in RepositoryContext.tbl_role_admin
                         select roleadmin
-                        ).FirstOrDefault();
+                        ).ToList();
             return result;
         }
     }
