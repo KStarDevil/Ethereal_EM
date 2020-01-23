@@ -1,0 +1,99 @@
+WARN  22-01-2020 12:35:17 Microsoft.EntityFrameworkCore.Query [14] - Query: '(from tbl_menu_permission menupermission in DbSet<tbl_menu_permission> select [menupermission]).Firs...' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results. 
+WARN  22-01-2020 12:35:18 Microsoft.EntityFrameworkCore.Query [14] - Query: '(from tbl_role_admin roleadmin in DbSet<tbl_role_admin> select [roleadmin]).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results. 
+WARN  22-01-2020 12:35:18 Microsoft.EntityFrameworkCore.Query [14] - Query: '(from tbl_permission_admin permissionadmin in DbSet<tbl_permission_admin> select [permissionadmin])....' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results. 
+ERROR 22-01-2020 12:35:18 Microsoft.EntityFrameworkCore.Database.Command [14] - Failed executing DbCommand (36ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT `permissionadmin`.`permission_admin_id`, `permissionadmin`.`admin_id`, `permissionadmin`.`permsiion_id`
+FROM `tbl_permission_admin` AS `permissionadmin`
+LIMIT 1 MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'permissionadmin.permsiion_id' in 'field list' ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'permissionadmin.permsiion_id' in 'field list'
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\Core\ResultSet.cs:line 44
+   at MySql.Data.MySqlClient.MySqlDataReader.ActivateResultSet(ResultSet resultSet) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 93
+   at MySql.Data.MySqlClient.MySqlDataReader.ReadFirstResultSetAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 328
+   at MySql.Data.MySqlClient.MySqlDataReader.CreateAsync(MySqlCommand command, CommandBehavior behavior, IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 313
+   at MySqlConnector.Core.TextCommandExecutor.ExecuteReaderAsync(String commandText, MySqlParameterCollection parameterCollection, CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in C:\projects\mysqlconnector\src\MySqlConnector\Core\TextCommandExecutor.cs:line 73
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlCommand.cs:line 168
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+
+ERROR 22-01-2020 12:35:18 Microsoft.EntityFrameworkCore.Query [14] - An exception occurred in the database while iterating the results of a query for context type 'Ethereal_EM.AppDb'.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'permissionadmin.permsiion_id' in 'field list' ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'permissionadmin.permsiion_id' in 'field list'
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\Core\ResultSet.cs:line 44
+   at MySql.Data.MySqlClient.MySqlDataReader.ActivateResultSet(ResultSet resultSet) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 93
+   at MySql.Data.MySqlClient.MySqlDataReader.ReadFirstResultSetAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 328
+   at MySql.Data.MySqlClient.MySqlDataReader.CreateAsync(MySqlCommand command, CommandBehavior behavior, IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 313
+   at MySqlConnector.Core.TextCommandExecutor.ExecuteReaderAsync(String commandText, MySqlParameterCollection parameterCollection, CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in C:\projects\mysqlconnector\src\MySqlConnector\Core\TextCommandExecutor.cs:line 73
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlCommand.cs:line 168
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.BufferlessMoveNext(DbContext _, Boolean buffer)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.MoveNext()
+   at System.Linq.Enumerable.TryGetFirst[TSource](IEnumerable`1 source, Boolean& found)
+   at lambda_method(Closure )
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider.ResultEnumerable`1.GetEnumerator()
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider._TrackEntities[TOut,TIn](IEnumerable`1 results, QueryContext queryContext, IList`1 entityTrackingInfos, IList`1 entityAccessors)+MoveNext()
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext() MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'permissionadmin.permsiion_id' in 'field list' ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'permissionadmin.permsiion_id' in 'field list'
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\Core\ResultSet.cs:line 44
+   at MySql.Data.MySqlClient.MySqlDataReader.ActivateResultSet(ResultSet resultSet) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 93
+   at MySql.Data.MySqlClient.MySqlDataReader.ReadFirstResultSetAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 328
+   at MySql.Data.MySqlClient.MySqlDataReader.CreateAsync(MySqlCommand command, CommandBehavior behavior, IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 313
+   at MySqlConnector.Core.TextCommandExecutor.ExecuteReaderAsync(String commandText, MySqlParameterCollection parameterCollection, CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in C:\projects\mysqlconnector\src\MySqlConnector\Core\TextCommandExecutor.cs:line 73
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlCommand.cs:line 168
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.BufferlessMoveNext(DbContext _, Boolean buffer)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.MoveNext()
+   at System.Linq.Enumerable.TryGetFirst[TSource](IEnumerable`1 source, Boolean& found)
+   at lambda_method(Closure )
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider.ResultEnumerable`1.GetEnumerator()
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider._TrackEntities[TOut,TIn](IEnumerable`1 results, QueryContext queryContext, IList`1 entityTrackingInfos, IList`1 entityAccessors)+MoveNext()
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext()
+
+ERROR 22-01-2020 12:35:18 Microsoft.EntityFrameworkCore.Query [14] - An exception occurred in the database while iterating the results of a query for context type 'Ethereal_EM.AppDb'.
+MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'permissionadmin.permsiion_id' in 'field list' ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'permissionadmin.permsiion_id' in 'field list'
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\Core\ResultSet.cs:line 44
+   at MySql.Data.MySqlClient.MySqlDataReader.ActivateResultSet(ResultSet resultSet) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 93
+   at MySql.Data.MySqlClient.MySqlDataReader.ReadFirstResultSetAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 328
+   at MySql.Data.MySqlClient.MySqlDataReader.CreateAsync(MySqlCommand command, CommandBehavior behavior, IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 313
+   at MySqlConnector.Core.TextCommandExecutor.ExecuteReaderAsync(String commandText, MySqlParameterCollection parameterCollection, CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in C:\projects\mysqlconnector\src\MySqlConnector\Core\TextCommandExecutor.cs:line 73
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlCommand.cs:line 168
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.BufferlessMoveNext(DbContext _, Boolean buffer)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.MoveNext()
+   at System.Linq.Enumerable.TryGetFirst[TSource](IEnumerable`1 source, Boolean& found)
+   at lambda_method(Closure )
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider.ResultEnumerable`1.GetEnumerator()
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider._TrackEntities[TOut,TIn](IEnumerable`1 results, QueryContext queryContext, IList`1 entityTrackingInfos, IList`1 entityAccessors)+MoveNext()
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext()
+   at System.Linq.Enumerable.TryGetFirst[TSource](IEnumerable`1 source, Boolean& found)
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.<>c__DisplayClass15_1`1.<CompileQueryCore>b__0(QueryContext qc) MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'permissionadmin.permsiion_id' in 'field list' ---> MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'permissionadmin.permsiion_id' in 'field list'
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\Core\ResultSet.cs:line 44
+   at MySql.Data.MySqlClient.MySqlDataReader.ActivateResultSet(ResultSet resultSet) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 93
+   at MySql.Data.MySqlClient.MySqlDataReader.ReadFirstResultSetAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 328
+   at MySql.Data.MySqlClient.MySqlDataReader.CreateAsync(MySqlCommand command, CommandBehavior behavior, IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 313
+   at MySqlConnector.Core.TextCommandExecutor.ExecuteReaderAsync(String commandText, MySqlParameterCollection parameterCollection, CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in C:\projects\mysqlconnector\src\MySqlConnector\Core\TextCommandExecutor.cs:line 73
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlCommand.cs:line 168
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.BufferlessMoveNext(DbContext _, Boolean buffer)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.MoveNext()
+   at System.Linq.Enumerable.TryGetFirst[TSource](IEnumerable`1 source, Boolean& found)
+   at lambda_method(Closure )
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider.ResultEnumerable`1.GetEnumerator()
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider._TrackEntities[TOut,TIn](IEnumerable`1 results, QueryContext queryContext, IList`1 entityTrackingInfos, IList`1 entityAccessors)+MoveNext()
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext()
+   at System.Linq.Enumerable.TryGetFirst[TSource](IEnumerable`1 source, Boolean& found)
+   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.<>c__DisplayClass15_1`1.<CompileQueryCore>b__0(QueryContext qc)
+
+WARN  22-01-2020 12:36:15 Microsoft.EntityFrameworkCore.Query [6] - Query: '(from tbl_menu_permission menupermission in DbSet<tbl_menu_permission> select [menupermission]).Firs...' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results. 
+WARN  22-01-2020 12:36:15 Microsoft.EntityFrameworkCore.Query [6] - Query: '(from tbl_role_admin roleadmin in DbSet<tbl_role_admin> select [roleadmin]).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results. 
+WARN  22-01-2020 12:36:15 Microsoft.EntityFrameworkCore.Query [6] - Query: '(from tbl_permission_admin permissionadmin in DbSet<tbl_permission_admin> select [permissionadmin])....' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results. 
