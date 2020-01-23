@@ -56,6 +56,10 @@ namespace Ethereal_EM.Repository
         IAdmin_Repository Admin_Repository{get;}
         IPermission_Repository Permission_Repository{get;}
         IRole_Repository Role_Repository{get;}
+        IMenu_Repository Menu_Repository{get;}
+        IPermission_Admin_Repository Permission_Admin_Repository{get;}
+        IRole_Admin_Repository Role_Admin_Repository{get;}
+        IMenu_Permission_Repository Menu_Permission_Repository{get;}
         //////Template Place Holder/////
     }
 }

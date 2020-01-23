@@ -685,3 +685,4 @@ MySql.Data.MySqlClient.MySqlException (0x80004005): Unknown column 'permission.p
    at System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
    at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.<>c__DisplayClass15_1`1.<CompileQueryCore>b__0(QueryContext qc)
 
+WARN  21-01-2020 21:40:26 Microsoft.EntityFrameworkCore.Query [14] - Query: '(from tbl_menu menu in DbSet<tbl_menu> select [menu]).FirstOrDefault()' uses First/FirstOrDefault/Last/LastOrDefault operation without OrderBy and filter which may lead to unpredictable results. 

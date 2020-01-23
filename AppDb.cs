@@ -87,6 +87,7 @@ namespace Ethereal_EM
           public DbSet <tbl_menu> tbl_menu{get;set;}
           public DbSet <tbl_permission_admin> tbl_permission_admin{get;set;}
           public DbSet <tbl_role_admin> tbl_role_admin{get;set;}
+          public DbSet <tbl_menu_permission> tbl_menu_permission{get;set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   
@@ -106,10 +107,13 @@ namespace Ethereal_EM
               .HasKey(c => new { c.menu_id });
             
             modelBuilder.Entity<tbl_permission_admin>()
-              .HasKey(c => new { c.permsiion_id, c.admin_id });
+              .HasKey(c => new {c.permission_admin_id});
 
             modelBuilder.Entity<tbl_role_admin>()
-              .HasKey(c => new { c.admin_id, c.role_id });
+              .HasKey(c => new {c.role_admin_id});
+
+            modelBuilder.Entity<tbl_menu_permission>()
+              .HasKey(c => new {c.menu_permission_id});
             //project
             modelBuilder.Entity<hw_tb1_account>()
               .HasKey(c => new { c.name });

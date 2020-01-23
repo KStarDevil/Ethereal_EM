@@ -6,7 +6,8 @@ namespace Ethereal_EM
     public class tbl_permission_admin : BaseModel
     {
         public int admin_id {get; set;}
-        public int permsiion_id { get; set; }
+        public int permission_id { get; set; }
+        public int permission_admin_id{get; set;}
 
     }
 }

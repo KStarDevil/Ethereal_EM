@@ -68,7 +68,60 @@ namespace Repository
         private IAdmin_Repository _Admin_Repository;
         private IPermission_Repository _Permission_Repository;
         private IRole_Repository _Role_Repository;
+        private IMenu_Repository _Menu_Repository;
+        private IPermission_Admin_Repository _Permission_Admin_Repository;
+        private IRole_Admin_Repository _Role_Admin_Repository;
+        private IMenu_Permission_Repository _Menu_Permission_Repository;
+         public IMenu_Permission_Repository Menu_Permission_Repository
+        {
+            get
+            {
+                if (_Menu_Permission_Repository == null)
+                {
+                    _Menu_Permission_Repository = new Menu_Permission_Repository(_repoContext);
+                }
 
+                return _Menu_Permission_Repository;
+            }
+        }
+         public IRole_Admin_Repository Role_Admin_Repository
+        {
+            get
+            {
+                if (_Role_Admin_Repository == null)
+                {
+                    _Role_Admin_Repository = new Role_Admin_Repository(_repoContext);
+                }
+
+                return _Role_Admin_Repository;
+            }
+        }
+
+         public IPermission_Admin_Repository Permission_Admin_Repository
+        {
+            get
+            {
+                if (_Permission_Admin_Repository == null)
+                {
+                    _Permission_Admin_Repository = new Permission_Admin_Repository(_repoContext);
+                }
+
+                return _Permission_Admin_Repository;
+            }
+        }
+         public IMenu_Repository Menu_Repository
+        {
+            get
+            {
+                if (_Menu_Repository == null)
+                {
+                    _Menu_Repository = new Menu_Repository(_repoContext);
+                }
+
+                return _Menu_Repository;
+            }
+        }
+           
          public IRole_Repository Role_Repository
         {
             get
@@ -693,7 +746,7 @@ namespace Repository
             }
         }
 
-       
+        
     }
 
 

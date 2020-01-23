@@ -30,16 +30,18 @@ namespace Ethereal_EM
             dynamic jsondata = null;
             try
             {
-                dynamic dd = param;
-                int id = dd.id;
-                dynamic mainQuery = _repositoryWrapper.Role_Repository.GetRolebyid(id);
-                if (mainQuery == null)
+                // dynamic dd = param;
+                // int id = dd.id;
+                dynamic mainQuery1 = _repositoryWrapper.Menu_Permission_Repository.GetMenuPermission();
+                dynamic mainQuery2 = _repositoryWrapper.Role_Admin_Repository.GetRoleAdmin();
+                dynamic mainQuery3 = _repositoryWrapper.Permission_Admin_Repository.GetPermissionAdmin();
+                if (mainQuery1 == null)
                 {
-                    jsondata = new { data = new { mainQuery = "No Data" } };
+                    jsondata = new { data = new { mainQuery1 = "No Data" } };
                 }
                 else
                 {
-                    jsondata = new { data = new { mainQuery } };
+                    jsondata = new { data = new { mainQuery1,mainQuery2,mainQuery3 } };
                 }
             }
             catch (Exception ex)

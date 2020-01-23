@@ -7,6 +7,7 @@ namespace Ethereal_EM
     {
         public int admin_id {get; set;}
         public int role_id { get; set; }
+        public int role_admin_id{get; set;}
 
     }
 }
