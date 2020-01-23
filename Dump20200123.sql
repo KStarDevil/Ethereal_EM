@@ -65,7 +65,33 @@ CREATE TABLE `tbl_menu` (
 
 LOCK TABLES `tbl_menu` WRITE;
 /*!40000 ALTER TABLE `tbl_menu` DISABLE KEYS */;
+INSERT INTO `tbl_menu` VALUES (1,1,'Game','m1'),(2,2,'Job','j1');
 /*!40000 ALTER TABLE `tbl_menu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_menu_permission`
+--
+
+DROP TABLE IF EXISTS `tbl_menu_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbl_menu_permission` (
+  `menu_permission_id` int(50) NOT NULL,
+  `menu_id` int(50) NOT NULL,
+  `permission_id` int(50) NOT NULL,
+  PRIMARY KEY (`menu_permission_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_menu_permission`
+--
+
+LOCK TABLES `tbl_menu_permission` WRITE;
+/*!40000 ALTER TABLE `tbl_menu_permission` DISABLE KEYS */;
+INSERT INTO `tbl_menu_permission` VALUES (1,1,2),(2,2,3);
+/*!40000 ALTER TABLE `tbl_menu_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -76,9 +102,9 @@ DROP TABLE IF EXISTS `tbl_permission`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tbl_permission` (
-  `permsiion_id` int(50) NOT NULL,
-  `permsiion_name` varchar(45) NOT NULL,
-  PRIMARY KEY (`permsiion_id`,`permsiion_name`)
+  `permission_id` int(50) NOT NULL,
+  `permission_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`permission_id`,`permission_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -88,6 +114,7 @@ CREATE TABLE `tbl_permission` (
 
 LOCK TABLES `tbl_permission` WRITE;
 /*!40000 ALTER TABLE `tbl_permission` DISABLE KEYS */;
+INSERT INTO `tbl_permission` VALUES (1,'Cleaning'),(2,'Network');
 /*!40000 ALTER TABLE `tbl_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,9 +126,10 @@ DROP TABLE IF EXISTS `tbl_permission_admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tbl_permission_admin` (
+  `permission_admin_id` int(50) NOT NULL,
   `admin_id` int(50) NOT NULL,
   `permission_id` int(50) NOT NULL,
-  PRIMARY KEY (`admin_id`,`permission_id`)
+  PRIMARY KEY (`permission_admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -111,6 +139,7 @@ CREATE TABLE `tbl_permission_admin` (
 
 LOCK TABLES `tbl_permission_admin` WRITE;
 /*!40000 ALTER TABLE `tbl_permission_admin` DISABLE KEYS */;
+INSERT INTO `tbl_permission_admin` VALUES (1,2,1),(2,1,2);
 /*!40000 ALTER TABLE `tbl_permission_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,6 +163,7 @@ CREATE TABLE `tbl_role` (
 
 LOCK TABLES `tbl_role` WRITE;
 /*!40000 ALTER TABLE `tbl_role` DISABLE KEYS */;
+INSERT INTO `tbl_role` VALUES (1,'a'),(2,'b'),(3,'c');
 /*!40000 ALTER TABLE `tbl_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,9 +175,10 @@ DROP TABLE IF EXISTS `tbl_role_admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tbl_role_admin` (
+  `role_admin_id` int(50) NOT NULL,
   `admin_id` int(50) NOT NULL,
   `role_id` int(50) NOT NULL,
-  PRIMARY KEY (`role_id`,`admin_id`)
+  PRIMARY KEY (`role_admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -157,6 +188,7 @@ CREATE TABLE `tbl_role_admin` (
 
 LOCK TABLES `tbl_role_admin` WRITE;
 /*!40000 ALTER TABLE `tbl_role_admin` DISABLE KEYS */;
+INSERT INTO `tbl_role_admin` VALUES (1,2,3),(2,2,1);
 /*!40000 ALTER TABLE `tbl_role_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -169,4 +201,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-21 13:19:21
+-- Dump completed on 2020-01-23 10:58:05
