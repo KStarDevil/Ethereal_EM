@@ -48,5 +48,123 @@ namespace Ethereal_EM
             }
             return jsondata;
         }
+
+        [HttpPost("SaveNotification", Name = "SaveNotification")]
+        public dynamic SaveNotification([FromBody] Newtonsoft.Json.Linq.JObject param)
+        {
+            string save ="";
+            try
+            {
+                dynamic dd = param;
+                int id = dd.notification_id;
+
+                string notification_user_photo = dd.notification_user_photo;
+                int admin_id =dd.admin_id;
+                string notification_title =dd.notification_title;
+                string notification_description= dd.notification_description;
+                int notification_status =dd.notification_status;
+                DateTime notification_date =dd.notification_date;
+                string notification_route=dd.notification_route;
+                int post_id =dd.post_id;
+
+                tbl_notification noti = new tbl_notification();
+
+                noti.notification_id = id;
+                noti.notification_user_photo=notification_user_photo;
+                noti.admin_id = admin_id;
+                noti.notification_title=notification_title;
+                noti.notification_description=notification_description;
+                noti.notification_status=notification_status;
+                noti.notification_date=notification_date;
+                noti.notification_route = notification_route;
+                noti.post_id = post_id;
+
+                _repositoryWrapper.Notification_Repository.Create(noti);
+            }catch(Exception ex)
+            {
+                save =ex.Message;
+            }
+            return save;
+        }
+
+        [HttpPost("UpdateNotification", Name = "UpdateNotification")]
+        public dynamic UpdateNotification([FromBody] Newtonsoft.Json.Linq.JObject param)
+        {
+            string update ="";
+            try
+            {
+                dynamic dd = param;
+                int id = dd.notification_id;
+
+                string notification_user_photo = dd.notification_user_photo;
+                int admin_id =dd.admin_id;
+                string notification_title =dd.notification_title;
+                string notification_description= dd.notification_description;
+                int notification_status =dd.notification_status;
+                DateTime notification_date =dd.notification_date;
+                string notification_route=dd.notification_route;
+                int post_id =dd.post_id;
+
+                dynamic noti =_repositoryWrapper.Notification_Repository.GetPermissionById(id);
+                // tbl_notification noti = new tbl_notification();
+
+                noti.notification_id = id;
+                noti.notification_user_photo=notification_user_photo;
+                noti.admin_id = admin_id;
+                noti.notification_title=notification_title;
+                noti.notification_description=notification_description;
+                noti.notification_status=notification_status;
+                noti.notification_date=notification_date;
+                noti.notification_route = notification_route;
+                noti.post_id = post_id;
+
+                _repositoryWrapper.Notification_Repository.Update(noti);
+            }catch(Exception ex)
+            {
+                update =ex.Message;
+            }
+            return update;
+        }
+        [HttpPost("DeleteNotification", Name = "DeleteNotification")]
+        public dynamic DeleteNotification([FromBody] Newtonsoft.Json.Linq.JObject param)
+        {
+            dynamic jsondata = null;
+            try
+            {
+                
+                string result = "Failed";
+                try
+                {
+                    dynamic dd = param;
+                    int id = dd.notification_id;
+
+                    string notification_user_photo = dd.notification_user_photo;
+                    int admin_id =dd.admin_id;
+                    string notification_title =dd.notification_title;
+                    string notification_description= dd.notification_description;
+                    int notification_status =dd.notification_status;
+                    DateTime notification_date =dd.notification_date;
+                    string notification_route=dd.notification_route;
+                    int post_id =dd.post_id;
+
+                  
+                    dynamic main = _repositoryWrapper.Notification_Repository.GetPermissionById(id);
+                    tbl_notification noti = main as tbl_notification;
+                    
+                    _repositoryWrapper.Notification_Repository.Delete(noti);
+                    result = "Delete Successfully";
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                jsondata = new { data = new { msg = ex.Message } };
+            }
+            return jsondata;
+        }
     }
 }

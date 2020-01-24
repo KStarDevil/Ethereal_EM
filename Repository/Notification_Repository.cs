@@ -23,5 +23,14 @@ namespace Ethereal_EM.Repository
                         ).ToList();
             return result;
         }
+        public dynamic GetPermissionById(int id)
+        {
+            var result = (from Notification in RepositoryContext.tbl_notifications
+                       where Notification.notification_id == id
+                       select Notification
+            ).FirstOrDefault();
+
+            return result;
+        }
     }
 }
