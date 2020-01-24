@@ -88,9 +88,12 @@ namespace Ethereal_EM
           public DbSet <tbl_permission_admin> tbl_permission_admin{get;set;}
           public DbSet <tbl_role_admin> tbl_role_admin{get;set;}
           public DbSet <tbl_menu_permission> tbl_menu_permission{get;set;}
+          public DbSet <tbl_notification> tbl_notifications{get;set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   
+            
+
             modelBuilder.Entity<hw_tb1_user>()
               .HasKey(c => new { c.id });
             //project
@@ -114,6 +117,9 @@ namespace Ethereal_EM
 
             modelBuilder.Entity<tbl_menu_permission>()
               .HasKey(c => new {c.menu_permission_id});
+
+            modelBuilder.Entity<tbl_notification>()
+              .HasKey(c=>new{c.notification_id});
             //project
             modelBuilder.Entity<hw_tb1_account>()
               .HasKey(c => new { c.name });

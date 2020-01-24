@@ -72,6 +72,20 @@ namespace Repository
         private IPermission_Admin_Repository _Permission_Admin_Repository;
         private IRole_Admin_Repository _Role_Admin_Repository;
         private IMenu_Permission_Repository _Menu_Permission_Repository;
+        private INotification_Repository _Notification_Repository;
+
+        public INotification_Repository Notification_Repository
+        {
+            get
+            {
+                if (_Notification_Repository == null)
+                {
+                    _Notification_Repository = new Notification_Repository(_repoContext);
+                }
+
+                return _Notification_Repository;
+            }
+        }
          public IMenu_Permission_Repository Menu_Permission_Repository
         {
             get
