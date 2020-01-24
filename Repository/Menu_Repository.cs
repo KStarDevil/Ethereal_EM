@@ -12,15 +12,16 @@ namespace Ethereal_EM.Repository
     {
         public Menu_Repository(AppDb reposityContext)
 
-        :base(reposityContext)
+        : base(reposityContext)
         {
         }
 
-        public dynamic GetMenu()
+        public List<tbl_menu> GetMenu()
         {
-            var result = (from menu in RepositoryContext.tbl_menu
-                            select menu
+            var result1 = (from menu in RepositoryContext.tbl_menu
+                           select menu
                         ).ToList();
+            List<tbl_menu> result = result1 as List<tbl_menu>;
             return result;
         }
     }

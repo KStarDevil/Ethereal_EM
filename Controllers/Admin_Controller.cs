@@ -24,25 +24,132 @@ namespace Ethereal_EM
         {
             _repositoryWrapper = RW;
         }
-        [HttpGet("GetAdmin", Name = "GetAdmin")]
-        public dynamic GetAdmin([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpGet("Get_Admin_Permission", Name = "Get_Admin_Permission")]
+        public dynamic Get_Admin_Permission([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic jsondata = null;
             try
             {
                 // dynamic dd = param;
                 // int id = dd.id;
-                dynamic mainQuery1 = _repositoryWrapper.Menu_Permission_Repository.GetMenuPermission();
-                dynamic mainQuery2 = _repositoryWrapper.Role_Admin_Repository.GetRoleAdmin();
-                dynamic mainQuery3 = _repositoryWrapper.Permission_Admin_Repository.GetPermissionAdmin();
+                dynamic mainQuery1 = _repositoryWrapper.Permission_Admin_Repository.GetPermissionAdmin();
+            
                 if (mainQuery1 == null)
                 {
                     jsondata = new { data = new { mainQuery1 = "No Data" } };
                 }
                 else
                 {
-                    jsondata = new { data = new { mainQuery1,mainQuery2,mainQuery3 } };
+                    jsondata = new { data = new { mainQuery1} };
                 }
+            }
+            catch (Exception ex)
+            {
+                jsondata = new { data = new { msg = ex.Message } };
+            }
+            return jsondata;
+        }
+
+        [HttpPost("Save_Admin_Permission", Name = "Save_Admin_Permission")]
+        public dynamic Save_Admin_Permission([FromBody] Newtonsoft.Json.Linq.JObject param)
+        {
+            dynamic jsondata = null;
+            try
+            {
+                // dynamic dd = param;
+                // int id = dd.id;
+                string result = "Failed";
+                try
+                {
+                    dynamic dd = param;
+                    int adminid = dd.admin_id;
+                    int permissionid = dd.permission_id;
+
+                    tbl_permission_admin permisson_admin = new tbl_permission_admin();
+                    permisson_admin.admin_id = adminid;
+                    permisson_admin.permission_id = permissionid;
+                    _repositoryWrapper.Permission_Admin_Repository.Create(permisson_admin);
+                    result = "Save Successfully";
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                jsondata = new { data = new { msg = ex.Message } };
+            }
+            return jsondata;
+        }
+
+        [HttpPost("Update_Admin_Permission", Name = "Update_Admin_Permission")]
+        public dynamic Update_Admin_Permission([FromBody] Newtonsoft.Json.Linq.JObject param)
+        {
+            dynamic jsondata = null;
+            try
+            {
+                // dynamic dd = param;
+                // int id = dd.id;
+                string result = "Failed";
+                try
+                {
+                    dynamic dd = param;
+                    int adminid = dd.admin_id;
+                    int permission_admin_id = dd.permission_admin_id;
+                    int permissionid = dd.permission_id;
+
+                  
+                    dynamic main = _repositoryWrapper.Permission_Admin_Repository.GetPermissionAdminByID(permission_admin_id);
+                    tbl_permission_admin permisson_admin = main as tbl_permission_admin;
+                    permisson_admin.admin_id = adminid;
+                    permisson_admin.permission_admin_id = permission_admin_id;
+                    permisson_admin.permission_id = permissionid;
+                    _repositoryWrapper.Permission_Admin_Repository.Update(permisson_admin);
+                    result = "Update Successfully";
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                jsondata = new { data = new { msg = ex.Message } };
+            }
+            return jsondata;
+        }
+
+          [HttpPost("Delete_Admin_Permission", Name = "Delete_Admin_Permission")]
+        public dynamic Delete_Admin_Permission([FromBody] Newtonsoft.Json.Linq.JObject param)
+        {
+            dynamic jsondata = null;
+            try
+            {
+                // dynamic dd = param;
+                // int id = dd.id;
+                string result = "Failed";
+                try
+                {
+                    dynamic dd = param;
+                    int adminid = dd.admin_id;
+                    int permission_admin_id = dd.permission_admin_id;
+                    int permissionid = dd.permission_id;
+
+                  
+                    dynamic main = _repositoryWrapper.Permission_Admin_Repository.GetPermissionAdminByID(permission_admin_id);
+                    tbl_permission_admin permisson_admin = main as tbl_permission_admin;
+                  
+                    _repositoryWrapper.Permission_Admin_Repository.Delete(permisson_admin);
+                    result = "Delete Successfully";
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message;
+                }
+                return result;
             }
             catch (Exception ex)
             {

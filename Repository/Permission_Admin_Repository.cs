@@ -17,9 +17,18 @@ namespace Ethereal_EM.Repository
 
         public dynamic GetPermissionAdmin()
         {
-            var result =(from permissionadmin in RepositoryContext.tbl_permission_admin
-                        select permissionadmin
+            var result = (from permissionadmin in RepositoryContext.tbl_permission_admin
+                          select permissionadmin
                         ).ToList();
+            return result;
+        }
+
+        public dynamic GetPermissionAdminByID(int id)
+        {
+            var result = (from permissionadmin in RepositoryContext.tbl_permission_admin
+                          where permissionadmin.permission_admin_id == id
+                          select permissionadmin
+                        ).FirstOrDefault();
             return result;
         }
     }
