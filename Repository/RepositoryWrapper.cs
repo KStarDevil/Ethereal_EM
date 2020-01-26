@@ -73,7 +73,33 @@ namespace Repository
         private IRole_Admin_Repository _Role_Admin_Repository;
         private IMenu_Permission_Repository _Menu_Permission_Repository;
         private INotification_Repository _Notification_Repository;
+        private IPost_Repository _Post_Repository;
+        private IPost_Detail_Repository _Post_Detail_Repository;
 
+        public IPost_Detail_Repository Post_Detail_Repository
+        {
+            get
+            {
+                if (_Post_Detail_Repository == null)
+                {
+                    _Post_Detail_Repository = new Post_Detail_Repository(_repoContext);
+                }
+
+                return _Post_Detail_Repository;
+            }
+        }
+        public IPost_Repository Post_Repository
+        {
+            get
+            {
+                if (_Post_Repository == null)
+                {
+                    _Post_Repository = new Post_Repository(_repoContext);
+                }
+
+                return _Post_Repository;
+            }
+        }
         public INotification_Repository Notification_Repository
         {
             get
