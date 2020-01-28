@@ -32,14 +32,14 @@ namespace Ethereal_EM
             {
                 // dynamic dd = param;
                 // int id = dd.id;
-                dynamic mainQuery = _repositoryWrapper.Notification_Repository.GetNotification();
-                if (mainQuery == null)
+                dynamic PostNotification = _repositoryWrapper.Notification_Repository.GetNotification();
+                if (PostNotification == null)
                 {
-                    jsondata = new { data = new { mainQuery = "No Data" } };
+                    jsondata = new { data = new { status = 0, Message = "No Data" } };
                 }
                 else
                 {
-                    jsondata = new { data = new { mainQuery } };
+                    jsondata = new { data = new { status = 1, Message = "Success", PostNotification } };
                 }
             }
             catch (Exception ex)

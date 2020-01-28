@@ -32,15 +32,15 @@ namespace Ethereal_EM
             {
                 // dynamic dd = param;
                 // int id = dd.id;
-                dynamic mainQuery1 = _repositoryWrapper.Permission_Admin_Repository.GetPermissionAdmin();
+                dynamic PostAdmin = _repositoryWrapper.Permission_Admin_Repository.GetPermissionAdmin();
             
-                if (mainQuery1 == null)
+                if (PostAdmin == null)
                 {
-                    jsondata = new { data = new { mainQuery1 = "No Data" } };
+                    jsondata = new { data = new { status = 0, Message = "No Data" } };
                 }
                 else
                 {
-                    jsondata = new { data = new { mainQuery1} };
+                    jsondata = new { data = new { status = 1, Message = "Success", PostAdmin } };
                 }
             }
             catch (Exception ex)

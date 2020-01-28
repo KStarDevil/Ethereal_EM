@@ -58,11 +58,11 @@ namespace Ethereal_EM
                 dynamic mainQuery = _repositoryWrapper.Menu_Repository.GetMenu();
                 if (Verified_menu == null)
                 {
-                    jsondata = new { data = new { Verified_menu = "No Data" } };
+                    jsondata = new { data = new { status = 0, Message = "No Data" } };
                 }
                 else
                 {
-                    jsondata = new { data = new { Verified_menu } };
+                    jsondata = new { data = new { status = 1, Message = "Success", Verified_menu } };
                 }
             }
             catch (Exception ex)
