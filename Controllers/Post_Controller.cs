@@ -37,11 +37,11 @@ namespace Ethereal_EM
                 dynamic PostDetailData = _repositoryWrapper.Post_Detail_Repository.GetPostDetail();
                 if (PostData == null && PostDetailData == null)
                 {
-                    jsondata = new { data = new { status = 0, Message = "No Data" } };
+                    jsondata = new {  status = 0, Message = "No Data", data = new { PostData } };
                 }
                 else
                 {
-                    jsondata = new { data = new { status = 1, Message = "Success", PostData, PostDetailData } };
+                    jsondata = new { status = 1, Message = "Success", data = new { PostData } };
                 }
             }
             catch (Exception ex)
@@ -54,7 +54,7 @@ namespace Ethereal_EM
         [HttpPost("SavePost", Name = "SavePost")]
         public dynamic SavePost([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            string save = "";
+            dynamic save = null;
             try
             {
                 dynamic dd = param;
@@ -87,7 +87,7 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                save = ex.Message;
+                save = new { status = 0, Message =ex.Message};
             }
             save = "Save Successfully";
             return save;
@@ -96,7 +96,8 @@ namespace Ethereal_EM
         [HttpPost("UpdatePost", Name = "UpdatePost")]
         public dynamic UpdatePost([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            string update = "";
+            
+            dynamic update = null;
             try
             {
                 dynamic dd = param;
@@ -131,7 +132,7 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                update = ex.Message;
+                update = new { status = 0, Message =ex.Message};
             }
             update = "Update Successfully";
             return update;
@@ -144,7 +145,7 @@ namespace Ethereal_EM
             try
             {
 
-                string result = "Failed";
+                dynamic result = null;
                 try
                 {
                     dynamic dd = param;
@@ -171,13 +172,13 @@ namespace Ethereal_EM
                 }
                 catch (Exception ex)
                 {
-                    result = ex.Message;
+                    jsondata = new { status = 0, Message =ex.Message};
                 }
                 return result;
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+                jsondata = new { status = 0, Message =ex.Message};
             }
             return jsondata;
         }

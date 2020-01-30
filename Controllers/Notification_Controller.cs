@@ -35,11 +35,11 @@ namespace Ethereal_EM
                 dynamic PostNotification = _repositoryWrapper.Notification_Repository.GetNotification();
                 if (PostNotification == null)
                 {
-                    jsondata = new { data = new { status = 0, Message = "No Data" } };
+                    jsondata = new {  status = 0, Message = "No Data", data = new { PostNotification } };
                 }
                 else
                 {
-                    jsondata = new { data = new { status = 1, Message = "Success", PostNotification } };
+                    jsondata = new { status = 1, Message = "Success", data = new { PostNotification } };
                 }
             }
             catch (Exception ex)
@@ -52,7 +52,7 @@ namespace Ethereal_EM
         [HttpPost("SaveNotification", Name = "SaveNotification")]
         public dynamic SaveNotification([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            string save ="";
+            dynamic save =null;
             try
             {
                 dynamic dd = param;
@@ -82,7 +82,7 @@ namespace Ethereal_EM
                 _repositoryWrapper.Notification_Repository.Create(noti);
             }catch(Exception ex)
             {
-                save =ex.Message;
+                save = new { status = 0, Message =ex.Message};
             }
             return save;
         }
@@ -90,7 +90,7 @@ namespace Ethereal_EM
         [HttpPost("UpdateNotification", Name = "UpdateNotification")]
         public dynamic UpdateNotification([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            string update ="";
+            dynamic update =null;
             try
             {
                 dynamic dd = param;
@@ -121,7 +121,7 @@ namespace Ethereal_EM
                 _repositoryWrapper.Notification_Repository.Update(noti);
             }catch(Exception ex)
             {
-                update =ex.Message;
+                update = new { status = 0, Message =ex.Message};
             }
             return update;
         }
@@ -132,7 +132,7 @@ namespace Ethereal_EM
             try
             {
                 
-                string result = "Failed";
+                dynamic result = null;
                 try
                 {
                     dynamic dd = param;
@@ -156,7 +156,7 @@ namespace Ethereal_EM
                 }
                 catch (Exception ex)
                 {
-                    result = ex.Message;
+                    result = new { data = new { msg = ex.Message } };
                 }
                 return result;
             }

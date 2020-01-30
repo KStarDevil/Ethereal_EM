@@ -36,11 +36,11 @@ namespace Ethereal_EM
             
                 if (PostAdmin == null)
                 {
-                    jsondata = new { data = new { status = 0, Message = "No Data" } };
+                    jsondata = new {  status = 0, Message = "No Data", data = new { PostAdmin } };
                 }
                 else
                 {
-                    jsondata = new { data = new { status = 1, Message = "Success", PostAdmin } };
+                    jsondata = new { status = 1, Message = "Success", data = new { PostAdmin } };
                 }
             }
             catch (Exception ex)
@@ -58,7 +58,7 @@ namespace Ethereal_EM
             {
                 // dynamic dd = param;
                 // int id = dd.id;
-                string result = "Failed";
+                dynamic result = null;
                 try
                 {
                     dynamic dd = param;
@@ -73,13 +73,13 @@ namespace Ethereal_EM
                 }
                 catch (Exception ex)
                 {
-                    result = ex.Message;
+                    result = new { status = 0, data = new { msg = ex.Message } };
                 }
                 return result;
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+                jsondata = new {status = 0, data = new { msg = ex.Message } };
             }
             return jsondata;
         }
@@ -92,7 +92,7 @@ namespace Ethereal_EM
             {
                 // dynamic dd = param;
                 // int id = dd.id;
-                string result = "Failed";
+                dynamic result = null;
                 try
                 {
                     dynamic dd = param;
@@ -111,13 +111,13 @@ namespace Ethereal_EM
                 }
                 catch (Exception ex)
                 {
-                    result = ex.Message;
+                    result = new { status = 0, data = new { msg = ex.Message } };
                 }
                 return result;
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+                jsondata = new { status = 0,data = new { msg = ex.Message } };
             }
             return jsondata;
         }
@@ -130,7 +130,7 @@ namespace Ethereal_EM
             {
                 // dynamic dd = param;
                 // int id = dd.id;
-                string result = "Failed";
+                dynamic result = null;
                 try
                 {
                     dynamic dd = param;
@@ -147,13 +147,13 @@ namespace Ethereal_EM
                 }
                 catch (Exception ex)
                 {
-                    result = ex.Message;
+                   result = new { status = 0, data = new { msg = ex.Message } };
                 }
                 return result;
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+                jsondata = new { status = 0, data = new { msg = ex.Message } };
             }
             return jsondata;
         }
