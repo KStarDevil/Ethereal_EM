@@ -23,5 +23,14 @@ namespace Ethereal_EM.Repository
                         ).ToList();
             return result;
         }
+
+        public dynamic GetRoleAdminById(int id)
+        {
+            var result =(from roleadmin in RepositoryContext.tbl_role_admin
+                        where roleadmin.role_admin_id == id
+                        select roleadmin
+                        ).FirstOrDefault();
+            return result;
+        }
     }
 }

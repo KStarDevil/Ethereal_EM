@@ -23,5 +23,14 @@ namespace Ethereal_EM.Repository
                         ).ToList();
             return result;
         }
+
+        public dynamic GetMenuPermissionById(int id)
+        {
+            var result =(from menupermission in RepositoryContext.tbl_menu_permission
+                        where menupermission.menu_permission_id == id
+                        select menupermission
+                        ).FirstOrDefault();
+            return result;
+        }
     }
 }

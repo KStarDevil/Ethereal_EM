@@ -17,22 +17,22 @@ using System.IO.Compression;
 namespace Ethereal_EM
 {
     [Route("api/[controller]")]
-    public class Admin_Controller : BaseController
+    public class Role_Controller : BaseController
     {
         private IRepositoryWrapper _repositoryWrapper;
-        public Admin_Controller(IRepositoryWrapper RW)
+        public Role_Controller(IRepositoryWrapper RW)
         {
             _repositoryWrapper = RW;
         }
-        [HttpGet("Get_Admin", Name = "Get_Admin")]
-        public dynamic Get_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpGet("Get_Role", Name = "Get_Role")]
+        public dynamic Get_Role([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic jsondata = null;
             try
             {
                 // dynamic dd = param;
                 // int id = dd.id;
-                dynamic PostAdmin = _repositoryWrapper.Admin_Repository.GetAdmin();
+                dynamic PostAdmin = _repositoryWrapper.Role_Repository.GetAllRole();
             
                 if (PostAdmin == null)
                 {
@@ -50,8 +50,8 @@ namespace Ethereal_EM
             return jsondata;
         }
 
-        [HttpPost("Save_Admin", Name = "Save_Admin")]
-        public dynamic Save_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpPost("Save_Role", Name = "Save_Role")]
+        public dynamic Save_Role([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic jsondata = null;
             try
@@ -62,19 +62,17 @@ namespace Ethereal_EM
                 try
                 {
                     dynamic dd = param;
-                    int admin_id = dd.admin_id;
-                    string admin_name = dd.admin_name;
-                    string admin_password = dd.admin_password;
-                    string admin_photo = dd.admin_photo;
+                    int role_id = dd.role_id;
 
-                    tbAdmin admin = new tbAdmin();
+                    string role_name = dd.role_name;
+                    
 
-                    admin.admin_id = admin_id;
-                    admin.admin_name = admin_name;
-                    admin.admin_password= admin_password;
-                    admin.admin_photo=admin_photo;
+                    tbl_role role = new tbl_role();
 
-                    _repositoryWrapper.Admin_Repository.Create(admin);
+                    role.role_id = role_id;
+                    role.role_name = role_name;
+
+                    _repositoryWrapper.Role_Repository.Create(role);
                     result =  new { status = 1, data = new { msg ="Save Successfully" } };
                 }
                 catch (Exception ex)
@@ -90,33 +88,29 @@ namespace Ethereal_EM
             return jsondata;
         }
 
-        [HttpPost("Update_Admin", Name = "Update_Admin")]
-        public dynamic Update_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpPost("Update_Role", Name = "Update_Role")]
+        public dynamic Update_Role([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic jsondata = null;
             try
             {
-                // dynamic dd = param;
-                // int id = dd.id;
+                
                 dynamic result = null;
                 try
                 {
                     dynamic dd = param;
-                    int admin_id = dd.admin_id;
-                    string admin_name = dd.admin_name;
-                    string admin_password = dd.admin_password;
-                    string admin_photo = dd.admin_photo;
+                    int role_id = dd.role_id;
+
+                    string role_name = dd.role_name;
 
                   
-                    dynamic main = _repositoryWrapper.Admin_Repository.GetAdminbyid(admin_id);
-                    tbAdmin admin = main as tbAdmin;
+                    dynamic main = _repositoryWrapper.Role_Repository.GetRolebyid(role_id);
+                    tbl_role role = main as tbl_role;
 
-                    admin.admin_id = admin_id;
-                    admin.admin_name = admin_name;
-                    admin.admin_password= admin_password;
-                    admin.admin_photo=admin_photo;
+                    role.role_id = role_id;
+                    role.role_name = role_name;
                     
-                    _repositoryWrapper.Admin_Repository.Update(admin);
+                    _repositoryWrapper.Role_Repository.Update(role);
                     result =  new { status = 1, data = new { msg = "Update Successfully" } };
                 }
                 catch (Exception ex)
@@ -132,8 +126,8 @@ namespace Ethereal_EM
             return jsondata;
         }
 
-          [HttpPost("Delete_Admin", Name = "Delete_Admin")]
-        public dynamic Delete_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
+          [HttpPost("Delete_Role", Name = "Delete_Role")]
+        public dynamic Delete_Role([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic jsondata = null;
             try
@@ -144,16 +138,15 @@ namespace Ethereal_EM
                 try
                 {
                     dynamic dd = param;
-                    int admin_id = dd.admin_id;
-                    string admin_name = dd.admin_name;
-                    string admin_password = dd.admin_password;
-                    string admin_photo = dd.admin_photo;
+                    int role_id = dd.role_id;
+
+                    string role_name = dd.role_name;
 
                   
-                    dynamic main = _repositoryWrapper.Admin_Repository.GetAdminbyid(admin_id);
-                    tbAdmin admin = main as tbAdmin;
+                    dynamic main = _repositoryWrapper.Role_Repository.GetRolebyid(role_id);
+                    tbl_role role = main as tbl_role;
                   
-                    _repositoryWrapper.Admin_Repository.Delete(admin);
+                    _repositoryWrapper.Role_Repository.Delete(role);
                     result =  new { status = 1, data = new { msg = "Delete Successfully" } };
                 }
                 catch (Exception ex)

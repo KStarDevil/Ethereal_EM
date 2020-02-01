@@ -63,6 +63,8 @@ namespace Ethereal_EM.Repository
         INotification_Repository Notification_Repository{get;}
         IPost_Repository Post_Repository{get;}
         IPost_Detail_Repository Post_Detail_Repository{get;}
+        ICategory_Repository Category_Repository{get;}
+        IPost_Category_Repository Post_Category_Repository{get;}
         //////Template Place Holder/////
     }
 }

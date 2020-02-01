@@ -89,7 +89,7 @@ namespace Ethereal_EM
             {
                 save = new { status = 0, Message = ex.Message };
             }
-            save = "Save Successfully";
+            save = new { status = 1, Message = "Save Successfully" };
             return save;
         }
 
@@ -134,7 +134,7 @@ namespace Ethereal_EM
             {
                 update = new { status = 0, Message = ex.Message };
             }
-            update = "Update Successfully";
+            update = new { status = 1, Message = "Update Successfully" };
             return update;
         }
 
@@ -170,7 +170,7 @@ namespace Ethereal_EM
 
 
 
-                    result = "Delete Successfully";
+                    result =  new { status = 0, Message = "Delete Successfully" };
                 }
                 catch (Exception ex)
                 {

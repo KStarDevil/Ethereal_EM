@@ -75,7 +75,33 @@ namespace Repository
         private INotification_Repository _Notification_Repository;
         private IPost_Repository _Post_Repository;
         private IPost_Detail_Repository _Post_Detail_Repository;
+        private ICategory_Repository _Category_Repository;
+        private IPost_Category_Repository _Post_Category_Repository;
 
+        public IPost_Category_Repository Post_Category_Repository
+        {
+            get
+            {
+                if (_Post_Category_Repository == null)
+                {
+                    _Post_Category_Repository = new Post_Category_Repository(_repoContext);
+                }
+
+                return _Post_Category_Repository;
+            }
+        }
+        public ICategory_Repository Category_Repository
+        {
+            get
+            {
+                if (_Category_Repository == null)
+                {
+                    _Category_Repository = new Category_Repository(_repoContext);
+                }
+
+                return _Category_Repository;
+            }
+        }
         public IPost_Detail_Repository Post_Detail_Repository
         {
             get

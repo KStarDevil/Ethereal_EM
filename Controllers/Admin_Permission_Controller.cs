@@ -17,22 +17,22 @@ using System.IO.Compression;
 namespace Ethereal_EM
 {
     [Route("api/[controller]")]
-    public class Admin_Controller : BaseController
+    public class Admin_Permission_Controller : BaseController
     {
         private IRepositoryWrapper _repositoryWrapper;
-        public Admin_Controller(IRepositoryWrapper RW)
+        public Admin_Permission_Controller(IRepositoryWrapper RW)
         {
             _repositoryWrapper = RW;
         }
-        [HttpGet("Get_Admin", Name = "Get_Admin")]
-        public dynamic Get_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpGet("Get_Admin_Permission", Name = "Get_Admin_Permission")]
+        public dynamic Get_Admin_Permission([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic jsondata = null;
             try
             {
                 // dynamic dd = param;
                 // int id = dd.id;
-                dynamic PostAdmin = _repositoryWrapper.Admin_Repository.GetAdmin();
+                dynamic PostAdmin = _repositoryWrapper.Permission_Admin_Repository.GetPermissionAdmin();
             
                 if (PostAdmin == null)
                 {
@@ -50,8 +50,8 @@ namespace Ethereal_EM
             return jsondata;
         }
 
-        [HttpPost("Save_Admin", Name = "Save_Admin")]
-        public dynamic Save_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpPost("Save_Admin_Permission", Name = "Save_Admin_Permission")]
+        public dynamic Save_Admin_Permission([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic jsondata = null;
             try
@@ -62,20 +62,14 @@ namespace Ethereal_EM
                 try
                 {
                     dynamic dd = param;
-                    int admin_id = dd.admin_id;
-                    string admin_name = dd.admin_name;
-                    string admin_password = dd.admin_password;
-                    string admin_photo = dd.admin_photo;
+                    int adminid = dd.admin_id;
+                    int permissionid = dd.permission_id;
 
-                    tbAdmin admin = new tbAdmin();
-
-                    admin.admin_id = admin_id;
-                    admin.admin_name = admin_name;
-                    admin.admin_password= admin_password;
-                    admin.admin_photo=admin_photo;
-
-                    _repositoryWrapper.Admin_Repository.Create(admin);
-                    result =  new { status = 1, data = new { msg ="Save Successfully" } };
+                    tbl_permission_admin permisson_admin = new tbl_permission_admin();
+                    permisson_admin.admin_id = adminid;
+                    permisson_admin.permission_id = permissionid;
+                    _repositoryWrapper.Permission_Admin_Repository.Create(permisson_admin);
+                    result = "Save Successfully";
                 }
                 catch (Exception ex)
                 {
@@ -90,8 +84,8 @@ namespace Ethereal_EM
             return jsondata;
         }
 
-        [HttpPost("Update_Admin", Name = "Update_Admin")]
-        public dynamic Update_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpPost("Update_Admin_Permission", Name = "Update_Admin_Permission")]
+        public dynamic Update_Admin_Permission([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic jsondata = null;
             try
@@ -102,22 +96,18 @@ namespace Ethereal_EM
                 try
                 {
                     dynamic dd = param;
-                    int admin_id = dd.admin_id;
-                    string admin_name = dd.admin_name;
-                    string admin_password = dd.admin_password;
-                    string admin_photo = dd.admin_photo;
+                    int adminid = dd.admin_id;
+                    int permission_admin_id = dd.permission_admin_id;
+                    int permissionid = dd.permission_id;
 
                   
-                    dynamic main = _repositoryWrapper.Admin_Repository.GetAdminbyid(admin_id);
-                    tbAdmin admin = main as tbAdmin;
-
-                    admin.admin_id = admin_id;
-                    admin.admin_name = admin_name;
-                    admin.admin_password= admin_password;
-                    admin.admin_photo=admin_photo;
-                    
-                    _repositoryWrapper.Admin_Repository.Update(admin);
-                    result =  new { status = 1, data = new { msg = "Update Successfully" } };
+                    dynamic main = _repositoryWrapper.Permission_Admin_Repository.GetPermissionAdminByID(permission_admin_id);
+                    tbl_permission_admin permisson_admin = main as tbl_permission_admin;
+                    permisson_admin.admin_id = adminid;
+                    permisson_admin.permission_admin_id = permission_admin_id;
+                    permisson_admin.permission_id = permissionid;
+                    _repositoryWrapper.Permission_Admin_Repository.Update(permisson_admin);
+                    result = "Update Successfully";
                 }
                 catch (Exception ex)
                 {
@@ -132,8 +122,8 @@ namespace Ethereal_EM
             return jsondata;
         }
 
-          [HttpPost("Delete_Admin", Name = "Delete_Admin")]
-        public dynamic Delete_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
+          [HttpPost("Delete_Admin_Permission", Name = "Delete_Admin_Permission")]
+        public dynamic Delete_Admin_Permission([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic jsondata = null;
             try
@@ -144,17 +134,16 @@ namespace Ethereal_EM
                 try
                 {
                     dynamic dd = param;
-                    int admin_id = dd.admin_id;
-                    string admin_name = dd.admin_name;
-                    string admin_password = dd.admin_password;
-                    string admin_photo = dd.admin_photo;
+                    int adminid = dd.admin_id;
+                    int permission_admin_id = dd.permission_admin_id;
+                    int permissionid = dd.permission_id;
 
                   
-                    dynamic main = _repositoryWrapper.Admin_Repository.GetAdminbyid(admin_id);
-                    tbAdmin admin = main as tbAdmin;
+                    dynamic main = _repositoryWrapper.Permission_Admin_Repository.GetPermissionAdminByID(permission_admin_id);
+                    tbl_permission_admin permisson_admin = main as tbl_permission_admin;
                   
-                    _repositoryWrapper.Admin_Repository.Delete(admin);
-                    result =  new { status = 1, data = new { msg = "Delete Successfully" } };
+                    _repositoryWrapper.Permission_Admin_Repository.Delete(permisson_admin);
+                    result = "Delete Successfully";
                 }
                 catch (Exception ex)
                 {

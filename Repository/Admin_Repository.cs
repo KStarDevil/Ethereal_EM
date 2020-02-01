@@ -16,10 +16,19 @@ namespace Ethereal_EM.Repository
         {
         }
 
+        public dynamic GetAdmin()
+        {
+            var result = (from admin in RepositoryContext.tbAdmin
+                            
+                            select admin
+                        ).ToList();
+            return result;
+        }
+
         public dynamic GetAdminbyid(int id)
         {
             var result = (from admin in RepositoryContext.tbAdmin
-                            where admin.admin_id.Equals(id)
+                            where admin.admin_id== id
                             select admin
                         ).FirstOrDefault();
             return result;
