@@ -37,7 +37,7 @@ namespace Ethereal_EM
                 dynamic PostDetailData = _repositoryWrapper.Post_Detail_Repository.GetPostDetail();
                 if (PostData == null && PostDetailData == null)
                 {
-                    jsondata = new {  status = 0, Message = "No Data", data = new { PostData } };
+                    jsondata = new { status = 0, Message = "No Data", data = new { PostData } };
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                save = new { status = 0, Message =ex.Message};
+                save = new { status = 0, Message = ex.Message };
             }
             save = "Save Successfully";
             return save;
@@ -96,7 +96,7 @@ namespace Ethereal_EM
         [HttpPost("UpdatePost", Name = "UpdatePost")]
         public dynamic UpdatePost([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            
+
             dynamic update = null;
             try
             {
@@ -132,7 +132,7 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                update = new { status = 0, Message =ex.Message};
+                update = new { status = 0, Message = ex.Message };
             }
             update = "Update Successfully";
             return update;
@@ -159,26 +159,28 @@ namespace Ethereal_EM
                     int post_detail_id = dd.post_detail_id;
                     string photo = dd.photo;
 
-
                     dynamic main1 = _repositoryWrapper.Post_Repository.GetPostByID(id);
                     tbl_post p = main1 as tbl_post;
-
-                    dynamic main2 = _repositoryWrapper.Post_Detail_Repository.GetPostDetailByID(post_detail_id);
-                    tbl_post_detail pd = main2 as tbl_post_detail;
-
                     _repositoryWrapper.Post_Repository.Delete(p);
-                    _repositoryWrapper.Post_Detail_Repository.Delete(pd);
+                    List<Post_Detail_Repository> main2 = _repositoryWrapper.Post_Detail_Repository.GetPostDetailByPostID(id);
+                    foreach (var item in main2)
+                    {
+                        _repositoryWrapper.Post_Detail_Repository.Delete(item);
+                    };
+
+
+
                     result = "Delete Successfully";
                 }
                 catch (Exception ex)
                 {
-                    jsondata = new { status = 0, Message =ex.Message};
+                    jsondata = new { status = 0, Message = ex.Message };
                 }
                 return result;
             }
             catch (Exception ex)
             {
-                jsondata = new { status = 0, Message =ex.Message};
+                jsondata = new { status = 0, Message = ex.Message };
             }
             return jsondata;
         }

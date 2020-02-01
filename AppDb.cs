@@ -91,11 +91,12 @@ namespace Ethereal_EM
           public DbSet <tbl_notification> tbl_notifications{get;set;}
           public DbSet <tbl_post> tbl_post{get;set;}
           public DbSet <tbl_post_detail>tbl_post_detail{get;set;}
+          public DbSet <tbl_category>tbl_category{get;set;}
+          public DbSet <tbl_post_category>tbl_post_category{get;set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   
             
-
             modelBuilder.Entity<hw_tb1_user>()
               .HasKey(c => new { c.id });
             //project
@@ -128,6 +129,12 @@ namespace Ethereal_EM
             
             modelBuilder.Entity<tbl_post_detail>()
               .HasKey(c=>new{c.post_detail_id});
+
+            modelBuilder.Entity<tbl_category>()
+              .HasKey(c => new { c.category_id});
+
+            modelBuilder.Entity<tbl_post_category>()
+              .HasKey(c => new { c.post_category_id });
             //project
             modelBuilder.Entity<hw_tb1_account>()
               .HasKey(c => new { c.name });

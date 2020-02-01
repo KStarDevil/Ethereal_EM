@@ -84,6 +84,7 @@ namespace Ethereal_EM
             {
                 save = new { status = 0, Message =ex.Message};
             }
+            save = "Save Successfully";
             return save;
         }
 
@@ -123,6 +124,7 @@ namespace Ethereal_EM
             {
                 update = new { status = 0, Message =ex.Message};
             }
+            update = "Update Successfully";
             return update;
         }
         [HttpPost("DeleteNotification", Name = "DeleteNotification")]

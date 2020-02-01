@@ -6,5 +6,7 @@ namespace Ethereal_EM.Repository
     {
         dynamic GetPostDetailByID(int id);
         dynamic GetPostDetail();
+
+        dynamic GetPostDetailByPostID(int id);
     }
 }

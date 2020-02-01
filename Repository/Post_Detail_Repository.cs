@@ -33,5 +33,14 @@ namespace Ethereal_EM.Repository
                             ).FirstOrDefault();
             return result;
         }
+
+        public dynamic GetPostDetailByPostID(int id)
+        {
+            var result = (from postdetail in RepositoryContext.tbl_post_detail
+                            where postdetail.post_id == id
+                            select postdetail
+                            ).ToList();
+            return result;
+        }
     }
 }
