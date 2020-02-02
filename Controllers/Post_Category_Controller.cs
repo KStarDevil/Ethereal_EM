@@ -9,10 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Ethereal_EM.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Kendo.Mvc.UI;
+using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
 using System.Security.Cryptography;
 using System.IO;
 using System.IO.Compression;
+using Newtonsoft.Json;
 
 namespace Ethereal_EM
 {
@@ -48,6 +50,34 @@ namespace Ethereal_EM
             return jsondata;
         }
 
+        [HttpGet("FilterPostCategory", Name = "FilterPostCategory")]
+        public dynamic FilterPostCategory([FromBody] Newtonsoft.Json.Linq.JObject param)
+        {
+            dynamic jsondata = null;
+            dynamic cat = param;
+            int[] category_id = cat.category_id.ToObject<int[]>();
+            int filter_method = cat.filter_method;
+
+            try
+            {
+                dynamic PostData = _repositoryWrapper.Post_Category_Repository.GetPostByCategoryID(category_id, filter_method);
+
+                if (PostData == null)
+                {
+                    jsondata = new { status = 0, Message = "No Data", data = new { PostData } };
+                }
+                else
+                {
+                    jsondata = new { status = 1, Message = "Success", data = new { PostData } };
+                }
+            }
+            catch (Exception ex)
+            {
+                jsondata = new { data = new { msg = ex.Message } };
+            }
+            return jsondata;
+        }
+
         [HttpPost("SavePostCategory", Name = "SavePostCategory")]
         public dynamic SaveCategory([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
@@ -55,13 +85,9 @@ namespace Ethereal_EM
             try
             {
                 dynamic dd = param;
-                int post_category_id = dd.post_category_id;
-                int category_id = dd.category_id;
+                string category_id = dd.category_id;
                 int post_id = dd.post_id;
-
                 tbl_post_category c = new tbl_post_category();
-
-                c.post_category_id = post_category_id;
                 c.category_id = category_id;
                 c.post_id = post_id;
 
@@ -83,18 +109,16 @@ namespace Ethereal_EM
             try
             {
                 dynamic dd = param;
-                int post_category_id = dd.post_category_id;
-                int category_id = dd.category_id;
+                string category_id = dd.category_id;
                 int post_id = dd.post_id;
 
                 // tbl_category c = new tbl_category();
-                dynamic c = _repositoryWrapper.Post_Category_Repository.GetPostCategoryID(post_category_id);
+                dynamic c = _repositoryWrapper.Post_Category_Repository.GetPostByPostID(post_id);
+                tbl_post_category category = c as tbl_post_category;
+                category.category_id = category_id;
+                category.post_id = post_id;
 
-                c.post_category_id = post_category_id;
-                c.category_id = category_id;
-                c.post_id = post_id;
-
-                _repositoryWrapper.Post_Category_Repository.Update(c);
+                _repositoryWrapper.Post_Category_Repository.Update(category);
 
             }
             catch (Exception ex)
@@ -112,14 +136,11 @@ namespace Ethereal_EM
             try
             {
                 dynamic dd = param;
-                int post_category_id = dd.post_category_id;
-                int category_id = dd.category_id;
+                string category_id = dd.category_id;
                 int post_id = dd.post_id;
 
                 // tbl_category c = new tbl_category();
-                dynamic c = _repositoryWrapper.Post_Category_Repository.GetPostCategoryID(post_category_id);
-
-                c.post_category_id = post_category_id;
+                dynamic c = _repositoryWrapper.Post_Category_Repository.GetPostByPostID(post_id);
                 c.category_id = category_id;
                 c.post_id = post_id;
 

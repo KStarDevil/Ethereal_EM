@@ -6,7 +6,7 @@ namespace Ethereal_EM
     public class tbl_post_category : BaseModel
     {
         public int post_category_id {get;set;}
-        public int category_id {get;set;}
+        public string category_id {get;set;}
         public int post_id {get;set;}
 
     }
