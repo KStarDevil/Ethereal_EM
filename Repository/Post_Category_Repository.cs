@@ -35,21 +35,24 @@ namespace Ethereal_EM.Repository
             return result;
         }
 
-        public dynamic GetPostByCategoryID(int[] id, int filter_method)
+        public dynamic GetPostByCategoryID(int[] id, int filter_method, string search_text)
         {
             // filter_method 
+            // 0 = Plain Text Search
             // 1 = Exact,
             // 2 = Include,
             // 3 = Except
-            List<dynamic> mini_result = new List<dynamic>();
+            List<tbl_post_category> mini_result = new List<tbl_post_category>();
             dynamic result = null;
+            List<tbl_post_category> before_data = new List<tbl_post_category>();
+            List<tbl_post> after_data = new List<tbl_post>();
             if (filter_method == 1)
             {
                 string category_string = string.Join(",", id);
-                result = (from postcategory in RepositoryContext.tbl_post_category
-                          where postcategory.category_id.Equals(category_string)
-                          select postcategory
-                            ).ToList();
+                before_data = (from postcategory in RepositoryContext.tbl_post_category
+                               where postcategory.category_id.Equals(category_string)
+                               select postcategory
+                            ).Distinct().ToList();
             }
             else if (filter_method == 2)
             {
@@ -64,9 +67,36 @@ namespace Ethereal_EM.Repository
                         mini_result.Add(item1);
                     }
                 }
-                result = mini_result.Distinct().ToList();
+                before_data = mini_result.Distinct().ToList();
             }
+            if (filter_method == 0)
+            {
 
+                result = (from post in RepositoryContext.tbl_post
+                          where post.content_text.Contains(search_text)
+                          select post).Distinct().ToList();
+            }
+            else
+            {
+                foreach (var item in before_data)
+                {
+                    var data = (from post in RepositoryContext.tbl_post
+                                where post.post_id == item.post_id
+                                select post).FirstOrDefault();
+                    after_data.Add(data);
+                }
+                if (String.IsNullOrEmpty(search_text))
+                {
+                    result = after_data;
+                }
+                else
+                {
+                    result = (from post in after_data
+                              where post.content_text.Contains(search_text)
+                              select post
+                              ).Distinct().ToList();
+                }
+            }
             return result;
         }
     }

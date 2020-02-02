@@ -207,11 +207,11 @@ DROP TABLE IF EXISTS `tbl_post`;
 CREATE TABLE `tbl_post` (
   `post_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_photo` varchar(255) DEFAULT NULL,
-  `uploader_id` int(11) DEFAULT NULL,
+  `uploader_id` int(11) NOT NULL DEFAULT '0',
   `content_text` text,
-  `photo_count` int(11) DEFAULT NULL,
+  `photo_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,6 +220,7 @@ CREATE TABLE `tbl_post` (
 
 LOCK TABLES `tbl_post` WRITE;
 /*!40000 ALTER TABLE `tbl_post` DISABLE KEYS */;
+INSERT INTO `tbl_post` VALUES (1,NULL,0,'King',0),(2,NULL,0,'Kilo',0),(3,NULL,0,'Data',0),(4,NULL,0,'mega',0),(5,NULL,0,'mia',0);
 /*!40000 ALTER TABLE `tbl_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,7 +246,7 @@ CREATE TABLE `tbl_post_category` (
 
 LOCK TABLES `tbl_post_category` WRITE;
 /*!40000 ALTER TABLE `tbl_post_category` DISABLE KEYS */;
-INSERT INTO `tbl_post_category` VALUES (1,'1,2,3,4,5',1),(3,'2,3,4,6,7',3),(4,'2,4,5,6,7',2),(5,'2,5,7,8',4);
+INSERT INTO `tbl_post_category` VALUES (1,'1,2,3,4,5',1),(2,'2,5,7,8',4),(3,'2,3,4,6,7',3),(4,'2,4,5,6,7',2);
 /*!40000 ALTER TABLE `tbl_post_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-02 14:24:50
+-- Dump completed on 2020-02-02 16:01:07

@@ -55,12 +55,30 @@ namespace Ethereal_EM
         {
             dynamic jsondata = null;
             dynamic cat = param;
-            int[] category_id = cat.category_id.ToObject<int[]>();
-            int filter_method = cat.filter_method;
-
             try
             {
-                dynamic PostData = _repositoryWrapper.Post_Category_Repository.GetPostByCategoryID(category_id, filter_method);
+                int filter_method = cat.filter_method;
+                int[] category_id = new int[] { };
+                string search_text = cat.search_text;
+                if (String.IsNullOrEmpty(search_text))
+                {
+                    search_text = string.Empty;
+                }
+                if (cat.category_id != null)
+                {
+                    category_id = cat.category_id.ToObject<int[]>();
+                    if (category_id.Contains(0))
+                    {
+                        filter_method = 0;
+                    }
+                }
+                else
+                {
+                    category_id = new int[0];
+                    filter_method = 0;
+                }
+
+                dynamic PostData = _repositoryWrapper.Post_Category_Repository.GetPostByCategoryID(category_id, filter_method, search_text);
 
                 if (PostData == null)
                 {
@@ -68,7 +86,15 @@ namespace Ethereal_EM
                 }
                 else
                 {
-                    jsondata = new { status = 1, Message = "Success", data = new { PostData } };
+                    if (PostData.Count == 0)
+                    {
+                        jsondata = new { status = 0, Message = "No Data", data = new { PostData } };
+                    }
+                    else
+                    {
+                        jsondata = new { status = 1, Message = "Success", data = new { PostData } };
+                    }
+
                 }
             }
             catch (Exception ex)
