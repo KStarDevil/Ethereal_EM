@@ -11,6 +11,8 @@ namespace Ethereal_EM
         public string content_text { get; set; }
         public int photo_count { get; set; }
         public DateTime created_date { get; set; }
+        public int status {get; set;}
+        public DateTime approved_rejected_date { get; set; }
 
     }
 }

@@ -180,5 +180,44 @@ namespace Ethereal_EM
             return result;
 
         }
+
+        [HttpPost("Approve", Name = "Approve")]
+        public dynamic Approve([FromBody] Newtonsoft.Json.Linq.JObject param)
+        {
+
+            dynamic update = null;
+            try
+            {
+                dynamic dd = param;
+                int id = dd.post_id;
+
+                
+
+                int status = dd.status;         
+                DateTime approved_rejected_date = DateTime.Now;
+
+                // tbl_post p = new tbl_post();
+                // tbl_post_detail pd = new tbl_post_detail();
+                dynamic p = _repositoryWrapper.Post_Repository.GetPostByID(id);
+                
+
+                p.post_id = id;
+                
+                
+                p.status = status;
+                p.approved_rejected_date = approved_rejected_date;
+                
+
+                _repositoryWrapper.Post_Repository.Update(p);
+                
+                update = new { status = 1, Message = "Approve Successfully" };
+            }
+            catch (Exception ex)
+            {
+                update = new { status = 0, Message = ex.Message };
+            }
+
+            return update;
+        }
     }
 }
