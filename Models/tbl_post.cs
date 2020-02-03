@@ -10,6 +10,7 @@ namespace Ethereal_EM
         public int uploader_id {get; set;}
         public string content_text { get; set; }
         public int photo_count { get; set; }
+        public DateTime created_date { get; set; }
 
     }
 }

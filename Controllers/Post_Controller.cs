@@ -64,9 +64,11 @@ namespace Ethereal_EM
                 int uploader_id = dd.uploader_id;
                 string content_text = dd.content_text;
                 int photo_count = dd.photo_count;
-
+                DateTime created_date =DateTime.Now;
+                
                 int post_detail_id = dd.post_detail_id;
                 string photo = dd.photo;
+                
 
                 tbl_post p = new tbl_post();
                 tbl_post_detail pd = new tbl_post_detail();
@@ -76,6 +78,7 @@ namespace Ethereal_EM
                 p.uploader_id = uploader_id;
                 p.content_text = content_text;
                 p.photo_count = photo_count;
+                p.created_date = created_date;
 
                 pd.post_detail_id = post_detail_id;
                 pd.post_id = id;
@@ -110,6 +113,7 @@ namespace Ethereal_EM
 
                 int post_detail_id = dd.post_detail_id;
                 string photo = dd.photo;
+                DateTime created_date =DateTime.Now;
 
                 // tbl_post p = new tbl_post();
                 // tbl_post_detail pd = new tbl_post_detail();
@@ -121,6 +125,7 @@ namespace Ethereal_EM
                 p.uploader_id = uploader_id;
                 p.content_text = content_text;
                 p.photo_count = photo_count;
+                p.created_date =created_date; 
 
                 pd.post_detail_id = post_detail_id;
                 pd.post_id = id;
@@ -155,6 +160,7 @@ namespace Ethereal_EM
                     int uploader_id = dd.uploader_id;
                     string content_text = dd.content_text;
                     int photo_count = dd.photo_count;
+                    DateTime created_date =DateTime.Now;
 
                     int post_detail_id = dd.post_detail_id;
                     string photo = dd.photo;
@@ -167,9 +173,6 @@ namespace Ethereal_EM
                     {
                         _repositoryWrapper.Post_Detail_Repository.Delete(item);
                     };
-
-
-
                     result =  new { status = 0, Message = "Delete Successfully" };
                 }
                 catch (Exception ex)
