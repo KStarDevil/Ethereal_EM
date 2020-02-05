@@ -66,13 +66,13 @@ namespace Ethereal_EM
                 mp.permission_id = permission_id;
 
                 _repositoryWrapper.Menu_Permission_Repository.Create(mp);
-
+                save = new { status = 1, Message = "Save Successfully" };
             }
             catch (Exception ex)
             {
                 save = new { status = 0, Message = ex.Message };
             }
-            save = new { status = 1, Message = "Save Successfully" };
+            
             return save;
         }
 
@@ -96,13 +96,13 @@ namespace Ethereal_EM
                 mp.permission_id = permission_id;
 
                 _repositoryWrapper.Menu_Permission_Repository.Update(mp);
-
+                Update = new { status = 1, Message = "Update Successfully" };
             }
             catch (Exception ex)
             {
                 Update = new { status = 0, Message = ex.Message };
             }
-            Update = new { status = 1, Message = "Update Successfully" };
+            
             return Update;
         }
 
@@ -122,13 +122,13 @@ namespace Ethereal_EM
                 tbl_menu_permission mp = main as tbl_menu_permission;
 
                 _repositoryWrapper.Menu_Permission_Repository.Delete(mp);
-
+                Delete = new { status = 1, Message = "Delete Successfully" };
             }
             catch (Exception ex)
             {
                 Delete = new { status = 0, Message = ex.Message };
             }
-            Delete = new { status = 1, Message = "Delete Successfully" };
+            
             return Delete;
         }
     }

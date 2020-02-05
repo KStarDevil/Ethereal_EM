@@ -66,13 +66,13 @@ namespace Ethereal_EM
                 c.category_name = category_name;
 
                 _repositoryWrapper.Category_Repository.Create(c);
-
+                save = new { status = 1, Message = "Save Successfully" };
             }
             catch (Exception ex)
             {
                 save = new { status = 0, Message = ex.Message };
             }
-            save = new { status = 1, Message = "Save Successfully" };
+            
             return save;
         }
 
@@ -95,13 +95,13 @@ namespace Ethereal_EM
                 c.category_name = category_name;
 
                 _repositoryWrapper.Category_Repository.Update(c);
-
+                Update = new { status = 1, Message = "Update Successfully" };
             }
             catch (Exception ex)
             {
                 Update = new { status = 0, Message = ex.Message };
             }
-            Update = new { status = 1, Message = "Update Successfully" };
+            
             return Update;
         }
 
@@ -124,13 +124,13 @@ namespace Ethereal_EM
                 c.category_name = category_name;
 
                 _repositoryWrapper.Category_Repository.Delete(c);
-
+                Delete = new { status = 1, Message = "Delete Successfully" };
             }
             catch (Exception ex)
             {
                 Delete = new { status = 0, Message = ex.Message };
             }
-            Delete = new { status = 1, Message = "Delete Successfully" };
+            
             return Delete;
         }
     }

@@ -80,11 +80,12 @@ namespace Ethereal_EM
                 noti.post_id = post_id;
 
                 _repositoryWrapper.Notification_Repository.Create(noti);
+                save = "Save Successfully";
             }catch(Exception ex)
             {
                 save = new { status = 0, Message =ex.Message};
             }
-            save = "Save Successfully";
+            
             return save;
         }
 
@@ -120,19 +121,18 @@ namespace Ethereal_EM
                 noti.post_id = post_id;
 
                 _repositoryWrapper.Notification_Repository.Update(noti);
+                update = "Update Successfully";
             }catch(Exception ex)
             {
                 update = new { status = 0, Message =ex.Message};
             }
-            update = "Update Successfully";
+            
             return update;
         }
         [HttpPost("DeleteNotification", Name = "DeleteNotification")]
         public dynamic DeleteNotification([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
-            try
-            {
+           
                 
                 dynamic result = null;
                 try
@@ -161,12 +161,7 @@ namespace Ethereal_EM
                     result = new { data = new { msg = ex.Message } };
                 }
                 return result;
-            }
-            catch (Exception ex)
-            {
-                jsondata = new { data = new { msg = ex.Message } };
-            }
-            return jsondata;
+            
         }
     }
 }

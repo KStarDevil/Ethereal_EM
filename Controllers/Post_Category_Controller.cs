@@ -130,13 +130,14 @@ namespace Ethereal_EM
                 c.post_id = post_id;
 
                 _repositoryWrapper.Post_Category_Repository.Create(c);
+                save = new { status = 1, Message = "Save Successfully" };
 
             }
             catch (Exception ex)
             {
                 save = new { status = 0, Message = ex.Message };
             }
-            save = new { status = 1, Message = "Save Successfully" };
+            
             return save;
         }
 
@@ -157,13 +158,13 @@ namespace Ethereal_EM
                 category.post_id = post_id;
 
                 _repositoryWrapper.Post_Category_Repository.Update(category);
-
+                Update = new { status = 1, Message = "Update Successfully" };
             }
             catch (Exception ex)
             {
                 Update = new { status = 0, Message = ex.Message };
             }
-            Update = new { status = 1, Message = "Update Successfully" };
+            
             return Update;
         }
 
@@ -183,13 +184,13 @@ namespace Ethereal_EM
                 c.post_id = post_id;
 
                 _repositoryWrapper.Post_Category_Repository.Delete(c);
-
+                Delete = new { status = 1, Message = "Delete Successfully" };
             }
             catch (Exception ex)
             {
                 Delete = new { status = 0, Message = ex.Message };
             }
-            Delete = new { status = 1, Message = "Delete Successfully" };
+            
             return Delete;
         }
     }

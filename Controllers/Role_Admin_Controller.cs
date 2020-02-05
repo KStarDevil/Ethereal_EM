@@ -66,13 +66,13 @@ namespace Ethereal_EM
                 c.role_id = role_id;
 
                 _repositoryWrapper.Role_Admin_Repository.Create(c);
-
+                save = new { status = 1, Message = "Save Successfully" };
             }
             catch (Exception ex)
             {
                 save = new { status = 0, Message = ex.Message };
             }
-            save = new { status = 1, Message = "Save Successfully" };
+            
             return save;
         }
 
@@ -96,13 +96,13 @@ namespace Ethereal_EM
                 rm.role_id = role_id;
 
                 _repositoryWrapper.Role_Admin_Repository.Update(rm);
-
+                Update = new { status = 1, Message = "Update Successfully" };
             }
             catch (Exception ex)
             {
                 Update = new { status = 0, Message = ex.Message };
             }
-            Update = new { status = 1, Message = "Update Successfully" };
+            
             return Update;
         }
 
@@ -122,13 +122,13 @@ namespace Ethereal_EM
                 tbl_role_admin rm = main as tbl_role_admin;
 
                 _repositoryWrapper.Role_Admin_Repository.Delete(rm);
-
+                Delete = new { status = 1, Message = "Delete Successfully" };
             }
             catch (Exception ex)
             {
                 Delete = new { status = 0, Message = ex.Message };
             }
-            Delete = new { status = 1, Message = "Delete Successfully" };
+            
             return Delete;
         }
     }
