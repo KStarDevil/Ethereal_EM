@@ -135,9 +135,7 @@ namespace Ethereal_EM
           [HttpPost("Delete_Admin", Name = "Delete_Admin")]
         public dynamic Delete_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
-            try
-            {
+            
                 // dynamic dd = param;
                 // int id = dd.id;
                 dynamic result = null;
@@ -161,12 +159,7 @@ namespace Ethereal_EM
                    result = new { status = 0, data = new { msg = ex.Message } };
                 }
                 return result;
-            }
-            catch (Exception ex)
-            {
-                jsondata = new { status = 0, data = new { msg = ex.Message } };
-            }
-            return jsondata;
+            
         }
     }
 }

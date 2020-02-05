@@ -78,18 +78,7 @@ namespace Repository
         private ICategory_Repository _Category_Repository;
         private IPost_Category_Repository _Post_Category_Repository;
         private IUser_Repository _User_Repository;
-        public IPost_Category_Repository Post_Category_Repository
-        {
-            get
-            {
-                if (_Post_Category_Repository == null)
-                {
-                    _Post_Category_Repository = new Post_Category_Repository(_repoContext);
-                }
 
-                return _Post_Category_Repository;
-            }
-        }
         public IUser_Repository User_Repository
         {
             get
@@ -102,6 +91,19 @@ namespace Repository
                 return _User_Repository;
             }
         }
+        public IPost_Category_Repository Post_Category_Repository
+        {
+            get
+            {
+                if (_Post_Category_Repository == null)
+                {
+                    _Post_Category_Repository = new Post_Category_Repository(_repoContext);
+                }
+
+                return _Post_Category_Repository;
+            }
+        }
+        
         public ICategory_Repository Category_Repository
         {
             get

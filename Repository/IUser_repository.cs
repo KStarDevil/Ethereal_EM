@@ -1,5 +1,10 @@
 namespace Ethereal_EM.Repository
 {
+    internal interface IUser_repository
+    {
+    }
+}namespace Ethereal_EM.Repository
+{
     public interface IUser_Repository:IRepositoryBase<tbl_user>
     {
         dynamic Get_user_by_id(int id);
