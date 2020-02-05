@@ -1,4 +1,5 @@
 {
-    
-    "server.urls":"http://localhost:8000/"
+    //192.168.2.101
+    //"http://localhost:8100/"//;http://172.31.15.157:8000/"
+    "server.urls":"http://localhost:8000/;http://192.168.2.101:8000/"
 }
