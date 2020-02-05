@@ -77,7 +77,7 @@ namespace Repository
         private IPost_Detail_Repository _Post_Detail_Repository;
         private ICategory_Repository _Category_Repository;
         private IPost_Category_Repository _Post_Category_Repository;
-
+        private IUser_Repository _User_Repository;
         public IPost_Category_Repository Post_Category_Repository
         {
             get
@@ -88,6 +88,18 @@ namespace Repository
                 }
 
                 return _Post_Category_Repository;
+            }
+        }
+        public IUser_Repository User_Repository
+        {
+            get
+            {
+                if (_User_Repository == null)
+                {
+                    _User_Repository = new User_Repository(_repoContext);
+                }
+
+                return _User_Repository;
             }
         }
         public ICategory_Repository Category_Repository
@@ -138,7 +150,7 @@ namespace Repository
                 return _Notification_Repository;
             }
         }
-         public IMenu_Permission_Repository Menu_Permission_Repository
+        public IMenu_Permission_Repository Menu_Permission_Repository
         {
             get
             {
@@ -150,7 +162,7 @@ namespace Repository
                 return _Menu_Permission_Repository;
             }
         }
-         public IRole_Admin_Repository Role_Admin_Repository
+        public IRole_Admin_Repository Role_Admin_Repository
         {
             get
             {
@@ -163,7 +175,7 @@ namespace Repository
             }
         }
 
-         public IPermission_Admin_Repository Permission_Admin_Repository
+        public IPermission_Admin_Repository Permission_Admin_Repository
         {
             get
             {
@@ -175,7 +187,7 @@ namespace Repository
                 return _Permission_Admin_Repository;
             }
         }
-         public IMenu_Repository Menu_Repository
+        public IMenu_Repository Menu_Repository
         {
             get
             {
@@ -187,8 +199,8 @@ namespace Repository
                 return _Menu_Repository;
             }
         }
-           
-         public IRole_Repository Role_Repository
+
+        public IRole_Repository Role_Repository
         {
             get
             {
@@ -200,7 +212,7 @@ namespace Repository
                 return _Role_Repository;
             }
         }
-         public IPermission_Repository Permission_Repository
+        public IPermission_Repository Permission_Repository
         {
             get
             {
@@ -212,7 +224,7 @@ namespace Repository
                 return _Permission_Repository;
             }
         }
-         public IAdmin_Repository Admin_Repository
+        public IAdmin_Repository Admin_Repository
         {
             get
             {
@@ -224,8 +236,8 @@ namespace Repository
                 return _Admin_Repository;
             }
         }
-        
-         public Ihw_tb1_userRepo hw_tb1_userRepo
+
+        public Ihw_tb1_userRepo hw_tb1_userRepo
         {
             get
             {
@@ -238,7 +250,7 @@ namespace Repository
             }
         }
 
-         public Ihw_tb1_accountRepo hw_tb1_accountRepo
+        public Ihw_tb1_accountRepo hw_tb1_accountRepo
         {
             get
             {
@@ -251,7 +263,7 @@ namespace Repository
             }
         }
 
-         public Ihw_tb1_registerRepo hw_tb1_registerRepo
+        public Ihw_tb1_registerRepo hw_tb1_registerRepo
         {
             get
             {
@@ -263,7 +275,7 @@ namespace Repository
                 return _hw_tb1_registerRepo;
             }
         }
-         public ICarRepo Car
+        public ICarRepo Car
         {
             get
             {
@@ -276,7 +288,7 @@ namespace Repository
             }
         }
 
-         public IFileSavingRepo FileSavingRepo
+        public IFileSavingRepo FileSavingRepo
         {
             get
             {
@@ -302,7 +314,7 @@ namespace Repository
             }
         }
 
-        
+
 
         public Iposition_repo Position
         {
@@ -738,7 +750,7 @@ namespace Repository
                 return _User;
             }
         }
-        
+
         public IDepartmentrepo Department
 
         {
@@ -767,9 +779,9 @@ namespace Repository
             }
         }
 
-        
 
-        
+
+
 
         public IAdmin_Admin_Repo AdminAdmin
 
@@ -784,7 +796,7 @@ namespace Repository
                 return _AdminAdmin;
             }
         }
-         public IAdmin_Permission_Repo AdminPermission
+        public IAdmin_Permission_Repo AdminPermission
 
         {
             get
@@ -798,7 +810,7 @@ namespace Repository
             }
         }
 
-         public IAdmin_Relationship_Repo AdminRelationship
+        public IAdmin_Relationship_Repo AdminRelationship
 
         {
             get
@@ -812,7 +824,7 @@ namespace Repository
             }
         }
 
-        
+
     }
 
 

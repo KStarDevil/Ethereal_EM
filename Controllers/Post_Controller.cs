@@ -46,7 +46,7 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+                 jsondata = new { status = 0, Message = ex.Message};
             }
             return jsondata;
         }

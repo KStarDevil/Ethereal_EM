@@ -14,7 +14,7 @@ namespace Ethereal_EM.Repository
         IEmailTemplateRepository EmailTemplate { get; }
         IAdminMenuUrlRepository AdminMenuUrl { get; }
         IAdminlevelmenuRepository Adminlevelmenu { get; }
-        ICarRepo Car{get;}
+        ICarRepo Car { get; }
         IAdminMenuRepository AdminMenu { get; }
         IAdmin_Admin_Repo AdminAdmin { get; }
         IAdmin_Permission_Repo AdminPermission { get; }
@@ -22,12 +22,12 @@ namespace Ethereal_EM.Repository
         IGeneralRepository General { get; }
         IUserRepository User { get; }
         ICompanyRepository Company { get; }
-        IDepartmentrepo Department {get;}
-        IAccountRepo Account {get;}
+        IDepartmentrepo Department { get; }
+        IAccountRepo Account { get; }
         IProductRepository Product { get; }
         ICustomerRepository Customer { get; }
         IStorageChargesRepository StorageCharges { get; }
-        Iposition_repo Position {get;}
+        Iposition_repo Position { get; }
         ITankRepository Tank { get; }
         IBowserRepository Bowser { get; }
         ICompartmentRepository Compartment { get; }
@@ -46,25 +46,26 @@ namespace Ethereal_EM.Repository
         IMovementTransactionRepository MovementTransaction { get; }
         IDemandOrderRepository DemandOrder { get; }
         IDemandOrderDetailRepository DemandOrderDetail { get; }
-        ISaleInvoiceRepository SaleInvoice{get;}
+        ISaleInvoiceRepository SaleInvoice { get; }
 
-        ICashReceiptRepository CashReceipt {get;}
-        IFileSavingRepo FileSavingRepo{get;}
-        Ihw_tb1_userRepo hw_tb1_userRepo{get;}
-        Ihw_tb1_accountRepo hw_tb1_accountRepo{get;}
-        Ihw_tb1_registerRepo hw_tb1_registerRepo{get;}
-        IAdmin_Repository Admin_Repository{get;}
-        IPermission_Repository Permission_Repository{get;}
-        IRole_Repository Role_Repository{get;}
-        IMenu_Repository Menu_Repository{get;}
-        IPermission_Admin_Repository Permission_Admin_Repository{get;}
-        IRole_Admin_Repository Role_Admin_Repository{get;}
-        IMenu_Permission_Repository Menu_Permission_Repository{get;}
-        INotification_Repository Notification_Repository{get;}
-        IPost_Repository Post_Repository{get;}
-        IPost_Detail_Repository Post_Detail_Repository{get;}
-        ICategory_Repository Category_Repository{get;}
-        IPost_Category_Repository Post_Category_Repository{get;}
+        ICashReceiptRepository CashReceipt { get; }
+        IFileSavingRepo FileSavingRepo { get; }
+        Ihw_tb1_userRepo hw_tb1_userRepo { get; }
+        Ihw_tb1_accountRepo hw_tb1_accountRepo { get; }
+        Ihw_tb1_registerRepo hw_tb1_registerRepo { get; }
+        IAdmin_Repository Admin_Repository { get; }
+        IPermission_Repository Permission_Repository { get; }
+        IRole_Repository Role_Repository { get; }
+        IMenu_Repository Menu_Repository { get; }
+        IPermission_Admin_Repository Permission_Admin_Repository { get; }
+        IRole_Admin_Repository Role_Admin_Repository { get; }
+        IMenu_Permission_Repository Menu_Permission_Repository { get; }
+        INotification_Repository Notification_Repository { get; }
+        IPost_Repository Post_Repository { get; }
+        IPost_Detail_Repository Post_Detail_Repository { get; }
+        ICategory_Repository Category_Repository { get; }
+        IPost_Category_Repository Post_Category_Repository { get; }
+        IUser_Repository User_Repository { get; }
         //////Template Place Holder/////
     }
 }
