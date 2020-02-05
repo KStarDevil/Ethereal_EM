@@ -60,6 +60,8 @@ namespace Ethereal_EM
                 int filter_method = cat.filter_method;
                 int[] category_id = new int[] { };
                 string search_text = cat.search_text;
+                int currentPage = cat.currentPage;
+                int rowsPerPage = cat.rowsPerPage;
                 if (String.IsNullOrEmpty(search_text))
                 {
                     search_text = string.Empty;
@@ -78,8 +80,18 @@ namespace Ethereal_EM
                     filter_method = 0;
                 }
 
-                dynamic PostData = _repositoryWrapper.Post_Category_Repository.GetPostByCategoryID(category_id, filter_method, search_text);
-
+                dynamic objresult = _repositoryWrapper.Post_Category_Repository.GetPostByCategoryID(category_id, filter_method, search_text);
+                IEnumerable<dynamic> tamplist = PaginatedList<dynamic>.Create(objresult, currentPage, rowsPerPage);
+                var PostData = tamplist.Select(x =>
+                                new
+                                {
+                                    post_id = x.post_id,
+                                    user_photo = x.user_photo,
+                                    uploader_id = x.uploader_id,
+                                    content_text = x.content_text,
+                                    photo_count = x.photo_count,
+                                    created_date = x.created_date
+                                }).ToList();
                 if (PostData == null)
                 {
                     jsondata = new { status = 0, Message = "No Data", data = new { PostData } };

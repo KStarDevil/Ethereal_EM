@@ -74,7 +74,7 @@ namespace Ethereal_EM.Repository
 
                 result = (from post in RepositoryContext.tbl_post
                           where post.content_text.Contains(search_text)
-                          select post).Distinct().ToList();
+                          select post).Distinct();
             }
             else
             {
@@ -87,16 +87,18 @@ namespace Ethereal_EM.Repository
                 }
                 if (String.IsNullOrEmpty(search_text))
                 {
-                    result = after_data;
+                    result = (from post in after_data 
+                              select post
+                              ).AsQueryable();
                 }
                 else
                 {
                     result = (from post in after_data
                               where post.content_text.Contains(search_text)
                               select post
-                              ).Distinct().ToList();
+                              ).Distinct().AsQueryable() ;
                 }
-            }
+            }   
             return result;
         }
     }
