@@ -16,8 +16,6 @@ namespace Ethereal_EM.Repository
         IAdminlevelmenuRepository Adminlevelmenu { get; }
         ICarRepo Car { get; }
         IAdminMenuRepository AdminMenu { get; }
-        IAdmin_Admin_Repo AdminAdmin { get; }
-        IAdmin_Permission_Repo AdminPermission { get; }
         IAdmin_Relationship_Repo AdminRelationship { get; }
         IGeneralRepository General { get; }
         IUserRepository User { get; }
@@ -57,7 +55,6 @@ namespace Ethereal_EM.Repository
         IPermission_Repository Permission_Repository { get; }
         IRole_Repository Role_Repository { get; }
         IMenu_Repository Menu_Repository { get; }
-        IPermission_Admin_Repository Permission_Admin_Repository { get; }
         IRole_Admin_Repository Role_Admin_Repository { get; }
         IMenu_Permission_Repository Menu_Permission_Repository { get; }
         INotification_Repository Notification_Repository { get; }
@@ -66,6 +63,7 @@ namespace Ethereal_EM.Repository
         ICategory_Repository Category_Repository { get; }
         IPost_Category_Repository Post_Category_Repository { get; }
         IUser_Repository User_Repository { get; }
+        IPermission_Role_Repository Permission_Role_Repository {get;}
         //////Template Place Holder/////
     }
 }

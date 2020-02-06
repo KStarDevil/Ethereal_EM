@@ -85,7 +85,7 @@ namespace Ethereal_EM
         public DbSet<tbl_role> tbl_role { get; set; }
         public DbSet<tbl_permission> tbl_permission { get; set; }
         public DbSet<tbl_menu> tbl_menu { get; set; }
-        public DbSet<tbl_permission_admin> tbl_permission_admin { get; set; }
+        public DbSet<tbl_permission_role> tbl_permission_role { get; set; }
         public DbSet<tbl_role_admin> tbl_role_admin { get; set; }
         public DbSet<tbl_menu_permission> tbl_menu_permission { get; set; }
         public DbSet<tbl_notification> tbl_notifications { get; set; }
@@ -115,8 +115,8 @@ namespace Ethereal_EM
             modelBuilder.Entity<tbl_menu>()
               .HasKey(c => new { c.menu_id });
 
-            modelBuilder.Entity<tbl_permission_admin>()
-              .HasKey(c => new { c.permission_admin_id });
+            modelBuilder.Entity<tbl_permission_role>()
+              .HasKey(c => new { c.permission_role_id });
 
             modelBuilder.Entity<tbl_role_admin>()
               .HasKey(c => new { c.role_admin_id });

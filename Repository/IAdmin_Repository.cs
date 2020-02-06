@@ -9,6 +9,5 @@ namespace Ethereal_EM.Repository
         dynamic GetAdmin();
         dynamic GetAdminbyid(int id);
         dynamic GetAdminRolebyid(int id);
-        dynamic GetAdminPermissionbyid(int id);
     }
 }

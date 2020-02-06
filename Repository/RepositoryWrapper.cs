@@ -55,8 +55,6 @@ namespace Repository
         private IDemandOrderDetailRepository _DemandOrderDetail;
         private ISaleInvoiceRepository _SaleInvoice;
         private ICashReceiptRepository _CashReceipt;
-        private IAdmin_Permission_Repo _AdminPermission;
-        private IAdmin_Admin_Repo _AdminAdmin;
         private IAdmin_Relationship_Repo _AdminRelationship;
         private ICarRepo _CarRepo;
 
@@ -69,7 +67,6 @@ namespace Repository
         private IPermission_Repository _Permission_Repository;
         private IRole_Repository _Role_Repository;
         private IMenu_Repository _Menu_Repository;
-        private IPermission_Admin_Repository _Permission_Admin_Repository;
         private IRole_Admin_Repository _Role_Admin_Repository;
         private IMenu_Permission_Repository _Menu_Permission_Repository;
         private INotification_Repository _Notification_Repository;
@@ -78,7 +75,20 @@ namespace Repository
         private ICategory_Repository _Category_Repository;
         private IPost_Category_Repository _Post_Category_Repository;
         private IUser_Repository _User_Repository;
+        private IPermission_Role_Repository _Permission_Role_Repository;
 
+        public IPermission_Role_Repository Permission_Role_Repository
+        {
+            get
+            {
+                if (_Permission_Role_Repository == null)
+                {
+                    _Permission_Role_Repository = new Permission_Role_Repository(_repoContext);
+                }
+
+                return _Permission_Role_Repository;
+            }
+        }
         public IUser_Repository User_Repository
         {
             get
@@ -103,7 +113,7 @@ namespace Repository
                 return _Post_Category_Repository;
             }
         }
-        
+
         public ICategory_Repository Category_Repository
         {
             get
@@ -177,18 +187,6 @@ namespace Repository
             }
         }
 
-        public IPermission_Admin_Repository Permission_Admin_Repository
-        {
-            get
-            {
-                if (_Permission_Admin_Repository == null)
-                {
-                    _Permission_Admin_Repository = new Permission_Admin_Repository(_repoContext);
-                }
-
-                return _Permission_Admin_Repository;
-            }
-        }
         public IMenu_Repository Menu_Repository
         {
             get
@@ -778,37 +776,6 @@ namespace Repository
                 }
 
                 return _Account;
-            }
-        }
-
-
-
-
-
-        public IAdmin_Admin_Repo AdminAdmin
-
-        {
-            get
-            {
-                if (_AdminAdmin == null)
-                {
-                    _AdminAdmin = new Admin_Admin_Repo(_repoContext);
-                }
-
-                return _AdminAdmin;
-            }
-        }
-        public IAdmin_Permission_Repo AdminPermission
-
-        {
-            get
-            {
-                if (_AdminPermission == null)
-                {
-                    _AdminPermission = new Admin_Permission_Repo(_repoContext);
-                }
-
-                return _AdminPermission;
             }
         }
 

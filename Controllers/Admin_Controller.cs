@@ -33,10 +33,10 @@ namespace Ethereal_EM
                 // dynamic dd = param;
                 // int id = dd.id;
                 dynamic PostAdmin = _repositoryWrapper.Admin_Repository.GetAdmin();
-            
+
                 if (PostAdmin == null)
                 {
-                    jsondata = new {  status = 0, Message = "No Data", data = new { PostAdmin } };
+                    jsondata = new { status = 0, Message = "No Data", data = new { PostAdmin } };
                 }
                 else
                 {
@@ -71,11 +71,11 @@ namespace Ethereal_EM
 
                     admin.admin_id = admin_id;
                     admin.admin_name = admin_name;
-                    admin.admin_password= admin_password;
-                    admin.admin_photo=admin_photo;
+                    admin.admin_password = admin_password;
+                    admin.admin_photo = admin_photo;
 
                     _repositoryWrapper.Admin_Repository.Create(admin);
-                    result =  new { status = 1, data = new { msg ="Save Successfully" } };
+                    result = new { status = 1, data = new { msg = "Save Successfully" } };
                 }
                 catch (Exception ex)
                 {
@@ -85,7 +85,7 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                jsondata = new {status = 0, data = new { msg = ex.Message } };
+                jsondata = new { status = 0, data = new { msg = ex.Message } };
             }
             return jsondata;
         }
@@ -107,17 +107,17 @@ namespace Ethereal_EM
                     string admin_password = dd.admin_password;
                     string admin_photo = dd.admin_photo;
 
-                  
+
                     dynamic main = _repositoryWrapper.Admin_Repository.GetAdminbyid(admin_id);
                     tbl_admin admin = main as tbl_admin;
 
                     admin.admin_id = admin_id;
                     admin.admin_name = admin_name;
-                    admin.admin_password= admin_password;
-                    admin.admin_photo=admin_photo;
-                    
+                    admin.admin_password = admin_password;
+                    admin.admin_photo = admin_photo;
+
                     _repositoryWrapper.Admin_Repository.Update(admin);
-                    result =  new { status = 1, data = new { msg = "Update Successfully" } };
+                    result = new { status = 1, data = new { msg = "Update Successfully" } };
                 }
                 catch (Exception ex)
                 {
@@ -127,39 +127,39 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                jsondata = new { status = 0,data = new { msg = ex.Message } };
+                jsondata = new { status = 0, data = new { msg = ex.Message } };
             }
             return jsondata;
         }
 
-          [HttpPost("Delete_Admin", Name = "Delete_Admin")]
+        [HttpPost("Delete_Admin", Name = "Delete_Admin")]
         public dynamic Delete_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            
-                // dynamic dd = param;
-                // int id = dd.id;
-                dynamic result = null;
-                try
-                {
-                    dynamic dd = param;
-                    int admin_id = dd.admin_id;
-                    string admin_name = dd.admin_name;
-                    string admin_password = dd.admin_password;
-                    string admin_photo = dd.admin_photo;
 
-                  
-                    dynamic main = _repositoryWrapper.Admin_Repository.GetAdminbyid(admin_id);
-                    tbl_admin admin = main as tbl_admin;
-                  
-                    _repositoryWrapper.Admin_Repository.Delete(admin);
-                    result =  new { status = 1, data = new { msg = "Delete Successfully" } };
-                }
-                catch (Exception ex)
-                {
-                   result = new { status = 0, data = new { msg = ex.Message } };
-                }
-                return result;
-            
+            // dynamic dd = param;
+            // int id = dd.id;
+            dynamic result = null;
+            try
+            {
+                dynamic dd = param;
+                int admin_id = dd.admin_id;
+                string admin_name = dd.admin_name;
+                string admin_password = dd.admin_password;
+                string admin_photo = dd.admin_photo;
+
+
+                dynamic main = _repositoryWrapper.Admin_Repository.GetAdminbyid(admin_id);
+                tbl_admin admin = main as tbl_admin;
+
+                _repositoryWrapper.Admin_Repository.Delete(admin);
+                result = new { status = 1, data = new { msg = "Delete Successfully" } };
+            }
+            catch (Exception ex)
+            {
+                result = new { status = 0, data = new { msg = ex.Message } };
+            }
+            return result;
+
         }
     }
 }

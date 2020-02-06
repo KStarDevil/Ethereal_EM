@@ -44,14 +44,6 @@ namespace Ethereal_EM.Repository
             return result;
         }
 
-        public dynamic GetAdminPermissionbyid(int id)
-        {
-            var result = (from admin in RepositoryContext.tbl_admin
-                            join Permission in RepositoryContext.tbl_permission_admin on admin.admin_id equals Permission.admin_id
-                            where admin.admin_id == id
-                            select admin
-                        ).FirstOrDefault();
-            return result;
-        }
+     
     }
 }
