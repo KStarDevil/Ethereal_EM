@@ -27,7 +27,7 @@ namespace Ethereal_EM
         [HttpGet("GetMenu", Name = "GetMenu")]
         public dynamic GetMenu([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
+            dynamic result = null;
             try
             {
                 // dynamic dd = param;
@@ -46,8 +46,9 @@ namespace Ethereal_EM
                         //     }
                         // }
                         List<tbl_menu> sub_menu = menulist.Where(x => x.sub_menu_id == item.menu_id).ToList();
-                        if(sub_menu.Count > 0){
-                             Verified_menu.Add(item);
+                        if (sub_menu.Count > 0)
+                        {
+                            Verified_menu.Add(item);
                         }
                         foreach (var item1 in sub_menu)
                         {
@@ -58,18 +59,18 @@ namespace Ethereal_EM
                 dynamic mainQuery = _repositoryWrapper.Menu_Repository.GetMenu();
                 if (Verified_menu == null)
                 {
-                    jsondata = new { data = new { status = 0, Message = "No Data" } };
+                    result = new { data = new { Status = 0, Message = "No Data", data = new { } } };
                 }
                 else
                 {
-                    jsondata = new { data = new { status = 1, Message = "Success", Verified_menu } };
+                    result = new { data = new { Status = 1, Message = "Success", data = new { Verified_menu } } };
                 }
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
         }
     }
 }

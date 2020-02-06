@@ -27,31 +27,31 @@ namespace Ethereal_EM
         [HttpGet("Get_Menu_Permission", Name = "Get_Menu_Permission")]
         public dynamic Get_Menu_Permission([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
+            dynamic result = null;
             try
             {
-                dynamic PostData = _repositoryWrapper.Menu_Permission_Repository.GetMenuPermission();
+                dynamic Post_Menu_Permission = _repositoryWrapper.Menu_Permission_Repository.GetMenuPermission();
 
-                if (PostData == null)
+                if (Post_Menu_Permission == null)
                 {
-                    jsondata = new { status = 0, Message = "No Data", data = new { PostData } };
+                    result = new { Status = 0, Message = "No Data", data = new { Post_Menu_Permission } };
                 }
                 else
                 {
-                    jsondata = new { status = 1, Message = "Success", data = new { PostData } };
+                    result = new { Status = 1, Message = "Success", data = new { Post_Menu_Permission } };
                 }
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
         }
 
         [HttpPost("Save_Menu_Permission", Name = "Save_Menu_Permission")]
         public dynamic Save_Menu_Permission([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic save = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -66,20 +66,21 @@ namespace Ethereal_EM
                 mp.permission_id = permission_id;
 
                 _repositoryWrapper.Menu_Permission_Repository.Create(mp);
-                save = new { status = 1, Message = "Save Successfully" };
+
+                result = new { Status = 1, Message = "Save Successfully",data = new { }  };
             }
             catch (Exception ex)
             {
-                save = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
             
-            return save;
+            return result;
         }
 
         [HttpPost("Update_Menu_Permission", Name = "Update_Menu_Permission")]
         public dynamic Update_Menu_Permission([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic Update = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -96,20 +97,20 @@ namespace Ethereal_EM
                 mp.permission_id = permission_id;
 
                 _repositoryWrapper.Menu_Permission_Repository.Update(mp);
-                Update = new { status = 1, Message = "Update Successfully" };
+                result = new { Status = 1, Message = "Update Successfully",data = new { }  };
             }
             catch (Exception ex)
             {
-                Update = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
             
-            return Update;
+            return result;
         }
 
         [HttpPost("Delete_Menu_Permission", Name = "Delete_Menu_Permission")]
         public dynamic Delete_Menu_Permission([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic Delete = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -122,14 +123,14 @@ namespace Ethereal_EM
                 tbl_menu_permission mp = main as tbl_menu_permission;
 
                 _repositoryWrapper.Menu_Permission_Repository.Delete(mp);
-                Delete = new { status = 1, Message = "Delete Successfully" };
+                result = new { Status = 1, Message = "Delete Successfully",data = new { }  };
             }
             catch (Exception ex)
             {
-                Delete = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
             
-            return Delete;
+            return result;
         }
     }
 }

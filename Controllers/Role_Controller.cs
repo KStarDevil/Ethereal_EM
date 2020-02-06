@@ -27,139 +27,119 @@ namespace Ethereal_EM
         [HttpGet("Get_Role", Name = "Get_Role")]
         public dynamic Get_Role([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
+            dynamic result = null;
             try
             {
                 // dynamic dd = param;
                 // int id = dd.id;
-                dynamic PostAdmin = _repositoryWrapper.Role_Repository.GetAllRole();
-            
-                if (PostAdmin == null)
+                dynamic Post_Role = _repositoryWrapper.Role_Repository.GetAllRole();
+
+                if (Post_Role == null)
                 {
-                    jsondata = new {  status = 0, Message = "No Data", data = new { PostAdmin } };
+                    result = new { Status = 0, Message = "No Data", data = new { Post_Role } };
                 }
                 else
                 {
-                    jsondata = new { status = 1, Message = "Success", data = new { PostAdmin } };
+                    result = new { Status = 1, Message = "Success", data = new { Post_Role } };
                 }
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
         }
 
         [HttpPost("Save_Role", Name = "Save_Role")]
         public dynamic Save_Role([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
+
+            // dynamic dd = param;
+            // int id = dd.id;
+            dynamic result = null;
             try
             {
-                // dynamic dd = param;
-                // int id = dd.id;
-                dynamic result = null;
-                try
-                {
-                    dynamic dd = param;
-                    int role_id = dd.role_id;
+                dynamic dd = param;
+                int role_id = dd.role_id;
 
-                    string role_name = dd.role_name;
-                    
+                string role_name = dd.role_name;
 
-                    tbl_role role = new tbl_role();
 
-                    role.role_id = role_id;
-                    role.role_name = role_name;
+                tbl_role role = new tbl_role();
 
-                    _repositoryWrapper.Role_Repository.Create(role);
-                    result =  new { status = 1, data = new { msg ="Save Successfully" } };
-                }
-                catch (Exception ex)
-                {
-                    result = new { status = 0, data = new { msg = ex.Message } };
-                }
-                return result;
+                role.role_id = role_id;
+                role.role_name = role_name;
+
+                _repositoryWrapper.Role_Repository.Create(role);
+                result = new { Status = 1, Message = "Save Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                jsondata = new {status = 0, data = new { msg = ex.Message } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
+
         }
 
         [HttpPost("Update_Role", Name = "Update_Role")]
         public dynamic Update_Role([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
+
+
+            dynamic result = null;
             try
             {
-                
-                dynamic result = null;
-                try
-                {
-                    dynamic dd = param;
-                    int role_id = dd.role_id;
+                dynamic dd = param;
+                int role_id = dd.role_id;
 
-                    string role_name = dd.role_name;
+                string role_name = dd.role_name;
 
-                  
-                    dynamic main = _repositoryWrapper.Role_Repository.GetRolebyid(role_id);
-                    tbl_role role = main as tbl_role;
 
-                    role.role_id = role_id;
-                    role.role_name = role_name;
-                    
-                    _repositoryWrapper.Role_Repository.Update(role);
-                    result =  new { status = 1, data = new { msg = "Update Successfully" } };
-                }
-                catch (Exception ex)
-                {
-                    result = new { status = 0, data = new { msg = ex.Message } };
-                }
-                return result;
+                dynamic main = _repositoryWrapper.Role_Repository.GetRolebyid(role_id);
+                tbl_role role = main as tbl_role;
+
+                role.role_id = role_id;
+                role.role_name = role_name;
+
+                _repositoryWrapper.Role_Repository.Update(role);
+                result = new { Status = 1, Message = "Update Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                jsondata = new { status = 0,data = new { msg = ex.Message } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
+
+
         }
 
-          [HttpPost("Delete_Role", Name = "Delete_Role")]
+        [HttpPost("Delete_Role", Name = "Delete_Role")]
         public dynamic Delete_Role([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
+
+            // dynamic dd = param;
+            // int id = dd.id;
+            dynamic result = null;
             try
             {
-                // dynamic dd = param;
-                // int id = dd.id;
-                dynamic result = null;
-                try
-                {
-                    dynamic dd = param;
-                    int role_id = dd.role_id;
+                dynamic dd = param;
+                int role_id = dd.role_id;
 
-                    string role_name = dd.role_name;
+                string role_name = dd.role_name;
 
-                  
-                    dynamic main = _repositoryWrapper.Role_Repository.GetRolebyid(role_id);
-                    tbl_role role = main as tbl_role;
-                  
-                    _repositoryWrapper.Role_Repository.Delete(role);
-                    result =  new { status = 1, data = new { msg = "Delete Successfully" } };
-                }
-                catch (Exception ex)
-                {
-                   result = new { status = 0, data = new { msg = ex.Message } };
-                }
-                return result;
+
+                dynamic main = _repositoryWrapper.Role_Repository.GetRolebyid(role_id);
+                tbl_role role = main as tbl_role;
+
+                _repositoryWrapper.Role_Repository.Delete(role);
+                result = new { Status = 1, Message = "Delete Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                jsondata = new { status = 0, data = new { msg = ex.Message } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
+
         }
     }
 }

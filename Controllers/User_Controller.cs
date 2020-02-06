@@ -12,8 +12,6 @@ using Ethereal_EM.Repository;
 using Kendo.Mvc.UI;
 using System.ComponentModel.DataAnnotations;
 
-
-
 namespace Ethereal_EM
 {
 
@@ -32,30 +30,30 @@ namespace Ethereal_EM
         public dynamic Get_All_User([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
 
-            dynamic jsondata = null;
+            dynamic result = null;
             try
             {
-                dynamic PostData = _repositoryWrapper.User_Repository.Get_all_user();
-                if (PostData != null)
+                dynamic Post_User = _repositoryWrapper.User_Repository.Get_all_user();
+                if (Post_User != null)
                 {
-                    jsondata = new { status = 1, Message = "Success", data = new { PostData } };
+                    result = new { Status = 0, Message = "No Data", data = new { Post_User } };
                 }
                 else
                 {
-                    jsondata = new { status = 0, Message = "No Data", data = new { PostData } };
+                    result = new { Status = 1, Message = "Success", data = new { Post_User } };
                 }
             }
             catch (Exception ex)
             {
-                jsondata = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
         }
 
         [HttpPost("SaveUser", Name = "SaveUser")]
         public dynamic SaveUser([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic save = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -79,20 +77,20 @@ namespace Ethereal_EM
 
               
                 _repositoryWrapper.User_Repository.Create(u);
-                save = new { status = 1, Message = "Save Successfully" };
+                result = new { Status = 1, Message = "Save Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                save = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
 
-            return save;
+            return result;
         }
 
         [HttpPost("UpdateUser", Name = "UpdateUser")]
         public dynamic UpdateUser([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic Update = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -117,20 +115,20 @@ namespace Ethereal_EM
 
               
                 _repositoryWrapper.User_Repository.Update(u);
-                Update = new { status = 1, Message = "Update Successfully" };
+                result = new { Status = 1, Message = "Update Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                Update = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
 
-            return Update;
+            return result;
         }
 
         [HttpPost("DeleteUser", Name = "DeleteUser")]
         public dynamic DeleteUser([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic Delete = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -148,14 +146,14 @@ namespace Ethereal_EM
                 
         
                 _repositoryWrapper.User_Repository.Delete(u);
-                Delete = new { status = 1, Message = "Delete Successfully" };
+                result = new { Status = 1, Message = "Delete Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                Delete = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
 
-            return Delete;
+            return result;
         }
 
     }

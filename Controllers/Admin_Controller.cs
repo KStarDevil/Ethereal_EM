@@ -27,75 +27,64 @@ namespace Ethereal_EM
         [HttpGet("Get_Admin", Name = "Get_Admin")]
         public dynamic Get_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
+            dynamic result = null;
             try
             {
                 // dynamic dd = param;
                 // int id = dd.id;
-                dynamic PostAdmin = _repositoryWrapper.Admin_Repository.GetAdmin();
+                dynamic Admin_Data = _repositoryWrapper.Admin_Repository.GetAdmin();
 
-                if (PostAdmin == null)
+                if (Admin_Data == null)
                 {
-                    jsondata = new { status = 0, Message = "No Data", data = new { PostAdmin } };
+                    result = new { Status = 0, Message = "No Data", data = new { Admin_Data } };
                 }
                 else
                 {
-                    jsondata = new { status = 1, Message = "Success", data = new { PostAdmin } };
+                    result = new { Status = 1, Message = "Success", data = new { Admin_Data } };
                 }
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
         }
 
         [HttpPost("Save_Admin", Name = "Save_Admin")]
         public dynamic Save_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
-            try
-            {
+
                 // dynamic dd = param;
                 // int id = dd.id;
                 dynamic result = null;
-                try
-                {
-                    dynamic dd = param;
-                    int admin_id = dd.admin_id;
-                    string admin_name = dd.admin_name;
-                    string admin_password = dd.admin_password;
-                    string admin_photo = dd.admin_photo;
+            try
+            {
+                dynamic dd = param;
+                int admin_id = dd.admin_id;
+                string admin_name = dd.admin_name;
+                string admin_password = dd.admin_password;
+                string admin_photo = dd.admin_photo;
 
-                    tbl_admin admin = new tbl_admin();
+                tbl_admin admin = new tbl_admin();
 
-                    admin.admin_id = admin_id;
-                    admin.admin_name = admin_name;
-                    admin.admin_password = admin_password;
-                    admin.admin_photo = admin_photo;
+                admin.admin_id = admin_id;
+                admin.admin_name = admin_name;
+                admin.admin_password = admin_password;
+                admin.admin_photo = admin_photo;
 
-                    _repositoryWrapper.Admin_Repository.Create(admin);
-                    result = new { status = 1, data = new { msg = "Save Successfully" } };
-                }
-                catch (Exception ex)
-                {
-                    result = new { status = 0, data = new { msg = ex.Message } };
-                }
-                return result;
+                _repositoryWrapper.Admin_Repository.Create(admin);
+                result = new { Status = 1, Message = "Save Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                jsondata = new { status = 0, data = new { msg = ex.Message } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
         }
 
         [HttpPost("Update_Admin", Name = "Update_Admin")]
         public dynamic Update_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
-            try
-            {
                 // dynamic dd = param;
                 // int id = dd.id;
                 dynamic result = null;
@@ -117,19 +106,13 @@ namespace Ethereal_EM
                     admin.admin_photo = admin_photo;
 
                     _repositoryWrapper.Admin_Repository.Update(admin);
-                    result = new { status = 1, data = new { msg = "Update Successfully" } };
+                    result = new { Status = 1, Message = "Update Successfully", data = new { } };
                 }
                 catch (Exception ex)
                 {
-                    result = new { status = 0, data = new { msg = ex.Message } };
+                    result = new { Status = 0, Message = ex.Message, data = new { } };
                 }
                 return result;
-            }
-            catch (Exception ex)
-            {
-                jsondata = new { status = 0, data = new { msg = ex.Message } };
-            }
-            return jsondata;
         }
 
         [HttpPost("Delete_Admin", Name = "Delete_Admin")]
@@ -152,11 +135,11 @@ namespace Ethereal_EM
                 tbl_admin admin = main as tbl_admin;
 
                 _repositoryWrapper.Admin_Repository.Delete(admin);
-                result = new { status = 1, data = new { msg = "Delete Successfully" } };
+                result = new { Status = 1, Message = "Delete Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                result = new { status = 0, data = new { msg = ex.Message } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
             return result;
 
