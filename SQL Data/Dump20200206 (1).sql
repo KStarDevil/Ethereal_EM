@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `ethereal_em` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `ethereal_em`;
 -- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
 -- Host: localhost    Database: ethereal_em
@@ -26,9 +24,17 @@ DROP TABLE IF EXISTS `tbl_admin`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tbl_admin` (
   `admin_id` int(50) NOT NULL AUTO_INCREMENT,
-  `admin_name` varchar(45) DEFAULT NULL,
-  `admin_password` varchar(45) DEFAULT NULL,
-  `admin_photo` text,
+  `admin_name` varchar(255) DEFAULT NULL,
+  `admin_password` varchar(255) DEFAULT NULL,
+  `admin_photo_path` text,
+  `admin_salt` varchar(255) DEFAULT NULL,
+  `admin_login_fail_count` int(11) DEFAULT '0',
+  `admin_login_name` varchar(255) DEFAULT NULL,
+  `admin_access_status` int(2) DEFAULT '0',
+  `admin_created_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `admin_email` varchar(255) DEFAULT NULL,
+  `admin_modified_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `admin_role_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`admin_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -39,7 +45,7 @@ CREATE TABLE `tbl_admin` (
 
 LOCK TABLES `tbl_admin` WRITE;
 /*!40000 ALTER TABLE `tbl_admin` DISABLE KEYS */;
-INSERT INTO `tbl_admin` VALUES (1,'DJ','123456','black'),(2,'Hyper','654321','gay'),(3,'Oeshi','13579','nay'),(4,'Bunny','24680','Good');
+INSERT INTO `tbl_admin` VALUES (1,'DJ','Ethereal-Systems',NULL,'RXRoZXJlYWwtU3lzdGVtcw==',0,'DJ',0,'0001-01-01 00:00:00','obamese.969@gmail.com','0001-01-01 00:00:00',2);
 /*!40000 ALTER TABLE `tbl_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,8 +168,8 @@ DROP TABLE IF EXISTS `tbl_menu_permission`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tbl_menu_permission` (
   `menu_permission_id` int(50) NOT NULL AUTO_INCREMENT,
-  `menu_id` int(50) DEFAULT NULL,
-  `permission_id` int(50) DEFAULT NULL,
+  `menu_id` int(50) NOT NULL,
+  `permission_id` int(50) NOT NULL,
   PRIMARY KEY (`menu_permission_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -174,7 +180,7 @@ CREATE TABLE `tbl_menu_permission` (
 
 LOCK TABLES `tbl_menu_permission` WRITE;
 /*!40000 ALTER TABLE `tbl_menu_permission` DISABLE KEYS */;
-INSERT INTO `tbl_menu_permission` VALUES (1,1,2),(2,3,2);
+INSERT INTO `tbl_menu_permission` VALUES (1,1,2),(2,2,3);
 /*!40000 ALTER TABLE `tbl_menu_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +202,7 @@ CREATE TABLE `tbl_notification` (
   `notification_route` varchar(255) DEFAULT NULL,
   `post_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`notification_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +211,7 @@ CREATE TABLE `tbl_notification` (
 
 LOCK TABLES `tbl_notification` WRITE;
 /*!40000 ALTER TABLE `tbl_notification` DISABLE KEYS */;
-INSERT INTO `tbl_notification` VALUES (1,'abc',2,'dea','asdxzcb',2,'2018-12-19 09:26:03','asd',2),(2,'DEF',2,'DEF','zxcvbn',1,'2018-12-19 09:26:03','qqqq',3);
+INSERT INTO `tbl_notification` VALUES (1,'abc',2,'dea','asdxzcb',2,'2018-12-19 09:26:03','asd',2);
 /*!40000 ALTER TABLE `tbl_notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,9 +224,9 @@ DROP TABLE IF EXISTS `tbl_permission`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tbl_permission` (
   `permission_id` int(50) NOT NULL AUTO_INCREMENT,
-  `permission_name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`permission_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `permission_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`permission_id`,`permission_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,7 +235,7 @@ CREATE TABLE `tbl_permission` (
 
 LOCK TABLES `tbl_permission` WRITE;
 /*!40000 ALTER TABLE `tbl_permission` DISABLE KEYS */;
-INSERT INTO `tbl_permission` VALUES (1,'Cleaning'),(2,'Network');
+INSERT INTO `tbl_permission` VALUES (1,'Admin Management'),(2,'User Management'),(3,'Post Management'),(4,'Notification Management'),(5,'Event Management');
 /*!40000 ALTER TABLE `tbl_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,6 +265,31 @@ INSERT INTO `tbl_permission_admin` VALUES (1,2,1),(2,1,2);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tbl_permission_role`
+--
+
+DROP TABLE IF EXISTS `tbl_permission_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbl_permission_role` (
+  `permission_role_id` int(50) NOT NULL AUTO_INCREMENT,
+  `role_id` int(50) NOT NULL,
+  `permission_id` int(50) NOT NULL,
+  PRIMARY KEY (`permission_role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_permission_role`
+--
+
+LOCK TABLES `tbl_permission_role` WRITE;
+/*!40000 ALTER TABLE `tbl_permission_role` DISABLE KEYS */;
+INSERT INTO `tbl_permission_role` VALUES (1,2,1),(2,1,2);
+/*!40000 ALTER TABLE `tbl_permission_role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tbl_post`
 --
 
@@ -270,7 +301,7 @@ CREATE TABLE `tbl_post` (
   `user_photo` varchar(255) DEFAULT NULL,
   `uploader_id` int(11) NOT NULL DEFAULT '0',
   `content_text` text,
-  `photo_count` int(11) DEFAULT '0',
+  `photo_count` int(11) NOT NULL DEFAULT '0',
   `created_date` datetime DEFAULT '0000-00-00 00:00:00',
   `approved_rejected_date` datetime DEFAULT '0000-00-00 00:00:00',
   `status` int(3) DEFAULT '0',
@@ -359,7 +390,7 @@ CREATE TABLE `tbl_role` (
 
 LOCK TABLES `tbl_role` WRITE;
 /*!40000 ALTER TABLE `tbl_role` DISABLE KEYS */;
-INSERT INTO `tbl_role` VALUES (1,'a'),(2,'b'),(3,'c');
+INSERT INTO `tbl_role` VALUES (1,'Review Admin'),(2,'Super Admin');
 /*!40000 ALTER TABLE `tbl_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,8 +403,8 @@ DROP TABLE IF EXISTS `tbl_role_admin`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tbl_role_admin` (
   `role_admin_id` int(50) NOT NULL AUTO_INCREMENT,
-  `admin_id` int(50) DEFAULT NULL,
-  `role_id` int(50) DEFAULT NULL,
+  `admin_id` int(50) NOT NULL,
+  `role_id` int(50) NOT NULL,
   PRIMARY KEY (`role_admin_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -384,8 +415,33 @@ CREATE TABLE `tbl_role_admin` (
 
 LOCK TABLES `tbl_role_admin` WRITE;
 /*!40000 ALTER TABLE `tbl_role_admin` DISABLE KEYS */;
-INSERT INTO `tbl_role_admin` VALUES (1,2,3),(2,2,1);
+INSERT INTO `tbl_role_admin` VALUES (1,2,3);
 /*!40000 ALTER TABLE `tbl_role_admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_setting`
+--
+
+DROP TABLE IF EXISTS `tbl_setting`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbl_setting` (
+  `SettingID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(45) DEFAULT NULL,
+  `Value` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`SettingID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_setting`
+--
+
+LOCK TABLES `tbl_setting` WRITE;
+/*!40000 ALTER TABLE `tbl_setting` DISABLE KEYS */;
+INSERT INTO `tbl_setting` VALUES (1,'Allow Login Failure Count','5'),(2,'Password Validation','123456@a'),(3,'Server Port','8000');
+/*!40000 ALTER TABLE `tbl_setting` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -396,14 +452,14 @@ DROP TABLE IF EXISTS `tbl_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tbl_user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(255) DEFAULT NULL,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_phone` varchar(255) DEFAULT NULL,
   `user_location` varchar(255) DEFAULT NULL,
   `user_registered_date` datetime DEFAULT '0000-00-00 00:00:00',
   `user_email` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -412,7 +468,7 @@ CREATE TABLE `tbl_user` (
 
 LOCK TABLES `tbl_user` WRITE;
 /*!40000 ALTER TABLE `tbl_user` DISABLE KEYS */;
-INSERT INTO `tbl_user` VALUES (1,'King April','09450032533','Botahtaung','0000-00-00 00:00:00','obamese.969@gmail.com');
+INSERT INTO `tbl_user` VALUES ('King April',1,'09450032533','Botahtaung','0000-00-00 00:00:00','obamese.969@gmail.com');
 /*!40000 ALTER TABLE `tbl_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -425,4 +481,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-06 15:17:11
+-- Dump completed on 2020-02-06 15:21:41
