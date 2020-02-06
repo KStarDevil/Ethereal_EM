@@ -28,7 +28,7 @@ namespace Ethereal_EM
         [HttpGet("GetPost", Name = "GetPost")]
         public dynamic GetPost([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
+            dynamic result = null;
             try
             {
                 // dynamic dd = param;
@@ -37,24 +37,24 @@ namespace Ethereal_EM
                 dynamic PostDetailData = _repositoryWrapper.Post_Detail_Repository.GetPostDetail();
                 if (PostData == null && PostDetailData == null)
                 {
-                    jsondata = new { status = 0, Message = "No Data", data = new { PostData } };
+                    result = new { Status = 0, Message = "No Data", data = new { PostData } };
                 }
                 else
                 {
-                    jsondata = new { status = 1, Message = "Success", data = new { PostData } };
+                    result = new { Status = 1, Message = "Success", data = new { PostData } };
                 }
             }
             catch (Exception ex)
             {
-                 jsondata = new { status = 0, Message = ex.Message};
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
         }
 
         [HttpPost("SavePost", Name = "SavePost")]
         public dynamic SavePost([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic save = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -87,21 +87,21 @@ namespace Ethereal_EM
 
                 _repositoryWrapper.Post_Repository.Create(p);
                 _repositoryWrapper.Post_Detail_Repository.Create(pd);
-                save = new { status = 1, Message = "Save Successfully" };
+                result = new { Status = 1, Message = "Save Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                save = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
 
-            return save;
+            return result;
         }
 
         [HttpPost("UpdatePost", Name = "UpdatePost")]
         public dynamic UpdatePost([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
 
-            dynamic update = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -135,14 +135,14 @@ namespace Ethereal_EM
 
                 _repositoryWrapper.Post_Repository.Update(p);
                 _repositoryWrapper.Post_Detail_Repository.Update(pd);
-                update = new { status = 1, Message = "Update Successfully" };
+                result = new { Status = 1, Message = "Update Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                update = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
 
-            return update;
+            return result;
         }
 
         [HttpPost("DeletePost", Name = "DeletePost")]
@@ -171,11 +171,11 @@ namespace Ethereal_EM
                 {
                     _repositoryWrapper.Post_Detail_Repository.Delete(item);
                 };
-                result = new { status = 0, Message = "Delete Successfully" };
+                result = new { Status = 1, Message = "Delete Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                result = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
             return result;
 
@@ -185,39 +185,39 @@ namespace Ethereal_EM
         public dynamic Approve([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
 
-            dynamic update = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
                 int id = dd.post_id;
 
-                
 
-                int status = dd.status;         
+
+                int status = dd.status;
                 DateTime approved_rejected_date = DateTime.Now;
 
                 // tbl_post p = new tbl_post();
                 // tbl_post_detail pd = new tbl_post_detail();
                 dynamic p = _repositoryWrapper.Post_Repository.GetPostByID(id);
-                
+
 
                 p.post_id = id;
-                
-                
+
+
                 p.status = status;
                 p.approved_rejected_date = approved_rejected_date;
-                
+
 
                 _repositoryWrapper.Post_Repository.Update(p);
-                
-                update = new { status = 1, Message = "Approve Successfully" };
+
+                result = new { Status = 1, Message = "Approve Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                update = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
 
-            return update;
+            return result;
         }
     }
 }

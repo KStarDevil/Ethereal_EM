@@ -27,31 +27,31 @@ namespace Ethereal_EM
         [HttpGet("Get_Role_Admin", Name = "Get_Role_Admin")]
         public dynamic Get_Role_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
+            dynamic result = null;
             try
             {
-                dynamic PostData = _repositoryWrapper.Role_Admin_Repository.GetRoleAdmin();
+                dynamic Post_Role_Amin = _repositoryWrapper.Role_Admin_Repository.GetRoleAdmin();
 
-                if (PostData == null)
+                if (Post_Role_Amin == null)
                 {
-                    jsondata = new { status = 0, Message = "No Data", data = new { PostData } };
+                    result = new { Status = 0, Message = "No Data", data = new { Post_Role_Amin } };
                 }
                 else
                 {
-                    jsondata = new { status = 1, Message = "Success", data = new { PostData } };
+                    result = new { Status = 1, Message = "Success", data = new { Post_Role_Amin } };
                 }
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
         }
 
         [HttpPost("Save_Role_Admin", Name = "Save_Role_Adminy")]
         public dynamic Save_Role_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic save = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -66,20 +66,20 @@ namespace Ethereal_EM
                 c.role_id = role_id;
 
                 _repositoryWrapper.Role_Admin_Repository.Create(c);
-                save = new { status = 1, Message = "Save Successfully" };
+                result = new { Status = 1, Message = "Save Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                save = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
             
-            return save;
+            return result;
         }
 
         [HttpPost("Update_Role_Admin", Name = "Update_Role_Admin")]
         public dynamic Update_Role_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic Update = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -96,20 +96,20 @@ namespace Ethereal_EM
                 rm.role_id = role_id;
 
                 _repositoryWrapper.Role_Admin_Repository.Update(rm);
-                Update = new { status = 1, Message = "Update Successfully" };
+                result = new { Status = 1, Message = "Update Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                Update = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
             
-            return Update;
+            return result;
         }
 
         [HttpPost("Delete_Role_Admin", Name = "Delete_Role_Admin")]
         public dynamic Delete_Role_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic Delete = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -122,14 +122,14 @@ namespace Ethereal_EM
                 tbl_role_admin rm = main as tbl_role_admin;
 
                 _repositoryWrapper.Role_Admin_Repository.Delete(rm);
-                Delete = new { status = 1, Message = "Delete Successfully" };
+                result = new { Status = 1, Message = "Delete Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                Delete = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
             
-            return Delete;
+            return result;
         }
     }
 }

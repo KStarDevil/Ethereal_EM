@@ -29,31 +29,31 @@ namespace Ethereal_EM
         [HttpGet("GetPostCategory", Name = "GetPostCategory")]
         public dynamic GetPostCategory([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
+            dynamic result = null;
             try
             {
-                dynamic PostData = _repositoryWrapper.Post_Category_Repository.GetPostCategory();
+                dynamic Post_Category = _repositoryWrapper.Post_Category_Repository.GetPostCategory();
 
-                if (PostData == null)
+                if (Post_Category == null)
                 {
-                    jsondata = new { status = 0, Message = "No Data", data = new { PostData } };
+                    result = new { Status = 0, Message = "No Data", data = new { Post_Category } };
                 }
                 else
                 {
-                    jsondata = new { status = 1, Message = "Success", data = new { PostData } };
+                    result = new { Status = 1, Message = "Success", data = new { Post_Category } };
                 }
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
         }
 
         [HttpGet("FilterPostCategory", Name = "FilterPostCategory")]
         public dynamic FilterPostCategory([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
+            dynamic result = null;
             dynamic cat = param;
             try
             {
@@ -94,32 +94,32 @@ namespace Ethereal_EM
                                 }).ToList();
                 if (PostData == null)
                 {
-                    jsondata = new { status = 0, Message = "No Data", data = new { PostData } };
+                    result = new { Status = 0, Message = "No Data", data = new { PostData } };
                 }
                 else
                 {
                     if (PostData.Count == 0)
                     {
-                        jsondata = new { status = 0, Message = "No Data", data = new { PostData } };
+                        result = new { Status = 0, Message = "No Data", data = new { PostData } };
                     }
                     else
                     {
-                        jsondata = new { status = 1, Message = "Success", data = new { PostData } };
+                        result = new { Status = 1, Message = "Success", data = new { PostData } };
                     }
 
                 }
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            return jsondata;
+            return result;
         }
 
         [HttpPost("SavePostCategory", Name = "SavePostCategory")]
         public dynamic SaveCategory([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic save = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -130,21 +130,20 @@ namespace Ethereal_EM
                 c.post_id = post_id;
 
                 _repositoryWrapper.Post_Category_Repository.Create(c);
-                save = new { status = 1, Message = "Save Successfully" };
-
+                result = new { Status = 1, Message = "Save Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                save = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
             
-            return save;
+            return result;
         }
 
         [HttpPost("UpdatePostCategory", Name = "UpdatePostCategory")]
         public dynamic UpdateCategory([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic Update = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -158,20 +157,20 @@ namespace Ethereal_EM
                 category.post_id = post_id;
 
                 _repositoryWrapper.Post_Category_Repository.Update(category);
-                Update = new { status = 1, Message = "Update Successfully" };
+                result = new { Status = 1, Message = "Update Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                Update = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
             
-            return Update;
+            return result;
         }
 
         [HttpPost("DeletePostCategory", Name = "DeletePostCategory")]
         public dynamic DeleteCategory([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic Delete = null;
+            dynamic result = null;
             try
             {
                 dynamic dd = param;
@@ -184,14 +183,14 @@ namespace Ethereal_EM
                 c.post_id = post_id;
 
                 _repositoryWrapper.Post_Category_Repository.Delete(c);
-                Delete = new { status = 1, Message = "Delete Successfully" };
+                result = new { Status = 1, Message = "Delete Successfully", data = new { } };
             }
             catch (Exception ex)
             {
-                Delete = new { status = 0, Message = ex.Message };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
             }
             
-            return Delete;
+            return result;
         }
     }
 }
