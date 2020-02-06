@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Ethereal_EM.Repository
 {
-    public class Admin_Repository : RepositoryBase<tbAdmin>, IAdmin_Repository
+    public class Admin_Repository : RepositoryBase<tbl_admin>, IAdmin_Repository
     { 
         public Admin_Repository(AppDb reposityContext)
 
@@ -18,7 +18,7 @@ namespace Ethereal_EM.Repository
 
         public dynamic GetAdmin()
         {
-            var result = (from admin in RepositoryContext.tbAdmin
+            var result = (from admin in RepositoryContext.tbl_admin
                             
                             select admin
                         ).ToList();
@@ -27,7 +27,7 @@ namespace Ethereal_EM.Repository
 
         public dynamic GetAdminbyid(int id)
         {
-            var result = (from admin in RepositoryContext.tbAdmin
+            var result = (from admin in RepositoryContext.tbl_admin
                             where admin.admin_id== id
                             select admin
                         ).FirstOrDefault();
@@ -36,7 +36,7 @@ namespace Ethereal_EM.Repository
 
         public dynamic GetAdminRolebyid(int id)
         {
-            var result = (from admin in RepositoryContext.tbAdmin
+            var result = (from admin in RepositoryContext.tbl_admin
                             join Role in RepositoryContext.tbl_role_admin on admin.admin_id equals Role.admin_id
                             where admin.admin_id == id
                             select admin
@@ -46,7 +46,7 @@ namespace Ethereal_EM.Repository
 
         public dynamic GetAdminPermissionbyid(int id)
         {
-            var result = (from admin in RepositoryContext.tbAdmin
+            var result = (from admin in RepositoryContext.tbl_admin
                             join Permission in RepositoryContext.tbl_permission_admin on admin.admin_id equals Permission.admin_id
                             where admin.admin_id == id
                             select admin

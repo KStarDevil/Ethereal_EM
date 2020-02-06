@@ -67,7 +67,7 @@ namespace Ethereal_EM
                     string admin_password = dd.admin_password;
                     string admin_photo = dd.admin_photo;
 
-                    tbAdmin admin = new tbAdmin();
+                    tbl_admin admin = new tbl_admin();
 
                     admin.admin_id = admin_id;
                     admin.admin_name = admin_name;
@@ -109,7 +109,7 @@ namespace Ethereal_EM
 
                   
                     dynamic main = _repositoryWrapper.Admin_Repository.GetAdminbyid(admin_id);
-                    tbAdmin admin = main as tbAdmin;
+                    tbl_admin admin = main as tbl_admin;
 
                     admin.admin_id = admin_id;
                     admin.admin_name = admin_name;
@@ -149,7 +149,7 @@ namespace Ethereal_EM
 
                   
                     dynamic main = _repositoryWrapper.Admin_Repository.GetAdminbyid(admin_id);
-                    tbAdmin admin = main as tbAdmin;
+                    tbl_admin admin = main as tbl_admin;
                   
                     _repositoryWrapper.Admin_Repository.Delete(admin);
                     result =  new { status = 1, data = new { msg = "Delete Successfully" } };
