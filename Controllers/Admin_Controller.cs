@@ -72,7 +72,7 @@ namespace Ethereal_EM
                     admin.admin_id = admin_id;
                     admin.admin_name = admin_name;
                     admin.admin_password = admin_password;
-                    admin.admin_photo = admin_photo;
+                    admin.admin_photo_path = admin_photo;
 
                     _repositoryWrapper.Admin_Repository.Create(admin);
                     result = new { status = 1, data = new { msg = "Save Successfully" } };
@@ -114,7 +114,7 @@ namespace Ethereal_EM
                     admin.admin_id = admin_id;
                     admin.admin_name = admin_name;
                     admin.admin_password = admin_password;
-                    admin.admin_photo = admin_photo;
+                    admin.admin_photo_path = admin_photo;
 
                     _repositoryWrapper.Admin_Repository.Update(admin);
                     result = new { status = 1, data = new { msg = "Update Successfully" } };

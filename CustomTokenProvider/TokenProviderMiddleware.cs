@@ -135,8 +135,8 @@ namespace CustomTokenAuthProvider
                 }
                 ipaddresslist = result[0].restricted_iplist;
             }
-             else if(_loginType == "2")
-             {
+            else if (_loginType == "2")
+            {
                 result = doCustomerTypeloginValidation(username, password, clienturl, ipaddress);
                 if (result == null || result.Count <= 0)
                 {
@@ -166,12 +166,12 @@ namespace CustomTokenAuthProvider
                     // await context.Response.WriteAsync("This user account is locked.Please check your email to unlock your account!!!");
                     return;
                 }
-                
-             }
-             else
-             {
+
+            }
+            else
+            {
                 // result = (_repository.Member.GetMemberLoginValidation(username)).ToList();
-               
+
                 if (result.Count > 0)
                 {
                     MemberID = result[0].memberID.ToString();
@@ -198,7 +198,7 @@ namespace CustomTokenAuthProvider
                 }
 
 
-             }
+            }
 
 
             Boolean sameip = true;
@@ -233,7 +233,7 @@ namespace CustomTokenAuthProvider
                 _tokenData.UserID = userID;
                 _tokenData.Userlevelid = result[0].AdminLevelID.ToString();
                 _tokenData.CompanyID = result[0].CompanyID;
-               // _tokenData.branchID = result[0].branchID;
+                // _tokenData.branchID = result[0].branchID;
                 _tokenData.LoginType = _loginType.ToString();
                 _tokenData.TicketExpireDate = now.Add(_options.Expiration);
                 var claims = Globalfunction.GetClaims(_tokenData);
@@ -268,8 +268,8 @@ namespace CustomTokenAuthProvider
                 context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
             }
-             else if(_loginType == "2")
-             {
+            else if (_loginType == "2")
+            {
                 string userID = result[0].customerID.ToString();
                 var now = DateTime.UtcNow;
                 var _tokenData = new TokenData();
@@ -277,7 +277,7 @@ namespace CustomTokenAuthProvider
                 _tokenData.Jti = await _options.NonceGenerator();
                 _tokenData.Iat = new DateTimeOffset(now).ToUniversalTime().ToUnixTimeSeconds().ToString();
                 _tokenData.UserID = userID;
-               // _tokenData.branchID = result[0].branchID;
+                // _tokenData.branchID = result[0].branchID;
                 _tokenData.LoginType = _loginType.ToString();
                 _tokenData.TicketExpireDate = now.Add(_options.Expiration);
                 var claims = Globalfunction.GetClaims(_tokenData);
@@ -308,147 +308,155 @@ namespace CustomTokenAuthProvider
                     PWDLength = pwdlength.ToString()
                 };
 
-                var objresponse = new { status = 1, messages =  "success", data = response };
+                var objresponse = new { status = 1, messages = "success", data = response };
 
                 context.Response.ContentType = "application/json";
                 // await context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(objresponse, _serializerSettings));
-             }
-              else
-              {
-                    string memberID = result[0].memberID.ToString();
-                    var now = DateTime.UtcNow;
-                    var _tokenData = new TokenData();
-                    _tokenData.Sub = result[0].memberName;
-                    _tokenData.Jti = await _options.NonceGenerator();
-                    _tokenData.Iat = new DateTimeOffset(now).ToUniversalTime().ToUnixTimeSeconds().ToString();
-                    _tokenData.UserID = memberID;
-                
-                    // _tokenData.Userlevelid = result[0].AdminLevelID.ToString();
-                    //_tokenData.LoginType = _loginType.ToString();
-                    _tokenData.TicketExpireDate = now.Add(_options.Expiration);
-                    var claims = Globalfunction.GetClaims(_tokenData);
+            }
+            else
+            {
+                string memberID = result[0].memberID.ToString();
+                var now = DateTime.UtcNow;
+                var _tokenData = new TokenData();
+                _tokenData.Sub = result[0].memberName;
+                _tokenData.Jti = await _options.NonceGenerator();
+                _tokenData.Iat = new DateTimeOffset(now).ToUniversalTime().ToUnixTimeSeconds().ToString();
+                _tokenData.UserID = memberID;
 
-                    // Create the JWT and write it to a string
-                    var jwt = new JwtSecurityToken(
-                        issuer: _options.Issuer,
-                        audience: _options.Audience,
-                        claims: claims,
-                        notBefore: now,
-                        expires: now.Add(_options.Expiration),
-                        signingCredentials: _options.SigningCredentials);
-                    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+                // _tokenData.Userlevelid = result[0].AdminLevelID.ToString();
+                //_tokenData.LoginType = _loginType.ToString();
+                _tokenData.TicketExpireDate = now.Add(_options.Expiration);
+                var claims = Globalfunction.GetClaims(_tokenData);
 
-                    var settingresult = (_repository.Setting.GetPasswordValidation()).ToList();
-                    var pwdlength = settingresult[0].Value;
+                // Create the JWT and write it to a string
+                var jwt = new JwtSecurityToken(
+                    issuer: _options.Issuer,
+                    audience: _options.Audience,
+                    claims: claims,
+                    notBefore: now,
+                    expires: now.Add(_options.Expiration),
+                    signingCredentials: _options.SigningCredentials);
+                var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-                    var response = new
-                    {
-                        access_token = encodedJwt,
-                        expires_in = (int)_options.Expiration.TotalSeconds,
-                        // UserID = userID,
-                        // LoginType = _loginType,
-                        // userLevelID = result[0].AdminLevelID,
-                        displayName = result[0].memberName,
-                        MemberID = MemberID,
-                        MemberNo = MemberNo,
-                        //userImage = result[0].ImagePath,
-                        PWDLength = pwdlength.ToString()
-                    };
-                    context.Response.ContentType = "application/json";
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
-              }
+                var settingresult = (_repository.Setting.GetPasswordValidation()).ToList();
+                var pwdlength = settingresult[0].Value;
+
+                var response = new
+                {
+                    access_token = encodedJwt,
+                    expires_in = (int)_options.Expiration.TotalSeconds,
+                    // UserID = userID,
+                    // LoginType = _loginType,
+                    // userLevelID = result[0].AdminLevelID,
+                    displayName = result[0].memberName,
+                    MemberID = MemberID,
+                    MemberNo = MemberNo,
+                    //userImage = result[0].ImagePath,
+                    PWDLength = pwdlength.ToString()
+                };
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
+            }
 
 
             // Serialize and return the response
 
         }
 
-       
+
         dynamic doAdminTypeloginValidation(string username, string password, string clienturl, string ipaddress)
         {
 
-            var result = (_repository.Admin.GetAdminLoginValidation(username)).ToList();
-
-
-            if (result.Count <= 0)
+            dynamic result = null;
+            try
             {
-                return null;
-            }
-            //To set for Session Data
-            string LoginUserID = result[0].AdminID.ToString();
-            _session.SetString("LoginUserID", LoginUserID);
-            _session.SetString("LoginRemoteIpAddress", ipaddress);
-            _session.SetString("LoginTypeParam", "1");
-
-
-            string oldhash = result[0].Password; //"wlaf1//SXWsJp/2+Mo8+1wnmxbmZ5ZAt";  //gwtsoft
-            string oldsalt = result[0].Salt; //"/SApKtKXpIa6YnHCjKLxQJAeb279BlX8";
-            bool flag = Operational.Encrypt.SaltedHash.Verify(oldsalt, oldhash, password);
-            if (flag == false)
-            {
-
-                //increase login_failure count 
-                Admin objAdmin = _repository.Admin.FindById(result[0].AdminID);
-                bool accLock = false;
-                if (objAdmin != null)
+                result = (_repository.Admin_Repository.GetAdminLoginValidation(username)).ToList();
+                if (result.Count <= 0)
                 {
-                    var newfailcount = result[0].login_fail_count + 1;
-                    var settingresult = (_repository.Setting.GetAllowLoginFailCount()).ToList();
-                    var settingfailcount = settingresult[0].Value;
+                    return null;
+                }
+                //To set for Session Data
+                string LoginUserID = result[0].AdminID.ToString();
+                _session.SetString("LoginUserID", LoginUserID);
+                _session.SetString("LoginRemoteIpAddress", ipaddress);
+                _session.SetString("LoginTypeParam", "1");
 
-                    //change access_status to 2 if login_failure_count = 'Allow Login Failure Count' from setting table
-                    if (newfailcount.ToString() == settingfailcount)
+
+                string oldhash = result[0].Password; //"wlaf1//SXWsJp/2+Mo8+1wnmxbmZ5ZAt";  //gwtsoft
+                string oldsalt = result[0].Salt; //"/SApKtKXpIa6YnHCjKLxQJAeb279BlX8";
+                bool flag = Operational.Encrypt.SaltedHash.Verify(oldsalt, oldhash, password);
+                if (flag == false)
+                {
+
+                    //increase login_failure count 
+                    Admin objAdmin = _repository.Admin_Repository.FindById(result[0].AdminID);
+                    bool accLock = false;
+                    if (objAdmin != null)
                     {
-                        objAdmin.access_status = 2;
-                        accLock = true;
+                        var newfailcount = result[0].login_fail_count + 1;
+                        var settingresult = (_repository.Setting.GetAllowLoginFailCount()).ToList();
+                        var settingfailcount = settingresult[0].Value;
 
-                        //send email to unlock
-                        var emailtemplateresult = (_repository.EmailTemplate.GetEmailTemplate("Account Lock Notification")).ToList();
-                        var settingResult = _repository.EmailTemplate.GetSettingResult();
-                        string Message = emailtemplateresult[0].template_content;
-                        string Subject = emailtemplateresult[0].subject;
-                        string Variable = emailtemplateresult[0].variable;
-                        string FromEmail = emailtemplateresult[0].from_email;
-                        string Email = result[0].Email;
-                        string Account_Name = result[0].AdminName.ToString();
-                        string Login_Name = result[0].LoginName.ToString();
+                        //change access_status to 2 if login_failure_count = 'Allow Login Failure Count' from setting table
+                        if (newfailcount.ToString() == settingfailcount)
+                        {
+                            objAdmin.access_status = 2;
+                            accLock = true;
 
-                        var plainTextBytes = Encoding.UTF8.GetBytes(result[0].AdminID.ToString());
-                        string ID = Convert.ToBase64String(plainTextBytes).Replace("=", "%3D"); ;
-                        string unlock_url = "#/unlock/" + ID;
-                        string body = Message.Replace("[Account Name]", Account_Name).Replace("[Login Name]", Login_Name).Replace("[Unlock URL]", unlock_url).Replace("\n", "<br/>");
-                        Globalfunction.SendEmailAsync(settingResult, Email, FromEmail, Subject, body, true);
+                            //send email to unlock
+                            var emailtemplateresult = (_repository.EmailTemplate.GetEmailTemplate("Account Lock Notification")).ToList();
+                            var settingResult = _repository.EmailTemplate.GetSettingResult();
+                            string Message = emailtemplateresult[0].template_content;
+                            string Subject = emailtemplateresult[0].subject;
+                            string Variable = emailtemplateresult[0].variable;
+                            string FromEmail = emailtemplateresult[0].from_email;
+                            string Email = result[0].Email;
+                            string Account_Name = result[0].AdminName.ToString();
+                            string Login_Name = result[0].LoginName.ToString();
+
+                            var plainTextBytes = Encoding.UTF8.GetBytes(result[0].AdminID.ToString());
+                            string ID = Convert.ToBase64String(plainTextBytes).Replace("=", "%3D"); ;
+                            string unlock_url = "#/unlock/" + ID;
+                            string body = Message.Replace("[Account Name]", Account_Name).Replace("[Login Name]", Login_Name).Replace("[Unlock URL]", unlock_url).Replace("\n", "<br/>");
+                            Globalfunction.SendEmailAsync(settingResult, Email, FromEmail, Subject, body, true);
+
+                        }
+
+                        objAdmin.login_fail_count = newfailcount;
+                    
+                        tbl_admin update_admin =_repository.Admin_Repository.GetAdminbyid(objAdmin.AdminID) as tbl_admin;
+                        update_admin.admin_login_fail_count = objAdmin.login_fail_count;
+                        _repository.Admin_Repository.Update(update_admin);
+                        //_repository.EventLog.Info("Login failed for this account UserName : " + username + " , Password : " + password);
+
+                        if (accLock == true)
+                        {
+                            result = (_repository.Admin.GetAdminLoginValidation(username)).ToList();
+                            return result;
+                        }
 
                     }
-
-                    objAdmin.login_fail_count = newfailcount;
-                    _repository.Admin.Update(objAdmin);
-                    _repository.EventLog.Info("Login failed for this account UserName : " + username + " , Password : " + password);
-
-                    if (accLock == true)
+                    return null;
+                }
+                else
+                {
+                    //reset login_failure count
+                    Admin objAdmin = _repository.Admin_Repository.FindById(result[0].AdminID);
+                    if (objAdmin != null)
                     {
+                        objAdmin.login_fail_count = 0;
+                        _repository.Admin.Update(objAdmin);
+
+                        _repository.EventLog.Info("Successful login for this account UserName : " + username);
                         result = (_repository.Admin.GetAdminLoginValidation(username)).ToList();
-                        return result;
                     }
-
                 }
-                return null;
             }
-            else
+            catch (Exception ex)
             {
-                //reset login_failure count
-                Admin objAdmin = _repository.Admin.FindById(result[0].AdminID);
-                if (objAdmin != null)
-                {
-                    objAdmin.login_fail_count = 0;
-                    _repository.Admin.Update(objAdmin);
-
-                    _repository.EventLog.Info("Successful login for this account UserName : " + username);
-                    result = (_repository.Admin.GetAdminLoginValidation(username)).ToList();
-                }
+                Console.WriteLine(ex.Message);
             }
-
             return result;
         }
 
@@ -508,14 +516,14 @@ namespace CustomTokenAuthProvider
                         Globalfunction.SendEmailAsync(settingResult, Email, FromEmail, Subject, body, true);
 
                     }
-  
+
                     objCustomer.login_fail_count = newfailcount;
                     _repository.Customer.Update(objCustomer);
                     _repository.EventLog.Info("Login failed for this account UserName : " + username + " , Password : " + password);
 
                     if (accLock == true)
                     {
-                        result =  _repository.Customer.GetCustomerLoginMobile(username);
+                        result = _repository.Customer.GetCustomerLoginMobile(username);
                         return result;
                     }
 
@@ -526,13 +534,13 @@ namespace CustomTokenAuthProvider
             {
                 //reset login_failure count
                 Customer objCustomer = _repository.Customer.FindById(result[0].customerID);
-                if (objCustomer != null)  
+                if (objCustomer != null)
                 {
                     objCustomer.login_fail_count = 0;
                     _repository.Customer.Update(objCustomer);
 
                     _repository.EventLog.Info("Successful login for this account UserName : " + username);
-                    result =  _repository.Customer.GetCustomerLoginMobile(username);
+                    result = _repository.Customer.GetCustomerLoginMobile(username);
                 }
             }
 
@@ -635,9 +643,9 @@ namespace CustomTokenAuthProvider
                 //             }
                 //             if (patharr[1].ToString() == "mobile")
                 //             {
-                                
+
                 //                     allow = true;
-                                
+
                 //             }
 
                 //             if (allow)
@@ -674,11 +682,11 @@ namespace CustomTokenAuthProvider
                 //                 _session.SetString("LoginTypeParam", "1");
                 //                 if (patharr[1].ToString() == "mobile")
                 //                 {
-                                    
+
                 //                     _session.SetString("LoginUserID", _tokenData.UserID);
                 //                     _session.SetString("LoginRemoteIpAddress", ipaddress);
                 //                     _session.SetString("LoginTypeParam", "mobile");
-                                    
+
                 //                 }
                 //             }
                 //             else
