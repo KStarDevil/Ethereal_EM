@@ -419,13 +419,13 @@ namespace CustomTokenAuthProvider
                             string ID = Convert.ToBase64String(plainTextBytes).Replace("=", "%3D"); ;
                             string unlock_url = "#/unlock/" + ID;
                             string body = Message.Replace("[Account Name]", Account_Name).Replace("[Login Name]", Login_Name).Replace("[Unlock URL]", unlock_url).Replace("\n", "<br/>");
-                           // Globalfunction.SendEmail(settingResult, Email, Subject, body);
+                            // Globalfunction.SendEmail(settingResult, Email, Subject, body);
 
                         }
 
                         objAdmin.login_fail_count = newfailcount;
-                    
-                        tbl_admin update_admin =_repository.Admin_Repository.GetAdminbyid(objAdmin.AdminID) as tbl_admin;
+
+                        tbl_admin update_admin = _repository.Admin_Repository.GetAdminbyid(objAdmin.AdminID) as tbl_admin;
                         update_admin.admin_login_fail_count = objAdmin.login_fail_count;
                         _repository.Admin_Repository.Update(update_admin);
                         _repository.EventLog.Info("Login failed for this account UserName : " + username + " , Password : " + password);
@@ -446,10 +446,10 @@ namespace CustomTokenAuthProvider
                     if (objAdmin != null)
                     {
                         objAdmin.login_fail_count = 0;
-                        tbl_admin update_admin =_repository.Admin_Repository.GetAdminbyid(objAdmin.AdminID) as tbl_admin;
+                        tbl_admin update_admin = _repository.Admin_Repository.GetAdminbyid(objAdmin.AdminID) as tbl_admin;
                         update_admin.admin_login_fail_count = objAdmin.login_fail_count;
                         _repository.Admin_Repository.Update(update_admin);
-                       // _repository.EventLog.Info("Successful login for this account UserName : " + username);
+                        // _repository.EventLog.Info("Successful login for this account UserName : " + username);
                         result = (_repository.Admin_Repository.GetAdminLoginValidation(username)).ToList();
                     }
                 }
@@ -570,145 +570,156 @@ namespace CustomTokenAuthProvider
             else
             {
                 //TODO for some
+                var pathstr = context.Request.Path.ToString();
+                string[] patharr = pathstr.Split('/');
+                //int prequest = Array.IndexOf(patharr, "public");
+                int prequest = Array.IndexOf(patharr, "api");
+                if (prequest > 0)
+                {
+                    await next(context);
+                }else{
+                    await ResponseMessage(new { status = "fail", message = "Access Denied" }, context, 400);
+                }
+
             }
             //  _objdb = DB;
             if (!context.Request.Path.Equals(_options.Path, StringComparison.Ordinal))
             {
-               // await next(context);
+                // await next(context);
                 var methodName = context.Request.Path.ToString().Split("/")[3];
-                    //Regenerate newtoken for not timeout at running
-                    string newToken = "";
-                    try
+                //Regenerate newtoken for not timeout at running
+                string newToken = "";
+                try
+                {
+                    var pathstr = context.Request.Path.ToString();
+                    string[] patharr = pathstr.Split('/');
+                    int prequest = Array.IndexOf(patharr, "public");
+                    int trequest = Array.IndexOf(patharr, "testapi");
+                    int flowrequest = Array.IndexOf(patharr, "TLG");
+                    int customerrequest = Array.IndexOf(patharr, "CutomerMobile");
+
+                    if (prequest < 1 && trequest < 1 && flowrequest < 1 && customerrequest < 1)
                     {
-                        var pathstr = context.Request.Path.ToString();
-                        string[] patharr = pathstr.Split('/');
-                        int prequest = Array.IndexOf(patharr, "public");
-                        int trequest = Array.IndexOf(patharr, "testapi");
-                        int flowrequest = Array.IndexOf(patharr, "TLG");
-                          int customerrequest = Array.IndexOf(patharr, "CutomerMobile");
+                        var handler = new JwtSecurityTokenHandler();
 
-                        if (prequest < 1 && trequest < 1 && flowrequest < 1 && customerrequest < 1)
+                        var allow = false;
+
+                        var tokenS = handler.ReadToken(access_token) as JwtSecurityToken;
+
+
+                        //check userlevel permission
+                        if (patharr[1].ToString() == "api")
                         {
-                            var handler = new JwtSecurityTokenHandler();
-
-                            var allow = false;
-
-                            var tokenS = handler.ReadToken(access_token) as JwtSecurityToken;
-
-
-                            //check userlevel permission
-                            if (patharr[1].ToString() == "api")
+                            var isadmin = false;
+                            tbl_role objAdminLevel = null;
+                            if (_tokenData.Userlevelid != "")
                             {
-                                var isadmin = false;
-                                tbl_role objAdminLevel = null;
-                                if (_tokenData.Userlevelid != "")
-                                {
-                                    objAdminLevel = _repository.Role_Repository.GetRolebyid(int.Parse(_tokenData.Userlevelid));
-                                }
-                                else
-                                {
-                                    isadmin = true;
-                                }
-                                //var objAdminLevel = _repository.AdminLevel.FindAdminLevel(int.Parse(_tokenData.Userlevelid));
-
-                                if (objAdminLevel != null)
-                                {
-                                    isadmin = objAdminLevel.role_is_admin;
-                                }
-                                if (isadmin)
-                                    allow = true;
-                                else
-                                {
-                                    // string ipaddress = context.Connection.RemoteIpAddress.ToString();
-                                    // allow = checkURLPermission(_tokenData, patharr[2], patharr[3], ipaddress);
-                                    string controllername = patharr[2];
-                                    string functionname = patharr[3];
-                                    string ServiceUrl = controllername + "/" + functionname;
-                           
-                                }
+                                objAdminLevel = _repository.Role_Repository.GetRolebyid(int.Parse(_tokenData.Userlevelid));
                             }
+                            else
+                            {
+                                isadmin = true;
+                            }
+                            //var objAdminLevel = _repository.AdminLevel.FindAdminLevel(int.Parse(_tokenData.Userlevelid));
+
+                            if (objAdminLevel != null)
+                            {
+                                isadmin = objAdminLevel.role_is_admin;
+                            }
+                            if (isadmin)
+                                allow = true;
+                            else
+                            {
+                                // string ipaddress = context.Connection.RemoteIpAddress.ToString();
+                                // allow = checkURLPermission(_tokenData, patharr[2], patharr[3], ipaddress);
+                                string controllername = patharr[2];
+                                string functionname = patharr[3];
+                                string ServiceUrl = controllername + "/" + functionname;
+
+                            }
+                        }
+                        if (patharr[1].ToString() == "mobile")
+                        {
+
+                            allow = true;
+
+                        }
+
+                        if (allow)
+                        {
+                            // check token expired   
+                            double expireTime = Convert.ToDouble(_options.Expiration.TotalMinutes);
+                            DateTime issueDate = _tokenData.TicketExpireDate.AddMinutes(-expireTime);
+                            DateTime NowDate = DateTime.UtcNow;
+                            if (issueDate > NowDate || _tokenData.TicketExpireDate < NowDate)
+                            {
+                                // return "-2";
+                                newToken = "-2";
+                            }
+                            // end of token expired check
+
+                            var now = DateTime.UtcNow;
+                            _tokenData.Jti = new DateTimeOffset(now).ToUniversalTime().ToUnixTimeSeconds().ToString();
+                            _tokenData.Jti = await _options.NonceGenerator();
+
+                            var claims = Globalfunction.GetClaims(_tokenData);
+                            // Create the JWT and write it to a string
+                            var jwt = new JwtSecurityToken(
+                                issuer: _options.Issuer,
+                                audience: _options.Audience,
+                                claims: claims,
+                                notBefore: now,
+                                expires: now.Add(_options.Expiration),
+                                signingCredentials: _options.SigningCredentials);
+                            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+                            //  return encodedJwt;
+                            newToken = encodedJwt;
+                            _session.SetString("LoginUserID", _tokenData.UserID);
+                            _session.SetString("LoginRemoteIpAddress", ipaddress);
+                            _session.SetString("LoginTypeParam", "1");
                             if (patharr[1].ToString() == "mobile")
                             {
 
-                                    allow = true;
-
-                            }
-
-                            if (allow)
-                            {
-                                // check token expired   
-                                double expireTime = Convert.ToDouble(_options.Expiration.TotalMinutes);
-                                DateTime issueDate = _tokenData.TicketExpireDate.AddMinutes(-expireTime);
-                                DateTime NowDate = DateTime.UtcNow;
-                                if (issueDate > NowDate || _tokenData.TicketExpireDate < NowDate)
-                                {
-                                    // return "-2";
-                                    newToken = "-2";
-                                }
-                                // end of token expired check
-
-                                var now = DateTime.UtcNow;
-                                _tokenData.Jti = new DateTimeOffset(now).ToUniversalTime().ToUnixTimeSeconds().ToString();
-                                _tokenData.Jti = await _options.NonceGenerator();
-
-                                var claims = Globalfunction.GetClaims(_tokenData);
-                                // Create the JWT and write it to a string
-                                var jwt = new JwtSecurityToken(
-                                    issuer: _options.Issuer,
-                                    audience: _options.Audience,
-                                    claims: claims,
-                                    notBefore: now,
-                                    expires: now.Add(_options.Expiration),
-                                    signingCredentials: _options.SigningCredentials);
-                                var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-                                //  return encodedJwt;
-                                newToken = encodedJwt;
                                 _session.SetString("LoginUserID", _tokenData.UserID);
                                 _session.SetString("LoginRemoteIpAddress", ipaddress);
-                                _session.SetString("LoginTypeParam", "1");
-                                if (patharr[1].ToString() == "mobile")
-                                {
+                                _session.SetString("LoginTypeParam", "mobile");
 
-                                    _session.SetString("LoginUserID", _tokenData.UserID);
-                                    _session.SetString("LoginRemoteIpAddress", ipaddress);
-                                    _session.SetString("LoginTypeParam", "mobile");
-
-                                }
                             }
-                            else
-                                //return "-1";
-                                newToken = "-1";
                         }
                         else
-                        {
-                            // if request is public, let pass without token.
-                            await next(context);
-                        }
+                            //return "-1";
+                            newToken = "-1";
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Globalfunction.WriteSystemLog(ex.Message);
-                    }
-
-                    if (newToken == "-1")
-                    {
-                        _repository.EventLog.Info("Not include Authorization Header, Access Denied");
-                        context.Response.StatusCode = 400;
-                        await ResponseMessage(new { status = "fail", message = "Access Denied" }, context, 400);
-
-                    }
-                    else if (newToken == "-2")
-                    {
-                        context.Response.StatusCode = 400;
-                        await ResponseMessage(new { status = "fail", message = "The Token has expired" }, context, 400);
-                    }
-                    else if (newToken != "")
-                    {
-                        context.Response.Headers.Add("Access-Control-Expose-Headers", "newToken");
-                        context.Response.Headers.Add("newToken", newToken);
+                        // if request is public, let pass without token.
                         await next(context);
                     }
-                
+                }
+                catch (Exception ex)
+                {
+                    Globalfunction.WriteSystemLog(ex.Message);
+                }
+
+                if (newToken == "-1")
+                {
+                    _repository.EventLog.Info("Not include Authorization Header, Access Denied");
+                    context.Response.StatusCode = 400;
+                    await ResponseMessage(new { status = "fail", message = "Access Denied" }, context, 400);
+
+                }
+                else if (newToken == "-2")
+                {
+                    context.Response.StatusCode = 400;
+                    await ResponseMessage(new { status = "fail", message = "The Token has expired" }, context, 400);
+                }
+                else if (newToken != "")
+                {
+                    context.Response.Headers.Add("Access-Control-Expose-Headers", "newToken");
+                    context.Response.Headers.Add("newToken", newToken);
+                    await next(context);
+                }
+
 
             }
             else

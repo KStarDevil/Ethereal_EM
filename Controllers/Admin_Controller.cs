@@ -51,7 +51,7 @@ namespace Ethereal_EM
         }
 
         [HttpPost("Save_Admin", Name = "Save_Admin")]
-        [Authorize]
+        //[Authorize]
         public dynamic Save_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
           
@@ -92,7 +92,7 @@ namespace Ethereal_EM
         }
 
         [HttpPost("Update_Admin", Name = "Update_Admin")]
-        [Authorize]
+        //[Authorize]
         public dynamic Update_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic jsondata = null;
@@ -159,7 +159,7 @@ namespace Ethereal_EM
         }
 
         [HttpPost("Delete_Admin", Name = "Delete_Admin")]
-        [Authorize]
+        //[Authorize]
         public dynamic Delete_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
 
