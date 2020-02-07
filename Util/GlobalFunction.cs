@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using MailKit.Net.Smtp;
+
 using MimeKit;
 using MailKit.Security;
 using System.Collections.Generic;
@@ -14,12 +14,15 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
 using Ethereal_EM.Repository;
+using System.Net.Mail;
+using SmtpClient = System.Net.Mail.SmtpClient;
+using System.Net;
 
 namespace Ethereal_EM
 {
     public class Globalfunction
     {
-       
+
         //private string _OldDataString = "";
         //private JObject _OldObj = null;
         public static dynamic SendEmailAsync(List<Setting> settingresult, string email, string FromEmail, string subject, string message, Boolean ishtml, string replytoname = "", string replytoemail = "")
@@ -46,8 +49,8 @@ namespace Ethereal_EM
             }
 
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(FromEmail, FromEmail));
-            emailMessage.To.Add(new MailboxAddress("", email));
+            emailMessage.From.Add(new MailboxAddress(FromEmail, email));
+            emailMessage.To.Add(new MailboxAddress("", UserName));
             if (replytoemail != "")
                 emailMessage.ReplyTo.Add(new MailboxAddress(replytoname, replytoemail));
             emailMessage.Subject = subject;
@@ -60,11 +63,11 @@ namespace Ethereal_EM
             {
                 try
                 {
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                    client.Connect(SMTP, Port, SecureSocketOptions.Auto);
-                    client.Authenticate("myanmarfootballmm@gmail.com", "mfF!234");
-                    client.Send(emailMessage);
-                    client.Disconnect(true);
+                    // client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                    // client.Connect(SMTP, Port, SecureSocketOptions.Auto);
+                    // client.Authenticate(UserName, Password);
+                    // client.Send(emailMessage);
+                    // client.Disconnect(true);
                 }
                 catch (Exception ex)
                 {
@@ -75,7 +78,7 @@ namespace Ethereal_EM
             }
             return true;
         }
-
+       
         public static Claim[] GetClaims(TokenData obj)
         {
             var claims = new Claim[]
@@ -102,7 +105,7 @@ namespace Ethereal_EM
                 obj.LoginType = tokenS.Claims.First(claim => claim.Type == "LoginType").Value;
                 obj.Userlevelid = tokenS.Claims.First(claim => claim.Type == "Userlevelid").Value;
                 obj.CompanyID = tokenS.Claims.First(claim => claim.Type == "CompanyID").Value;
-               // obj.branchID = tokenS.Claims.First(claim => claim.Type == "branchID").Value;
+                // obj.branchID = tokenS.Claims.First(claim => claim.Type == "branchID").Value;
                 obj.Sub = tokenS.Claims.First(claim => claim.Type == "sub").Value;
                 string TicketExpire = tokenS.Claims.First(claim => claim.Type == "TicketExpireDate").Value;
                 DateTime TicketExpireDate = DateTime.Parse(TicketExpire);
@@ -261,7 +264,7 @@ namespace Ethereal_EM
 
             return result;
         }
-      
+
 
     }
 }

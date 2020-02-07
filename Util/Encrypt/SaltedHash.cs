@@ -55,7 +55,8 @@ namespace Operational.Encrypt
 
         public static bool Verify(string salt, string hash, string password)
         {
-            return hash == ComputeHash(salt, password);
+            var t = ComputeHash(salt, password);
+            return hash == t;
         }
 
        /*     public static string ComputeHash1(string password)

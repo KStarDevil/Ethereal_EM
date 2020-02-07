@@ -24,5 +24,17 @@ namespace Ethereal_EM.Repository
             List<tbl_menu> result = result1 as List<tbl_menu>;
             return result;
         }
+        public List<tbl_menu> Get_Menu_By_Amdin_ID(int ID)
+        {
+            var result1 = (from admin in RepositoryContext.tbl_admin
+                           join permission_role in RepositoryContext.tbl_permission_role on admin.admin_role_id equals permission_role.role_id
+                           join menu_permission in RepositoryContext.tbl_menu_permission on permission_role.permission_id equals menu_permission.permission_id
+                           join menu in RepositoryContext.tbl_menu on menu_permission.menu_id equals menu.menu_id
+                           where admin.admin_id == ID
+                           select menu
+                        ).ToList();
+            List<tbl_menu> result = result1 as List<tbl_menu>;
+            return result;
+        }
     }
 }

@@ -36,61 +36,63 @@ namespace Ethereal_EM
 
                 if (PostAdmin == null)
                 {
-                    jsondata = new { status = 0, Message = "No Data", data = new { PostAdmin } };
+                    jsondata = new { Status = 0, Message = "No Data", data = new { PostAdmin } };
                 }
                 else
                 {
-                    jsondata = new { status = 1, Message = "Success", data = new { PostAdmin } };
+                    jsondata = new { Status = 1, Message = "Success", data = new { PostAdmin } };
                 }
             }
             catch (Exception ex)
             {
-                jsondata = new { data = new { msg = ex.Message } };
+               jsondata = new { Status = 0, Message = ex.Message, data = new { } };
             }
             return jsondata;
         }
 
         [HttpPost("Save_Admin", Name = "Save_Admin")]
+        [Authorize]
         public dynamic Save_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
-            try
-            {
+          
                 // dynamic dd = param;
                 // int id = dd.id;
                 dynamic result = null;
                 try
                 {
                     dynamic dd = param;
-                    int admin_id = dd.admin_id;
                     string admin_name = dd.admin_name;
+                    string admin_email = dd.admin_email;
+                    int admin_role_id = dd.admin_role_id;
+                    string admin_login_name = dd.admin_login_name;
                     string admin_password = dd.admin_password;
                     string admin_photo = dd.admin_photo;
-
+                    string salt = Operational.Encrypt.SaltedHash.GenerateSalt();
+                    string password = Operational.Encrypt.SaltedHash.ComputeHash(salt, admin_password);
                     tbl_admin admin = new tbl_admin();
-
-                    admin.admin_id = admin_id;
                     admin.admin_name = admin_name;
-                    admin.admin_password = admin_password;
+                    admin.admin_password = password;
+                    admin.admin_salt = salt;
+                    admin.admin_email = admin_email;
+                    admin.admin_login_name = admin_name;
+                    admin.admin_role_id = admin_role_id;
                     admin.admin_photo_path = admin_photo;
+                    admin.admin_created_date = DateTime.UtcNow;
+                    admin.admin_modified_date = DateTime.UtcNow;
 
                     _repositoryWrapper.Admin_Repository.Create(admin);
-                    result = new { status = 1, data = new { msg = "Save Successfully" } };
+                     result = new { Status = 1, Message = "Save Success", data = new {} };
                 }
                 catch (Exception ex)
                 {
-                    result = new { status = 0, data = new { msg = ex.Message } };
+                    result = new { Status = 0, Message = "Save Failed", data = new {} };
                 }
                 return result;
-            }
-            catch (Exception ex)
-            {
-                jsondata = new { status = 0, data = new { msg = ex.Message } };
-            }
-            return jsondata;
+           
         }
 
         [HttpPost("Update_Admin", Name = "Update_Admin")]
+        [Authorize]
         public dynamic Update_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic jsondata = null;
@@ -104,35 +106,60 @@ namespace Ethereal_EM
                     dynamic dd = param;
                     int admin_id = dd.admin_id;
                     string admin_name = dd.admin_name;
+                    string admin_login_name = dd.admin_login_name;
+                    string admin_email = dd.admin_email;
                     string admin_password = dd.admin_password;
                     string admin_photo = dd.admin_photo;
 
-
                     dynamic main = _repositoryWrapper.Admin_Repository.GetAdminbyid(admin_id);
                     tbl_admin admin = main as tbl_admin;
-
-                    admin.admin_id = admin_id;
-                    admin.admin_name = admin_name;
-                    admin.admin_password = admin_password;
-                    admin.admin_photo_path = admin_photo;
-
+                    if (!String.IsNullOrEmpty(admin_name))
+                    {
+                        admin.admin_name = admin_name;
+                    }
+                    if (!String.IsNullOrEmpty(admin_email))
+                    {
+                        admin.admin_email = admin_email;
+                    }
+                    if (!String.IsNullOrEmpty(admin_login_name))
+                    {
+                        admin.admin_login_name = admin_login_name;
+                    }
+                    if (!String.IsNullOrEmpty(admin_password))
+                    {
+                        string salt = Operational.Encrypt.SaltedHash.GenerateSalt();
+                        string password = Operational.Encrypt.SaltedHash.ComputeHash(salt, admin_password);
+                        admin.admin_password = password;
+                        admin.admin_salt = salt;
+                    }
+                    if (dd.admin_role_id != null)
+                    {
+                        int admin_role_id = dd.admin_role_id;
+                        admin.admin_role_id = admin_role_id;
+                    }
+                    if (!String.IsNullOrEmpty(admin_photo))
+                    {
+                        admin.admin_photo_path = admin_photo;
+                    }
+                    admin.admin_modified_date = DateTime.UtcNow;
                     _repositoryWrapper.Admin_Repository.Update(admin);
                     result = new { status = 1, data = new { msg = "Update Successfully" } };
                 }
                 catch (Exception ex)
                 {
-                    result = new { status = 0, data = new { msg = ex.Message } };
+                    result = new { status = 0, data = new { msg = "Update Fail" } };
                 }
                 return result;
             }
             catch (Exception ex)
             {
-                jsondata = new { status = 0, data = new { msg = ex.Message } };
+                jsondata = new { status = 0, data = new { msg =  "Update Fail"  } };
             }
             return jsondata;
         }
 
         [HttpPost("Delete_Admin", Name = "Delete_Admin")]
+        [Authorize]
         public dynamic Delete_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
 
@@ -156,7 +183,7 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                result = new { status = 0, data = new { msg = ex.Message } };
+                result = new { status = 0, data = new { msg =  "Delete Fail"  } };
             }
             return result;
 

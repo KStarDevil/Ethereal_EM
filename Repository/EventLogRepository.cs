@@ -34,18 +34,20 @@ namespace Ethereal_EM.Repository
             {
                 if (LoginTypeParam == "" || LoginTypeParam == null) LoginTypeParam = "0";
                 string LoginTypestr = "public";
-                 int LoginType =0;
-                if(LoginTypeParam =="mobile"){
-                 LoginType= 2;
+                int LoginType = 0;
+                if (LoginTypeParam == "mobile")
+                {
+                    LoginType = 2;
                 }
-                else{
-                        LoginType= int.Parse(LoginTypeParam);
+                else
+                {
+                    LoginType = int.Parse(LoginTypeParam);
                 }
-               
+
                 if (LoginType == 1)
                     LoginTypestr = "admin";
-                else if(LoginType == 2)
-                LoginTypestr = "Mobile_Customer";
+                else if (LoginType == 2)
+                    LoginTypestr = "Mobile_Customer";
                 try
                 {
                     var newobj = new EventLog();
@@ -141,7 +143,11 @@ namespace Ethereal_EM.Repository
         {
             AddEventLog(EventLogType.Warning, LogMessage, "");
         }
-
+        public void Error(string Source, string Form, string LogMessage, string ErrMessage)
+        {
+            int ActionID = Convert.ToInt32(null);
+            AddEventLog(EventLogType.Error, LogMessage,"");
+        }
         public dynamic getEventlogReportList(dynamic param)
         {
             DataSourceRequest request = KendoDataSourceRequestUtil.Parse(param);

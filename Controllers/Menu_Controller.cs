@@ -24,7 +24,8 @@ namespace Ethereal_EM
         {
             _repositoryWrapper = RW;
         }
-        [HttpGet("GetMenu", Name = "GetMenu")]
+        [HttpPost("GetMenu", Name = "GetMenu")]
+        [Authorize]
         public dynamic GetMenu([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic result = null;
@@ -32,8 +33,10 @@ namespace Ethereal_EM
             {
                 // dynamic dd = param;
                 // int id = dd.id;
-                List<tbl_menu> menulist = _repositoryWrapper.Menu_Repository.GetMenu();
+                int LogInUserID = Int32.Parse(_tokenData.UserID);
+                List<tbl_menu> menulist = _repositoryWrapper.Menu_Repository.Get_Menu_By_Amdin_ID(LogInUserID);
                 List<tbl_menu> Verified_menu = new List<tbl_menu>();
+                List<tbl_menu> Unverified_menu = new List<tbl_menu>();
                 foreach (var item in menulist)
                 {
                     if (item.sub_menu_id == 0)
@@ -50,20 +53,25 @@ namespace Ethereal_EM
                         {
                             Verified_menu.Add(item);
                         }
+                        else
+                        {
+                            Unverified_menu.Add(item);
+                        }
                         foreach (var item1 in sub_menu)
                         {
                             Verified_menu.Add(item1);
                         }
                     }
+                    Verified_menu.AddRange(Unverified_menu);
                 }
                 dynamic mainQuery = _repositoryWrapper.Menu_Repository.GetMenu();
-                if (Verified_menu == null)
+                if (Verified_menu == null || Verified_menu.Count <= 0)
                 {
-                    result = new { data = new { Status = 0, Message = "No Data", data = new { } } };
+                    result = new { Status = 0, Message = "No Data", data = new { } };
                 }
                 else
                 {
-                    result = new { data = new { Status = 1, Message = "Success", data = new { Verified_menu } } };
+                    result = new { Status = 1, Message = "Success", data = new { Verified_menu } };
                 }
             }
             catch (Exception ex)
