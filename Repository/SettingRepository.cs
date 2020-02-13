@@ -28,6 +28,13 @@ namespace Ethereal_EM.Repository
                                 .OrderBy(x => x.SettingID);
 
         }
+         public IEnumerable<Setting> Get_Mail_Settings()
+        {
+            return FindByCondition(x => x.Name == "SMTP" || x.Name == "Email"
+                                    || x.Name == "Email_Password" || x.Name == "Server_Port" || x.Name=="Email_Name")
+                                .OrderBy(x => x.SettingID);
+
+        }
 
         public dynamic GetSettingData()
         {

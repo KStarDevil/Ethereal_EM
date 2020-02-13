@@ -15,7 +15,6 @@ using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
 using Ethereal_EM.Repository;
 using System.Net.Mail;
-using SmtpClient = System.Net.Mail.SmtpClient;
 using System.Net;
 
 namespace Ethereal_EM

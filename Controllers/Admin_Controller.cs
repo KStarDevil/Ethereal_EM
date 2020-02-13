@@ -13,6 +13,7 @@ using OfficeOpenXml;
 using System.Security.Cryptography;
 using System.IO;
 using System.IO.Compression;
+using System.Threading.Tasks;
 
 namespace Ethereal_EM
 {
@@ -27,6 +28,7 @@ namespace Ethereal_EM
         [HttpGet("Get_Admin", Name = "Get_Admin")]
         public dynamic Get_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
+
             dynamic jsondata = null;
             try
             {
@@ -45,7 +47,7 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-               jsondata = new { Status = 0, Message = ex.Message, data = new { } };
+                jsondata = new { Status = 0, Message = ex.Message, data = new { } };
             }
             return jsondata;
         }
@@ -54,41 +56,40 @@ namespace Ethereal_EM
         //[Authorize]
         public dynamic Save_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-          
-                // dynamic dd = param;
-                // int id = dd.id;
-                dynamic result = null;
-                try
-                {
-                    dynamic dd = param;
-                    string admin_name = dd.admin_name;
-                    string admin_email = dd.admin_email;
-                    int admin_role_id = dd.admin_role_id;
-                    string admin_login_name = dd.admin_login_name;
-                    string admin_password = dd.admin_password;
-                    string admin_photo = dd.admin_photo;
-                    string salt = Operational.Encrypt.SaltedHash.GenerateSalt();
-                    string password = Operational.Encrypt.SaltedHash.ComputeHash(salt, admin_password);
-                    tbl_admin admin = new tbl_admin();
-                    admin.admin_name = admin_name;
-                    admin.admin_password = password;
-                    admin.admin_salt = salt;
-                    admin.admin_email = admin_email;
-                    admin.admin_login_name = admin_name;
-                    admin.admin_role_id = admin_role_id;
-                    admin.admin_photo_path = admin_photo;
-                    admin.admin_created_date = DateTime.UtcNow;
-                    admin.admin_modified_date = DateTime.UtcNow;
+            // dynamic dd = param;
+            // int id = dd.id;
+            dynamic result = null;
+            try
+            {
+                dynamic dd = param;
+                string admin_name = dd.admin_name;
+                string admin_email = dd.admin_email;
+                int admin_role_id = dd.admin_role_id;
+                string admin_login_name = dd.admin_login_name;
+                string admin_password = dd.admin_password;
+                string admin_photo = dd.admin_photo;
+                string salt = Operational.Encrypt.SaltedHash.GenerateSalt();
+                string password = Operational.Encrypt.SaltedHash.ComputeHash(salt, admin_password);
+                tbl_admin admin = new tbl_admin();
+                admin.admin_name = admin_name;
+                admin.admin_password = password;
+                admin.admin_salt = salt;
+                admin.admin_email = admin_email;
+                admin.admin_login_name = admin_name;
+                admin.admin_role_id = admin_role_id;
+                admin.admin_photo_path = admin_photo;
+                admin.admin_created_date = DateTime.UtcNow;
+                admin.admin_modified_date = DateTime.UtcNow;
 
-                    _repositoryWrapper.Admin_Repository.Create(admin);
-                     result = new { Status = 1, Message = "Save Success", data = new {} };
-                }
-                catch (Exception ex)
-                {
-                    result = new { Status = 0, Message = "Save Failed", data = new {} };
-                }
-                return result;
-           
+                _repositoryWrapper.Admin_Repository.Create(admin);
+                result = new { Status = 1, Message = "Save Success", data = new { } };
+            }
+            catch (Exception ex)
+            {
+                result = new { Status = 0, Message = "Save Failed", data = new { } };
+            }
+            return result;
+
         }
 
         [HttpPost("Update_Admin", Name = "Update_Admin")]
@@ -153,7 +154,7 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                jsondata = new { status = 0, data = new { msg =  "Update Fail"  } };
+                jsondata = new { status = 0, data = new { msg = "Update Fail" } };
             }
             return jsondata;
         }
@@ -183,7 +184,35 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                result = new { status = 0, data = new { msg =  "Delete Fail"  } };
+                result = new { status = 0, data = new { msg = "Delete Fail" } };
+            }
+            return result;
+
+        }
+        [HttpPost("Mail_Send", Name = "Mail_Send")]
+        public dynamic Mail_Send([FromBody] Newtonsoft.Json.Linq.JObject param)
+        {
+            dynamic dd = param;
+            dynamic result = null;
+            try
+            {
+                string toemail = dd.To_Mail;
+                string subject = dd.Mail_Subject;
+                string message = dd.Mail_Message;
+                Boolean ishtml = dd.Mail_IsHTML;
+                if (String.IsNullOrEmpty(toemail))
+                {
+                    result = new { Status = 0, Message = "Please Enter Receiver Mail" };
+                }
+                else
+                {
+                    var settingResultList = _repositoryWrapper.Setting.Get_Mail_Settings().ToList();
+                    result = EmailUtil.Mail(settingResultList, toemail, subject, message, ishtml);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new { Status = 0, Message = "Something went wrong!!" };
             }
             return result;
 
