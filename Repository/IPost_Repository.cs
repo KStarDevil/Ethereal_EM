@@ -6,5 +6,6 @@ namespace Ethereal_EM.Repository
     {
         dynamic GetPostByID(int id);
         dynamic GetPost();
+        dynamic Data_To_List();
     }
 }

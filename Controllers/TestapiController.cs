@@ -13,6 +13,7 @@ using OfficeOpenXml;
 using System.Security.Cryptography;
 using System.IO;
 using System.IO.Compression;
+using Newtonsoft.Json.Linq;
 
 namespace Ethereal_EM
 {
@@ -41,12 +42,16 @@ namespace Ethereal_EM
         {
             try
             {
-                dynamic objres = _repositoryWrapper.AdminLevel.FindByID(1);
-                return "Success Database Connection";
+                //dynamic objres = _repositoryWrapper.AdminLevel.FindByID(1);
+                var testing = new Admin_Controller(_repositoryWrapper);
+                JObject JO = new JObject();
+                JO.Add("ID", 1);
+                var T =testing.Get_Admin(JO);
+                return T;
             }
-            catch
+            catch(Exception ex)
             {
-                return "Fail Database Connection";
+                return ex.Message;
             }
         }
 

@@ -10,6 +10,7 @@ namespace Ethereal_EM.Repository
 {
     public class Post_Detail_Repository : RepositoryBase<tbl_post_detail>, IPost_Detail_Repository
     {
+        public dynamic Data_List = null;
         public Post_Detail_Repository(AppDb reposityContext)
 
         : base(reposityContext)
@@ -19,17 +20,21 @@ namespace Ethereal_EM.Repository
         public dynamic GetPostDetail()
         {
             var result = (from postdetail in RepositoryContext.tbl_post_detail
-                            
-                            select postdetail
-                            ).ToList();
+
+                          select postdetail
+                            ).AsQueryable();
+            Data_List = result.Select(s => s).ToList();
             return result;
         }
-
+        public dynamic Data_To_List()
+        {
+            return Data_List;
+        }
         public dynamic GetPostDetailByID(int id)
         {
             var result = (from postdetail in RepositoryContext.tbl_post_detail
-                            where postdetail.post_detail_id == id
-                            select postdetail
+                          where postdetail.post_detail_id == id
+                          select postdetail
                             ).FirstOrDefault();
             return result;
         }
@@ -37,8 +42,8 @@ namespace Ethereal_EM.Repository
         public dynamic GetPostDetailByPostID(int id)
         {
             var result = (from postdetail in RepositoryContext.tbl_post_detail
-                            where postdetail.post_id == id
-                            select postdetail
+                          where postdetail.post_id == id
+                          select postdetail
                             ).ToList();
             return result;
         }

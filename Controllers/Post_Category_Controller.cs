@@ -50,8 +50,8 @@ namespace Ethereal_EM
             return result;
         }
 
-        [HttpGet("FilterPostCategory", Name = "FilterPostCategory")]
-        public dynamic FilterPostCategory([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpPost("Filter_Post_Category", Name = "Filter_Post_Category")]
+        public dynamic Filter_Post_Category([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic result = null;
             dynamic cat = param;
@@ -60,8 +60,22 @@ namespace Ethereal_EM
                 int filter_method = cat.filter_method;
                 int[] category_id = new int[] { };
                 string search_text = cat.search_text;
-                int currentPage = cat.currentPage;
-                int rowsPerPage = cat.rowsPerPage;
+                int currentPage = 0;
+                int rowsPerPage = 5;
+                if (cat.currentPage == null || cat.rowsPerPage == null)
+                {
+                    currentPage = 0;
+                    rowsPerPage = 5;
+                }
+                else
+                {
+                    currentPage = cat.currentPage;
+                    rowsPerPage = cat.rowsPerPage;
+                }
+                if (rowsPerPage <= 0)
+                {
+                    rowsPerPage = 5;
+                }
                 if (String.IsNullOrEmpty(search_text))
                 {
                     search_text = string.Empty;
@@ -81,6 +95,8 @@ namespace Ethereal_EM
                 }
 
                 dynamic objresult = _repositoryWrapper.Post_Category_Repository.GetPostByCategoryID(category_id, filter_method, search_text);
+                var Post_Data_List = _repositoryWrapper.Post_Category_Repository.Data_To_List();
+
                 IEnumerable<dynamic> tamplist = PaginatedList<dynamic>.Create(objresult, currentPage, rowsPerPage);
                 var PostData = tamplist.Select(x =>
                                 new
@@ -94,17 +110,18 @@ namespace Ethereal_EM
                                 }).ToList();
                 if (PostData == null)
                 {
-                    result = new { Status = 0, Message = "No Data", data = new { PostData } };
+                    result = new { Status = 0, Message = "No Data", data = new { PostData, Total_Page_Post = 0 } };
                 }
                 else
                 {
+                    int Total_Page_Post = (int)Math.Ceiling(Post_Data_List.Count / (double)rowsPerPage);
                     if (PostData.Count == 0)
                     {
-                        result = new { Status = 0, Message = "No Data", data = new { PostData } };
+                        result = new { Status = 0, Message = "No Data", data = new { PostData, Total_Page_Post } };
                     }
                     else
                     {
-                        result = new { Status = 1, Message = "Success", data = new { PostData } };
+                        result = new { Status = 1, Message = "Success", data = new { PostData, Total_Page_Post } };
                     }
 
                 }
@@ -136,7 +153,7 @@ namespace Ethereal_EM
             {
                 result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            
+
             return result;
         }
 
@@ -163,7 +180,7 @@ namespace Ethereal_EM
             {
                 result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            
+
             return result;
         }
 
@@ -189,7 +206,7 @@ namespace Ethereal_EM
             {
                 result = new { Status = 0, Message = ex.Message, data = new { } };
             }
-            
+
             return result;
         }
     }

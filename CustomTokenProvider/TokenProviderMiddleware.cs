@@ -574,10 +574,13 @@ namespace CustomTokenAuthProvider
                 string[] patharr = pathstr.Split('/');
                 //int prequest = Array.IndexOf(patharr, "public");
                 int prequest = Array.IndexOf(patharr, "api");
+               
                 if (prequest > 0)
                 {
                     await next(context);
-                }else{
+                }
+                else
+                {
                     await ResponseMessage(new { status = "fail", message = "Access Denied" }, context, 400);
                 }
 

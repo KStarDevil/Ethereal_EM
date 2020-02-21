@@ -53,23 +53,15 @@ namespace Ethereal_EM
         [HttpPost("Save_Role", Name = "Save_Role")]
         public dynamic Save_Role([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-
-            // dynamic dd = param;
-            // int id = dd.id;
             dynamic result = null;
             try
             {
                 dynamic dd = param;
                 int role_id = dd.role_id;
-
                 string role_name = dd.role_name;
-
-
                 tbl_role role = new tbl_role();
-
                 role.role_id = role_id;
                 role.role_name = role_name;
-
                 _repositoryWrapper.Role_Repository.Create(role);
                 result = new { Status = 1, Message = "Save Successfully", data = new { } };
             }

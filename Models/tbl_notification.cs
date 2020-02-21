@@ -2,10 +2,10 @@ using System;
 
 namespace Ethereal_EM
 {
-   [System.ComponentModel.DataAnnotations.Schema.Table("tbl_notification")]
+    [System.ComponentModel.DataAnnotations.Schema.Table("tbl_notification")]
     public class tbl_notification : BaseModel
     {
-        public int notification_id {get; set;}
+        public int notification_id { get; set; }
         public string notification_user_photo { get; set; }
         public int admin_id { get; set; }
         public string notification_title { get; set; }
@@ -14,6 +14,10 @@ namespace Ethereal_EM
         public DateTime notification_date { get; set; }
         public string notification_route { get; set; }
         public int post_id { get; set; }
-               
+        public int notification_is_active { get; set; }
+        public string notification_category { get; set; }
+        public string notification_user { get; set; }
+
+
     }
 }

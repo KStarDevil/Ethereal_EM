@@ -11,6 +11,7 @@ namespace Ethereal_EM.Repository
 {
     public class Post_Category_Repository : RepositoryBase<tbl_post_category>, IPost_Category_Repository
     {
+        public dynamic Data_List = null;
         public Post_Category_Repository(AppDb reposityContext)
 
         : base(reposityContext)
@@ -72,9 +73,11 @@ namespace Ethereal_EM.Repository
             if (filter_method == 0)
             {
 
-                result = (from post in RepositoryContext.tbl_post
-                          where post.content_text.Contains(search_text)
-                          select post).Distinct();
+                var data = (from post in RepositoryContext.tbl_post
+                            where post.content_text.Contains(search_text)
+                            select post).Distinct().AsQueryable();
+                Data_List = data.Select(s => s).ToList();
+                result = data;
             }
             else
             {
@@ -87,19 +90,29 @@ namespace Ethereal_EM.Repository
                 }
                 if (String.IsNullOrEmpty(search_text))
                 {
-                    result = (from post in after_data 
-                              select post
+                    var data = (from post in after_data
+                                select post
                               ).AsQueryable();
+                    Data_List = data.Select(s => s).ToList();
+                    result = data;
                 }
                 else
                 {
-                    result = (from post in after_data
-                              where post.content_text.Contains(search_text)
-                              select post
-                              ).Distinct().AsQueryable() ;
+                    var data = (from post in after_data
+                                where post.content_text.Contains(search_text)
+                                select post
+                              ).Distinct().AsQueryable();
+                    Data_List = data.Select(s => s).ToList();
+                    result = data;
+
                 }
-            }   
+            }
+
             return result;
+        }
+         public dynamic Data_To_List()
+        {
+            return Data_List;
         }
     }
 }

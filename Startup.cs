@@ -41,7 +41,7 @@ namespace Ethereal_EM
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.ConfigureCors();
 
             services.ConfigureIISIntegration();
@@ -52,7 +52,7 @@ namespace Ethereal_EM
 
             services.AddTransient<TokenProviderMiddleware>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            services.AddSignalR();
             services.AddMvc()
             .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
@@ -108,6 +108,7 @@ namespace Ethereal_EM
             options.DefaultFileNames.Add("index.html");
             app.UseDefaultFiles(options);
             app.UseStaticFiles();
+          
             //app.UseStaticFiles("");  
             //app.UsePathBase("/videocvadmin");
 

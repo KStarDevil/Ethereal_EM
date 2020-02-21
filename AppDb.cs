@@ -94,6 +94,7 @@ namespace Ethereal_EM
         public DbSet<tbl_category> tbl_category { get; set; }
         public DbSet<tbl_post_category> tbl_post_category { get; set; }
         public DbSet<tbl_user> tbl_user { get; set; }
+        public DbSet<tbl_user_notification> tbl_user_notification { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -105,6 +106,8 @@ namespace Ethereal_EM
             //project
             modelBuilder.Entity<tbl_admin>()
               .HasKey(c => new { c.admin_id });
+            modelBuilder.Entity<tbl_user_notification>()
+                        .HasKey(c => new { c.user_notification_id });
 
             modelBuilder.Entity<tbl_role>()
               .HasKey(c => new { c.role_id });
@@ -147,7 +150,6 @@ namespace Ethereal_EM
 
             modelBuilder.Entity<FileSaveModel>()
               .HasKey(c => new { c.id });
-
 
             modelBuilder.Entity<tb_adminmodel>()
               .HasKey(c => new { c.admin_id });

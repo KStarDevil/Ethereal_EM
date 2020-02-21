@@ -4,5 +4,6 @@ namespace Ethereal_EM.Repository
     {
         dynamic GetNotification();
         dynamic GetPermissionById(int id);
+        dynamic Get_Notification_By_CategoryID_UserID(int[] id, int user_id);
     }
 }

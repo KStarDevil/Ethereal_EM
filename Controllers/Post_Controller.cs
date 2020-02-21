@@ -25,23 +25,74 @@ namespace Ethereal_EM
             _repositoryWrapper = RW;
         }
 
-        [HttpGet("GetPost", Name = "GetPost")]
-        public dynamic GetPost([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpPost("Get_Post", Name = "GetPost")]
+        public dynamic Get_Post([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic result = null;
             try
             {
-                // dynamic dd = param;
+                dynamic dd = param;
                 // int id = dd.id;
-                dynamic PostData = _repositoryWrapper.Post_Repository.GetPost();
-                dynamic PostDetailData = _repositoryWrapper.Post_Detail_Repository.GetPostDetail();
-                if (PostData == null && PostDetailData == null)
+                int currentPage = 0;
+                int rowsPerPage = 5;
+                if (dd.currentPage == null || dd.rowsPerPage == null)
                 {
-                    result = new { Status = 0, Message = "No Data", data = new { PostData } };
+                    currentPage = 0;
+                    rowsPerPage = 5;
                 }
                 else
                 {
-                    result = new { Status = 1, Message = "Success", data = new { PostData } };
+                    currentPage = dd.currentPage;
+                    rowsPerPage = dd.rowsPerPage;
+                }
+                if (rowsPerPage <= 0)
+                {
+                    rowsPerPage = 5;
+                }
+                dynamic PostData = _repositoryWrapper.Post_Repository.GetPost();
+                dynamic PostDetailData = _repositoryWrapper.Post_Detail_Repository.GetPostDetail();
+                var Post_Data_List = _repositoryWrapper.Post_Repository.Data_To_List();
+                var Post_Data_Detail_List = _repositoryWrapper.Post_Detail_Repository.Data_To_List();
+                IEnumerable<dynamic> tamplist = PaginatedList<dynamic>.Create(PostData, currentPage, rowsPerPage);
+                var PostData1 = tamplist.Select(x =>
+                                new
+                                {
+                                    post_id = x.post_id,
+                                    user_photo = x.user_photo,
+                                    uploader_id = x.uploader_id,
+                                    content_text = x.content_text,
+                                    photo_count = x.photo_count,
+                                    created_date = x.created_date,
+
+                                }).ToList();
+
+                IEnumerable<dynamic> tamplist1 = PaginatedList<dynamic>.Create(PostDetailData, currentPage, rowsPerPage);
+                var PostDetailData1 = tamplist1.Select(x =>
+                                new
+                                {
+                                    post_detail_id = x.post_detail_id,
+                                    post_id = x.post_id,
+                                    content_text = x.content_text,
+                                    photo = x.photo,
+                                }).ToList();
+
+                if (PostData1 == null && PostDetailData1 == null)
+                {
+                    result = new { Status = 0, Message = "No Data", data = new { PostData1, Total_Page_Post = 0, PostDetailData1, Total_Page_Post_Detail = 0 } };
+                }
+                else
+                {
+                    int Total_Page_Post = (int)Math.Ceiling(Post_Data_List.Count / (double)rowsPerPage);
+                    int Total_Page_Post_Detail = (int)Math.Ceiling(Post_Data_Detail_List.Count / (double)rowsPerPage);
+                    if (PostData1.Count == 0 && PostDetailData1.Count == 0)
+                    {
+                        result = new { Status = 0, Message = "No Data", data = new { PostData1, Total_Page_Post, PostDetailData1, Total_Page_Post_Detail } };
+                    }
+                    else
+                    {
+                        result = new { Status = 1, Message = "Success", data = new { PostData1, Total_Page_Post, PostDetailData1, Total_Page_Post_Detail } };
+                    }
+
                 }
             }
             catch (Exception ex)

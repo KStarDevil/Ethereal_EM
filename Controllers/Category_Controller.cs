@@ -113,7 +113,7 @@ namespace Ethereal_EM
             {
                 dynamic dd = param;
                 int category_id = dd.category_id;
-                
+
 
                 // tbl_category c = new tbl_category();
                 dynamic c = _repositoryWrapper.Category_Repository.GetCategoryID(category_id);
@@ -127,6 +127,23 @@ namespace Ethereal_EM
             }
 
             return result;
+        }
+
+        [HttpPost("Chat_Hub", Name = "Chat_Hub")]
+        public async void Chat_Hub([FromBody] Newtonsoft.Json.Linq.JObject param)
+        {
+            dynamic result = null;
+            try
+            {
+                dynamic dd = param;
+                string message = dd.message;
+                ChatHub CH =new ChatHub();
+                await CH.SendMessage(message);               
+            }
+            catch (Exception ex)
+            {
+                result = new { Status = 0, Message = ex.Message, data = new { } };
+            }
         }
     }
 }
