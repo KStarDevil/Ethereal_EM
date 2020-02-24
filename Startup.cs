@@ -7,7 +7,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Newtonsoft.Json.Serialization;
-
 using System;
 using System.Text;
 using System.Security.Claims;
@@ -18,7 +17,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Ethereal_EM.Extensions;
 using Microsoft.AspNetCore.Http;
-
+using Microsoft.AspNetCore.SignalR;
 
 namespace Ethereal_EM
 {
@@ -43,7 +42,12 @@ namespace Ethereal_EM
         {
 
             services.ConfigureCors();
-
+            // services.AddSignalR(hubOptions =>
+            //        {
+            //            hubOptions.EnableDetailedErrors = true;
+            //            hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(15);
+            //        });
+            services.AddSignalR();
             services.ConfigureIISIntegration();
 
             services.ConfigureMySqlContext(Configuration);
@@ -55,7 +59,6 @@ namespace Ethereal_EM
             services.AddSignalR();
             services.AddMvc()
             .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
-
             services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
             services.AddSession(options =>
             {
@@ -108,10 +111,12 @@ namespace Ethereal_EM
             options.DefaultFileNames.Add("index.html");
             app.UseDefaultFiles(options);
             app.UseStaticFiles();
-          
             //app.UseStaticFiles("");  
             //app.UsePathBase("/videocvadmin");
-
+            // app.UseSignalR(routes =>
+            //        {
+            //            routes.MapHub<ChatHub>("api/chatHub");
+            //        });
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.All,
@@ -127,6 +132,10 @@ namespace Ethereal_EM
             app.UseCors("CorsAllowAllPolicy");
 
             app.UseAuthentication();
+            app.UseSignalR(routes =>
+           {
+               routes.MapHub<ChatHub>("/Ethereal_EM/Util/chathub");
+           });
 
             app.UseTokenProviderMiddleware();
             loggerFactory.AddConsole(LogLevel.Warning, true).AddDebug();
@@ -141,3 +150,4 @@ namespace Ethereal_EM
         }
     }
 }
+

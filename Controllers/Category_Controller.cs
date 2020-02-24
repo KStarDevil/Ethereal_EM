@@ -137,8 +137,7 @@ namespace Ethereal_EM
             {
                 dynamic dd = param;
                 string message = dd.message;
-                ChatHub CH =new ChatHub();
-                await CH.SendMessage(message);               
+                            
             }
             catch (Exception ex)
             {

@@ -21,7 +21,7 @@ namespace Ethereal_EM
 {
     public class Globalfunction
     {
-
+        public static JObject UserIdentifier = new JObject();
         //private string _OldDataString = "";
         //private JObject _OldObj = null;
         public static dynamic SendEmailAsync(List<Setting> settingresult, string email, string FromEmail, string subject, string message, Boolean ishtml, string replytoname = "", string replytoemail = "")
@@ -77,7 +77,7 @@ namespace Ethereal_EM
             }
             return true;
         }
-       
+
         public static Claim[] GetClaims(TokenData obj)
         {
             var claims = new Claim[]
