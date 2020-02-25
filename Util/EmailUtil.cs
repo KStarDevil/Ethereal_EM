@@ -6,8 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.IO;
-using System.Net;
-using System.Net.Mail;
+
 
 namespace Ethereal_EM
 {

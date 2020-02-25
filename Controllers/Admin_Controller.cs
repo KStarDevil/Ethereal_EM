@@ -29,7 +29,7 @@ namespace Ethereal_EM
         public dynamic Get_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
 
-            dynamic jsondata = null;
+            dynamic result = null;
             try
             {
                 // dynamic dd = param;
@@ -38,18 +38,19 @@ namespace Ethereal_EM
 
                 if (PostAdmin == null)
                 {
-                    jsondata = new { Status = 0, Message = "No Data", data = new { PostAdmin } };
+                    result = new { Status = 0, Message = "No Data", data = new { PostAdmin } };
                 }
                 else
                 {
-                    jsondata = new { Status = 1, Message = "Success", data = new { PostAdmin } };
+                    result = new { Status = 1, Message = "Success", data = new { PostAdmin } };
                 }
             }
             catch (Exception ex)
             {
-                jsondata = new { Status = 0, Message = ex.Message, data = new { } };
+                result = new { Status = 0, Message = ex.Message, data = new { } };
+                Console.WriteLine(ex.Message);
             }
-            return jsondata;
+            return result;
         }
 
         [HttpPost("Save_Admin", Name = "Save_Admin")]
@@ -87,6 +88,7 @@ namespace Ethereal_EM
             catch (Exception ex)
             {
                 result = new { Status = 0, Message = "Save Failed", data = new { } };
+                Console.WriteLine(ex.Message);
             }
             return result;
 
@@ -96,9 +98,7 @@ namespace Ethereal_EM
         //[Authorize]
         public dynamic Update_Admin([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
-            dynamic jsondata = null;
-            try
-            {
+
                 // dynamic dd = param;
                 // int id = dd.id;
                 dynamic result = null;
@@ -144,19 +144,14 @@ namespace Ethereal_EM
                     }
                     admin.admin_modified_date = DateTime.UtcNow;
                     _repositoryWrapper.Admin_Repository.Update(admin);
-                    result = new { status = 1, data = new { msg = "Update Successfully" } };
+                    result = new { Status = 1, data = new { msg = "Update Successfully" } };
                 }
                 catch (Exception ex)
                 {
-                    result = new { status = 0, data = new { msg = "Update Fail" } };
+                    result = new { Status = 0, data = new { msg = "Update Fail" } };
+                    Console.WriteLine(ex.Message);
                 }
                 return result;
-            }
-            catch (Exception ex)
-            {
-                jsondata = new { status = 0, data = new { msg = "Update Fail" } };
-            }
-            return jsondata;
         }
 
         [HttpPost("Delete_Admin", Name = "Delete_Admin")]
@@ -180,11 +175,12 @@ namespace Ethereal_EM
                 tbl_admin admin = main as tbl_admin;
 
                 _repositoryWrapper.Admin_Repository.Delete(admin);
-                result = new { status = 1, data = new { msg = "Delete Successfully" } };
+                result = new { Status = 1, data = new { msg = "Delete Successfully" } };
             }
             catch (Exception ex)
             {
-                result = new { status = 0, data = new { msg = "Delete Fail" } };
+                result = new { Status = 0, data = new { msg = "Delete Fail" } };
+                Console.WriteLine(ex.Message);
             }
             return result;
 
@@ -213,6 +209,7 @@ namespace Ethereal_EM
             catch (Exception ex)
             {
                 result = new { Status = 0, Message = "Something went wrong!!" };
+                Console.WriteLine(ex.Message);
             }
             return result;
 

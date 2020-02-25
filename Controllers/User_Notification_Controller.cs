@@ -73,7 +73,8 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                result = new { Status = 0, Message = ex.Message, data = new { } };
+                result = new { Status = 0, Message = "Fail", data = new { } };
+                Console.WriteLine(ex.Message);
             }
             return result;
         }

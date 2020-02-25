@@ -45,7 +45,8 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                result = new { Status = 0, Message = ex.Message, data = new { } };
+                result = new { Status = 0, Message = "Fail", data = new { } };
+                Console.WriteLine(ex.Message);
             }
             return result;
         }
@@ -81,7 +82,8 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                result = new { Status = 0, Message = ex.Message, data = new { } };
+                result = new { Status = 0, Message = "Save Fail", data = new { } };
+                Console.WriteLine(ex.Message);
             }
 
             return result;
@@ -119,7 +121,8 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                result = new { Status = 0, Message = ex.Message, data = new { } };
+                result = new { Status = 0, Message = "Update Fail", data = new { } };
+                Console.WriteLine(ex.Message);
             }
 
             return result;
@@ -150,7 +153,8 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                result = new { Status = 0, Message = ex.Message, data = new { } };
+                result = new { Status = 0, Message = "Delete Fail", data = new { } };
+                Console.WriteLine(ex.Message);
             }
 
             return result;

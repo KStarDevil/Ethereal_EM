@@ -24,8 +24,8 @@ namespace Ethereal_EM
         {
             _repositoryWrapper = RW;
         }
-        [HttpGet("GetNotification", Name = "GetNotification")]
-        public dynamic GetNotification([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpGet("Get_Notification", Name = "Get_Notification")]
+        public dynamic Get_Notification([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic result = null;
             try
@@ -44,13 +44,14 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                result = new { Status = 0, Message = ex.Message, data = new { } };
+                result = new { Status = 0, Message = "Fail", data = new { } };
+                Console.WriteLine(ex.Message);
             }
             return result;
         }
 
-        [HttpPost("SaveNotification", Name = "SaveNotification")]
-        public dynamic SaveNotification([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpPost("Save_Notification", Name = "Save_Notification")]
+        public dynamic Save_Notification([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic result = null;
             try
@@ -84,13 +85,14 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                result = new { Status = 0, Message = ex.Message, data = new { } };
+                result = new { Status = 0, Message = "Save Fail", data = new { } };
+                Console.WriteLine(ex.Message);
             }
             return result;
         }
 
-        [HttpPost("UpdateNotification", Name = "UpdateNotification")]
-        public dynamic UpdateNotification([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpPost("Update_Notification", Name = "Update_Notification")]
+        public dynamic Update_Notification([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic result = null;
             try
@@ -125,30 +127,20 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                result = new { Status = 0, Message = ex.Message, data = new { } };
+                result = new { Status = 0, Message = "Update Fail", data = new { } };
+                Console.WriteLine(ex.Message);
             }
 
             return result;
         }
-        [HttpPost("DeleteNotification", Name = "DeleteNotification")]
-        public dynamic DeleteNotification([FromBody] Newtonsoft.Json.Linq.JObject param)
+        [HttpPost("Delete_Notification", Name = "Delete_Notification")]
+        public dynamic Delete_Notification([FromBody] Newtonsoft.Json.Linq.JObject param)
         {
             dynamic result = null;
             try
             {
                 dynamic dd = param;
                 int id = dd.notification_id;
-
-                string notification_user_photo = dd.notification_user_photo;
-                int admin_id = dd.admin_id;
-                string notification_title = dd.notification_title;
-                string notification_description = dd.notification_description;
-                int notification_status = dd.notification_status;
-                DateTime notification_date = dd.notification_date;
-                string notification_route = dd.notification_route;
-                int post_id = dd.post_id;
-
-
                 dynamic main = _repositoryWrapper.Notification_Repository.GetPermissionById(id);
                 tbl_notification noti = main as tbl_notification;
 
@@ -157,7 +149,8 @@ namespace Ethereal_EM
             }
             catch (Exception ex)
             {
-                result = new { Status = 0, Message = ex.Message, data = new { } };
+                result = new { Status = 0, Message = "Delete Fail", data = new { } };
+                Console.WriteLine(ex.Message);
             }
             return result;
 
